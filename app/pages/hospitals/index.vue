@@ -1,0 +1,3 @@
+<template>
+    hospital index
+</template>
