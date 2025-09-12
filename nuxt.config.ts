@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['usebootstrap', '@nuxt/eslint', 'nuxt-link-checker', '@nuxt/icon'],
+  modules: [
+    'usebootstrap',
+    '@nuxt/eslint',
+    'nuxt-link-checker',
+    '@nuxt/icon',
+    'nuxt-swiper'
+  ],
   eslint: {
     config: {
       stylistic: {

@@ -1,5 +1,9 @@
 <template>
-    hospital show
+    <div>
+        <h1>Hospital ID: {{ route.params.id }}</h1>
+    </div>
 </template>
 
-v
+<script setup>
+const route = useRoute()
+</script>

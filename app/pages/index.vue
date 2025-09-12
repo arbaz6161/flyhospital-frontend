@@ -529,114 +529,10 @@
         </section>
 
         <!--=============== POPULAR HOSPITALS SECTION ===============-->
-        <section class="popular-hospitals-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Explore Popular Hospitals and Clinics</h2>
-                    <p>Discover our most sought-after treatments in neurology, plastic surgery, dentistry, and oncology
-                        expertly performed for optimal care and results.</p>
-                </div>
+        <HospitalList :hospitals="hospitals" />
 
-                <div class="slider-container">
-                    <button class="slider-arrow prev-arrow  prev-sss">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.75 23.75L10 15L18.75 6.25" stroke="#003D6F" stroke-width="3"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <div class="slider-grid hospital-grid">
-                        <!-- Hospital Card 1 -->
-                        <div class="hospital-card">
-                            <img src="https://images.pexels.com/photos/2631746/pexels-photo-2631746.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="Toronto General Hospital">
-                            <div class="card-content">
-                                <h3>
-                                    <NuxtLink to="/hospitals/1">Toronto General Ho... </NuxtLink>
-                                    <span class="rating">4.6<span class="star">★</span></span>
-                                </h3>
-                                <p class="location">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                    </svg>
-                                    Toronto, Canada
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Hospital Card 2 -->
-                        <div class="hospital-card">
-                            <img src="https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="The Johns Hopkins Hospital">
-                            <div class="card-content">
-                                <h3>The Johns Hopkins... <span class="rating">4.5<span class="star">★</span></span></h3>
-                                <p class="location">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                    </svg>
-                                    Maryland, USA
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Hospital Card 3 -->
-                        <div class="hospital-card">
-                            <img src="https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="Cleveland Clinic">
-                            <div class="card-content">
-                                <h3>Cleveland Clinic <span class="rating">4.4<span class="star">★</span></span></h3>
-                                <p class="location">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                    </svg>
-                                    Ohio, USA
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Hospital Card 4 -->
-                        <div class="hospital-card">
-                            <img src="https://images.pexels.com/photos/1692693/pexels-photo-1692693.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="Massachusetts General Hospital">
-                            <div class="card-content">
-                                <h3>Massachusetts Gen... <span class="rating">4.8<span class="star">★</span></span></h3>
-                                <p class="location">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                    </svg>
-                                    Massachusetts, USA
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Hospital Card 5 -->
-                        <div class="hospital-card">
-                            <img src="https://images.pexels.com/photos/1692693/pexels-photo-1692693.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="Massachusetts General Hospital">
-                            <div class="card-content">
-                                <h3>Massachusetts Gen... <span class="rating">4.8<span class="star">★</span></span></h3>
-                                <p class="location">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                    </svg>
-                                    Massachusetts, USA
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="slider-arrow next-arrow next-sss">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.25 23.75L20 15L11.25 6.25" stroke="#003D6F" stroke-width="3"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                </div>
-                <NuxtLink to="/hospitals" class="view-all-btn">View all Hospitals</NuxtLink>
-            </div>
-        </section>
-
-        <!--=============== BLOGS SECTION ===============-->
-        <section class="blogs-section">
+        <!--=============== BLOGS SECTION =============== -->
+        <section class=" blogs-section">
             <div class="container">
                 <div class="section-header">
                     <h2>Blogs</h2>
@@ -795,3 +691,14 @@
         </div>
     </div>
 </template>
+
+<script setup lang="ts">
+import HospitalList from '~/components/hospital/HospitalList.vue';
+
+
+const { data, pending, error } = await useFetch('http://flyhospital.test/api/')
+
+const hospitals = computed(() => data.value?.hospitals ?? [])
+const destinations = computed(() => data.value?.destinations ?? [])
+
+</script>
