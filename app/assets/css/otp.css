@@ -39,14 +39,6 @@
     color: var(--fly-dark-blue);
 }
 
-/* .stepper-nav .step.completed a::after {
-    content: '✓';
-    display: inline-block;
-    margin-left: 0.5rem;
-    font-weight: bold;
-    color: var(--fly-dark-blue);
-} */
-
 /* OTP Form Styles */
 .otp-form h5 {
     font-family: Inter Tight;
