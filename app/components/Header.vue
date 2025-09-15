@@ -11,7 +11,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav ">
-                    <ul class="navbar-nav mx-auto">
+                    <ul class="navbar-nav mx-auto align-items-center">
                         <li class="nav-item dropdown nav-item dropdown relative">
                             <Dropdown>
                                 <DropdownToggle class="dropdown-toggle d-flex align-items-center">
@@ -53,7 +53,6 @@
                             </NuxtLink>
                         </li>
                     </ul>
-
                     <div class="d-flex align-items-center">
                         <div class="support-info me-3 text-end">
                             <span class="d-block d-flex align-items-center p-2"
