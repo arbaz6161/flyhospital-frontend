@@ -38,13 +38,13 @@
     text-align: left;
 }
 
-.about-hero-section::before {
+/* .about-hero-section::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: rgba(13, 42, 79, 0.75);
+    background-color: rgba(13, 42, 79, 0.75); */
     /* Darker overlay */
-}
+/* } */
 
 .about-hero-section .container {
     position: relative;
@@ -57,6 +57,7 @@
     font-weight: 700;
     line-height: 120%;
     letter-spacing: 0px;
+    color: #fff;
 }
 
 .stat-box {

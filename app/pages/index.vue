@@ -11,7 +11,7 @@
                         <h3>Start Your Medical Search</h3>
                         <div class="search-bar">
                             <input type="text" placeholder="Search hospitals, treatments or countries...">
-                            <a href="/listing">Search</a>
+                           <NuxtLink to="/listing">Search</NuxtLink>
                         </div>
                         <div class="filters">
                             <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#priceRangeModal">$ Filter
@@ -30,7 +30,6 @@
                 </div>
             </div>
         </section>
-
         <section class="info-section">
             <div class="container info-content">
                 <div class="info-icon">
@@ -176,10 +175,21 @@
                 </div>
 
                 <div class="slider-container">
-                    <button class="slider-arrow prev-arrow prev-des">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.75 23.75L10 15L18.75 6.25" stroke="#003D6F" stroke-width="3"
-                                stroke-linecap="round" stroke-linejoin="round" />
+                    <button class="slider-arrow prev-arrow prev-des" @click="scrollPrev">
+                        <svg
+                            width="30"
+                            height="30"
+                            viewBox="0 0 30 30"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                            d="M18.75 23.75L10 15L18.75 6.25"
+                            stroke="#003D6F"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            />
                         </svg>
                     </button>
                     <div class="slider-grid destination-grid">
@@ -412,10 +422,21 @@
                             </div>
                         </div>
                     </div>
-                    <button class="slider-arrow next-arrow next-des">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.25 23.75L20 15L11.25 6.25" stroke="#003D6F" stroke-width="3"
-                                stroke-linecap="round" stroke-linejoin="round" />
+                    <button class="slider-arrow next-arrow next-des" @click="scrollNext">
+                        <svg
+                            width="30"
+                            height="30"
+                            viewBox="0 0 30 30"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                            d="M11.25 23.75L20 15L11.25 6.25"
+                            stroke="#003D6F"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -795,3 +816,20 @@
         </div>
     </div>
 </template>
+<script setup>
+import { ref } from "vue";
+
+const slider = ref(null);
+const scrollAmount = 300; // pixels per click
+
+const scrollPrev = () => {
+  if (!slider.value) return;
+  slider.value.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+};
+
+const scrollNext = () => {
+    console.log("Next clicked"); // 👈 test if event works
+  if (!slider.value) return;
+  slider.value.scrollBy({ left: scrollAmount, behavior: "smooth" });
+};
+</script>
