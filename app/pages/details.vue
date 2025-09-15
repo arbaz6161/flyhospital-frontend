@@ -3,10 +3,14 @@
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Treatment abroad</a></li>
-        <li class="breadcrumb-item"><a href="#">All specialities</a></li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Toronto General Hospital
+        <li class="breadcrumb-item">
+            <NuxtLink to="#">Treatment abroad</NuxtLink>
+          </li>
+          <li class="breadcrumb-item">
+            <NuxtLink to="#">All specialities</NuxtLink>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Toronto General Hospital
         </li>
       </ol>
     </nav>
@@ -26,17 +30,13 @@
 
     <!-- Tabs -->
     <ul class="nav page-tabs mb-4">
-      <li class="nav-item"><a class="nav-link active" href="#">Overview</a></li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Facility Services</a>
-      </li>
-      <li class="nav-item"><a class="nav-link" href="#">Procedures</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Medical Staff</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Nearby Hotels</a></li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Nearby Restaurants</a>
-      </li>
+     <li class="nav-item"><NuxtLink class="nav-link active" to="#">Overview</NuxtLink></li>
+    <li class="nav-item"><NuxtLink class="nav-link" to="#">Facility Services</NuxtLink></li>
+    <li class="nav-item"><NuxtLink class="nav-link" to="#">Procedures</NuxtLink></li>
+    <li class="nav-item"><NuxtLink class="nav-link" to="#">Medical Staff</NuxtLink></li>
+    <li class="nav-item"><NuxtLink class="nav-link" to="#">Reviews</NuxtLink></li>
+    <li class="nav-item"><NuxtLink class="nav-link" to="#">Nearby Hotels</NuxtLink></li>
+    <li class="nav-item"><NuxtLink class="nav-link" to="#">Nearby Restaurants</NuxtLink></li>
     </ul>
 
     <div class="row">
@@ -87,11 +87,10 @@
                   <div class="rating-item">
                     <div class="value">4.6</div>
                     <div class="stars">
-                      <i class="bi bi-star-fill text-warning"></i>
-                      <i class="bi bi-star-fill text-warning"></i>
-                      <i class="bi bi-star-fill text-warning"></i>
-                      <i class="bi bi-star-fill text-warning"></i>
-                      <i class="bi bi-star-half text-warning"></i>
+                      <Icon name="bi:star-fill" class="text-warning" />
+                      <Icon name="bi:star-fill" class="text-warning" />
+                      <Icon name="bi:star-fill" class="text-warning" />
+                      <Icon name="bi:star-fill" class="text-warning" />
                     </div>
                   </div>
                 </div>
@@ -951,7 +950,7 @@
               </svg>
             </button>
           </div>
-          <a href="#" class="view-all-btn">View all Hotels</a>
+         <NuxtLink to="#" class="view-all-btn">View all Hotels</NuxtLink>
         </div>
       </section>
 
@@ -1093,7 +1092,7 @@
               </svg>
             </button>
           </div>
-          <a href="#" class="view-all-btn">View all resturants</a>
+          <NuxtLink to="#" class="view-all-btn">View all Restaurants</NuxtLink>
         </div>
       </section>
     </div>

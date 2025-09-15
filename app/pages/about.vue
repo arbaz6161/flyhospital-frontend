@@ -80,9 +80,13 @@
                     <div class="col-md-6 col-lg-3 d-flex">
                         <div class="testimonial-card w-100">
                             <h6 class="name">Lara Sentis</h6>
-                            <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i></div>
+                            <div class="stars">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
                             <p class="quote">Overall a very positive experience. The staff was very attentive and
                                 helpful throughout the process.</p>
                         </div>

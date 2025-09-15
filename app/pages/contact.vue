@@ -30,7 +30,6 @@
                     </div>
                     <img src="~/assets/img/contact.png" alt="Patients at reception" class="contact-image mt-3">
                 </div>
-
                 <!-- Right Column -->
                 <div class="col-lg-7">
                     <div class="contact-form-section">

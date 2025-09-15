@@ -130,7 +130,7 @@ textarea.form-control {
 }
 
 .submit-btn {
-    background-color: var(--fly-dark-blue);
+    background-color: #0056b3;
     border-color: var(--fly-dark-blue);
     padding: 0.85rem 1.5rem;
     font-weight: 500;

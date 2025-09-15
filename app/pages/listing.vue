@@ -4,13 +4,15 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                <a href="#">Treatment abroad</a>
+                    <NuxtLink to="#">Treatment abroad</NuxtLink>
                 </li>
 
                 <li class="breadcrumb-separator">
-                <i class="bi bi-chevron-right"></i>
+                  <Icon name="bi:chevron-right" size="20" />
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">All specialities</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    All specialities
+                </li>
             </ol>
         </nav>
 
@@ -91,23 +93,34 @@
                     <div class="col-md-3 col-sm-6 card-body border-start-md">
                         <div class="rating d-flex align-items-center mb-3">
                             <div class="stars text-warning">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-half" class="text-warning" />
                             </div>
                             <span class="fw-bold ms-2 me-1 rating">4.8</span>
                             <span class="text-muted review">327 review</span>
                         </div>
                         <h6 class="treatment-title">TREATMENT</h6>
-                        <ul class="treatment-list list-unstyled">
-                            <li><i class="bi bi-check"></i> Treatment Name</li>
-                            <li><i class="bi bi-check"></i> Treatment Name</li>
-                            <li><i class="bi bi-check"></i> Treatment Name</li>
-                          
+                       <ul class="treatment-list list-unstyled space-y-2">
+                            <li class="flex items-center gap-2">
+                               <Icon name="bi:check" style="color: #28a745; width: 24px; height: 24px;" />
+                                <span>Treatment Name</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                               <Icon name="bi:check" style="color: #28a745; width: 24px; height: 24px;" />
+                                <span>Treatment Name</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                               <Icon name="bi:check" style="color: #28a745; width: 24px; height: 24px;" />
+                                <span>Treatment Name</span>
+                            </li>
                         </ul>
-                        <a href="/details" class="btn btn-primary w-100 mt-3 details-btn">View Hospital Details</a>
+                        <NuxtLink to="/details" class="btn btn-primary w-100 mt-3 details-btn">
+                            View Hospital Details
+                        </NuxtLink>
+
                     </div>
                 </div>
             </div>
@@ -143,21 +156,32 @@
                             Website</a>
                         </div>
                     </div>
-                    <div class="col-md-3 card-body border-start-md">
+                    <div class="col-md-3 col-sm-6 card-body border-start-md">
                         <div class="rating d-flex align-items-center mb-3">
-                             <div class="stars text-warning">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                            <div class="stars text-warning">
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-fill" class="text-warning" />
+                                <Icon name="bi:star-half" class="text-warning" />
                             </div>
-                            <span class="fw-bold ms-2 me-1 rating">4.7</span>
-                            <span class="text-muted review">199 review</span>
+                            <span class="fw-bold ms-2 me-1 rating">4.8</span>
+                            <span class="text-muted review">327 review</span>
                         </div>
                         <h6 class="treatment-title">TREATMENT</h6>
-                        <ul class="treatment-list list-unstyled">
-                            <li>
-                                <i class="bi bi-check"></i> 
-                            Treatment Name</li>
-                            <li><i class="bi bi-check"></i> Treatment Name</li>
-                            <li><i class="bi bi-check"></i> Treatment Name</li>
+                       <ul class="treatment-list list-unstyled space-y-2">
+                            <li class="flex items-center gap-2">
+                               <Icon name="bi:check" style="color: #28a745; width: 24px; height: 24px;" />
+                                <span>Treatment Name</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                               <Icon name="bi:check" style="color: #28a745; width: 24px; height: 24px;" />
+                                <span>Treatment Name</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                               <Icon name="bi:check" style="color: #28a745; width: 24px; height: 24px;" />
+                                <span>Treatment Name</span>
+                            </li>
                         </ul>
                         <NuxtLink to="/details" class="btn btn-primary w-100 mt-3 details-btn">
                             View Hospital Details
@@ -191,7 +215,7 @@
                         <div class="blog-content">
                             <h3>Utilize Our Medical Templates!</h3>
                             <p>Lets embody your beautiful ideas together, simplify the way you visualize your next big things.</p>
-                            <a href="#">Read More</a>
+                          <NuxtLink to="#">Read More</NuxtLink>
                         </div>
                     </div>
                     <!-- Blog Card 2 -->
@@ -200,7 +224,7 @@
                         <div class="blog-content">
                              <h3>Discover Our Medical Templates!</h3>
                             <p>Lets embody your beautiful ideas together, simplify the way you visualize your next big things.</p>
-                            <a href="#">Read More</a>
+                          <NuxtLink to="#">Read More</NuxtLink>
                         </div>
                     </div>
                     <!-- Blog Card 3 -->
@@ -209,7 +233,7 @@
                         <div class="blog-content">
                             <h3>Check Out Our Medical Design Resources!</h3>
                             <p>Unlock creativity with our curated assets, and transform your vision into stunning realities.</p>
-                            <a href="#">Read More</a>
+                           <NuxtLink to="#">Read More</NuxtLink>
                         </div>
                     </div>
                      <!-- Blog Card 4 -->
@@ -218,7 +242,7 @@
                         <div class="blog-content">
                             <h3>Become Part of Our Medical Community!</h3>
                             <p>Connect with fellow innovators, share insights, and execute your design journey together.</p>
-                            <a href="#">Read More</a>
+                            <NuxtLink to="#">Read More</NuxtLink>
                         </div>
                     </div>
                 </div>
