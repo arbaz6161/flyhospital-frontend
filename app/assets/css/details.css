@@ -1,19 +1,4 @@
 /* General Styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f8f9fa;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: #0d2a4f;
-    font-weight: 700;
-}
-
 .section-base {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
