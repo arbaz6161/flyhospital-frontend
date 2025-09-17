@@ -326,3 +326,7 @@
     background: #fff;
     /* optional background */
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
