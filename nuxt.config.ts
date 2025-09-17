@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     'nuxt-link-checker',
     '@nuxt/icon',
-    'nuxt-swiper'
+    'nuxt-swiper',
+    '@pinia/nuxt'
   ],
   eslint: {
     config: {

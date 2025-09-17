@@ -1,0 +1,128 @@
+<template>
+    <div class="card hospital-card mb-4">
+        <div class="row g-0">
+            <!-- Image -->
+            <div class="col-md-3 p-3">
+                <img :src="hospital.image_url" :alt="title" class="img-fluid img-fit rounded" />
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-6 card-body">
+                <h5 class="card-title">
+                    <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none">
+                        {{ title }}
+                    </NuxtLink>
+                </h5>
+
+                <!-- Location -->
+                <p class="card-text location mb-2">
+                    <Icon name="material-symbols:location-on" />
+                    {{ shortAddress }}
+                </p>
+
+                <!-- Description -->
+                <p class="card-text description">
+                    {{ truncatedDescription }}
+                    <span v-if="needsTruncate" @click.prevent="toggleDescription" class="text-primary cursor-pointer">
+                        {{ showMore ? " Show less" : " ... Show more" }}
+                    </span>
+                </p>
+
+                <!-- Info Buttons -->
+                <div class="info-buttons d-flex gap-2 flex-wrap">
+                    <NuxtLink :to="`tel:${hospital.phone}`" class="btn btn-sm btn-light">
+                        <Icon name="mdi:telephone" />
+                        Call
+                    </NuxtLink>
+                    <NuxtLink
+                        :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`"
+                        class="btn btn-sm btn-light">
+                        <Icon name="mdi:google-maps" />
+                        Google Map
+                    </NuxtLink>
+                    <NuxtLink :to="`/${hospital.url}`" class="btn btn-sm btn-light">
+                        <Icon name="mdi:web" />
+                        Website
+                    </NuxtLink>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-md-3 col-sm-6 card-body border-start-md d-flex flex-column">
+                <!-- Rating -->
+                <div>
+                    <div class="rating d-flex align-items-center mb-3">
+                        <div class="stars text-warning">
+                            <template v-for="i in 5" :key="i">
+                                <!-- Full star -->
+                                <Icon v-if="i <= Math.floor(hospital.average_rating)" name="carbon:star-filled" />
+
+                                <!-- Half star -->
+                                <Icon
+                                    v-else-if="i === Math.floor(hospital.average_rating) + 1 && (hospital.average_rating % 1) >= 0.5"
+                                    name="carbon:star-half" />
+
+                                <!-- Empty star -->
+                                <Icon v-else name="carbon:star" />
+                            </template>
+                        </div>
+
+                        <span class="fw-bold ms-2 me-1 rating">{{ Number(hospital.average_rating).toFixed(1) }}</span>
+                        <span class="text-muted review">{{ hospital.total_reviews }} reviews</span>
+                    </div>
+
+                    <h6 class="treatment-title">TREATMENTS</h6>
+                    <ul class="treatment-list list-unstyled">
+                        <li v-for="treatment in hospital.treatments" :key="treatment">
+                            <Icon name="material-symbols:check-rounded" class="bg-success" /> {{ treatment.name }}
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Details Button pinned to bottom -->
+                <NuxtLink :to="`/hospitals/${hospital.id}`" @click.native="store.setSelectedHospital(hospital)"
+                    class="btn btn-primary w-100 mt-auto">
+                    View Hospital Details
+                </NuxtLink>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref, computed } from "vue"
+import { useCapitalize, useTruncateText } from "~/composables/useHelpers"
+
+const props = defineProps({
+    hospital: {
+        type: Object,
+        required: true,
+    },
+})
+
+const store = useLandingPageStore()
+
+const showMore = ref(false)
+
+// Helpers
+const title = computed(() => useCapitalize(props.hospital?.title || ""))
+const shortAddress = computed(() =>
+    useTruncateText(props.hospital?.address || "", 100)
+)
+
+// Description logic
+const needsTruncate = computed(
+    () => props.hospital?.description?.length > 100
+)
+
+const truncatedDescription = computed(() => {
+    if (showMore.value || !needsTruncate.value) {
+        return props.hospital?.description || ""
+    }
+    return props.hospital?.description.slice(0, 100)
+})
+
+const toggleDescription = () => {
+    showMore.value = !showMore.value
+}
+</script>

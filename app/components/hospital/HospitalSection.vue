@@ -17,7 +17,7 @@
                 </button>
 
                 <div class="slider-grid hospital-grid">
-                    <HospitalCard v-for="hospital in hospitals" :key="hospital.id" :hospital="hospital" />
+                    <HospitalSectionCard v-for="hospital in hospitals" :key="hospital.id" :hospital="hospital" />
                 </div>
 
                 <button class="slider-arrow next-arrow next-sss" aria-label="Next slide">
