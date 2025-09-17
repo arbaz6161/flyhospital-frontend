@@ -19,7 +19,7 @@
         <TreatmentList />
 
         <!--=============== POPULAR HOSPITALS ===============-->
-        <HospitalSection :hospitals="data.hospitals" />
+        <HospitalSection :hospitals="store.hospitals" />
 
         <!--=============== BLOGS =============== -->
         <BlogList />
@@ -129,12 +129,13 @@
 </template>
 
 <script setup lang="ts">
-import HospitalSection from '~/components/hospital/HospitalSection.vue';
 import AboutSection from '~/components/landingPage/AboutSection.vue';
 import HeroSection from '~/components/landingPage/HeroSection.vue';
 import HowItWorks from '~/components/landingPage/HowItWorks.vue';
 import TreatmentServices from '~/components/landingPage/TreatmentServices.vue';
+import { useLandingPageStore } from '~/stores/landingPage'
 
-const data = useLandingPageStore()
-await data.fetchLandingPageData()
+const store = useLandingPageStore()
+
+await useAsyncData('landingPage', () => store.index())
 </script>

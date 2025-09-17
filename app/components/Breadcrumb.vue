@@ -3,9 +3,11 @@
         <ol class="breadcrumb">
             <li v-for="(item, index) in items" :key="index" class="breadcrumb-item" :class="{ active: item.active }">
                 <template v-if="!item.active">
-                    <a :href="item.link">{{ item.label }}</a>
-                    <span class="breadcrumb-separator mx-1">
-                        <i class="bi bi-chevron-right"></i>
+                    <NuxtLink :to="item.link">
+                        {{ item.label }}
+                    </NuxtLink>
+                    <span class="mx-1">
+                        <Icon name="material-symbols:chevron-right"></Icon>
                     </span>
                 </template>
                 <template v-else>

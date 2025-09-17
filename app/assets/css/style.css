@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 /* Hero Section */
 .hero-layout {
     display: flex;

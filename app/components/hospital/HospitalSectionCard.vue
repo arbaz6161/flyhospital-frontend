@@ -1,9 +1,9 @@
 <template>
     <div class="hospital-card">
-        <img :src="props.hospital.image_url" :alt="title">
+        <img :src="hospital.image_urls[0]" :alt="title">
         <div class="card-content">
             <h3>
-                <NuxtLink :to="`/hospitals/${props.hospital.id}`" class="text-dark text-decoration-none">{{ title }}
+                <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none">{{ title }}
                 </NuxtLink>
                 <span class="rating">{{ Number(hospital.average_rating).toFixed(1) }}<span class="star">★</span></span>
             </h3>

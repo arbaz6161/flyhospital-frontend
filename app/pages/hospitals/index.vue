@@ -3,7 +3,7 @@
     <main class="container my-5">
         <!-- Breadcrumb -->
         <Breadcrumb :items="[
-            { label: 'Treatment abroad', link: '#' },
+            { label: 'Treatment abroad', link: '/' },
             { label: 'All specialities', active: true }
         ]" />
 

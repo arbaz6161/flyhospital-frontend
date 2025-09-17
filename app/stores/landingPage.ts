@@ -4,12 +4,12 @@ export const useLandingPageStore = defineStore('landingPage', {
     state: () => ({
         hospitals: [] as any[],
         destinations: [] as any[],
-        totalHospitals: 1654,
-        selectedHospital: null as any | null,
     }),
     actions: {
-        async fetchLandingPageData() {
+        async index() {
             const { data, error } = await useFetch('http://flyhospital.test/api/')
+
+            console.log(data);
 
             if (error.value) {
                 console.error('❌ API Error:', error.value)
@@ -18,10 +18,6 @@ export const useLandingPageStore = defineStore('landingPage', {
 
             this.hospitals = data.value?.hospitals ?? []
             this.destinations = data.value?.destinations ?? []
-        },
-
-        setSelectedHospital(hospital: any) {
-            this.selectedHospital = hospital
-        },
+        }
     }
 })

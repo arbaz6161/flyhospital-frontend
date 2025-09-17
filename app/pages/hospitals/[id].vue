@@ -1,52 +1,57 @@
 <template>
     <main class="container mt-4">
-        <!-- Breadcrumbs -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Treatment abroad</a></li>
-                <li class="breadcrumb-item"><a href="#">All specialities</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Toronto General Hospital
-                </li>
-            </ol>
-        </nav>
+        <!-- Breadcrumb -->
+        <Breadcrumb :items="[
+            { label: 'Treatment abroad', link: '/' },
+            { label: 'All specialities', link: '/hospitals' },
+            { label: title, active: true }
+        ]" />
 
         <!-- Image Gallery -->
         <div class="image-gallery my-4">
-            <div class="main-image">
-                <img src="/assets/img/banner-img1.png" alt="banner-img1" />
+            <div v-if="hospital.image_urls && hospital.image_urls.length" class="main-image">
+                <img :src="hospital.image_urls[0]" :alt="title" />
             </div>
-            <div class="thumbnail-grid">
-                <img src="/assets/img/banner-img2.png" alt="banner-img2" />
-                <img src="/assets/img/banner-img3.png" alt="banner-img3" />
-                <img src="/assets/img/banner-img4.png" alt="banner-img4" />
-                <img src="/assets/img/banner-img5.png" alt="banner-img5" />
+            <!-- Thumbnails (all others) -->
+            <div v-if="hospital.image_urls && hospital.image_urls.length > 1" class="thumbnail-grid">
+                <img v-for="(img, index) in hospital.image_urls.slice(1)" :key="index" :src="img"
+                    :alt="`${title} thumbnail ${index + 1}`" />
             </div>
         </div>
 
         <!-- Tabs -->
         <ul class="nav page-tabs mb-4">
-            <li class="nav-item"><a class="nav-link active" href="#">Overview</a></li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Facility Services</a>
+                <NuxtLink class="nav-link active" to="#overview">Overview</NuxtLink>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">Procedures</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Medical Staff</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Nearby Hotels</a></li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Nearby Restaurants</a>
+                <NuxtLink class="nav-link" to="#facilities">Facility Services</NuxtLink>
+            </li>
+            <li class="nav-item">
+                <NuxtLink class="nav-link" to="#procedures">Procedures</NuxtLink>
+            </li>
+            <li class="nav-item">
+                <NuxtLink class="nav-link" to="#medical-staff">Medical Staff</NuxtLink>
+            </li>
+            <li class="nav-item">
+                <NuxtLink class="nav-link" to="#reviews">Reviews</NuxtLink>
+            </li>
+            <li class="nav-item">
+                <NuxtLink class="nav-link" to="#hotels">Nearby Hotels</NuxtLink>
+            </li>
+            <li class="nav-item">
+                <NuxtLink class="nav-link" to="#restaurants">Nearby Restaurants</NuxtLink>
             </li>
         </ul>
 
-        <div class="row">
+        <div id="overview" class="row">
             <!-- Left Column: Details -->
             <div class="col-lg-8">
                 <!-- Title & Basic Info -->
                 <div class="mb-4 section-base">
                     <div class="hospital-location-section">
                         <Icon name="material-symbols:location-on" />
-                        <p class="text-muted ms-0 ps-2">{{ shortAddress }}</p>
+                        <p class="text-muted ms-0 ps-2">{{ hospital.address }}</p>
                     </div>
                     <div class="hospital-title-section">
                         <h2>{{ title }}</h2>
@@ -182,8 +187,16 @@
                 </div>
 
                 <!-- Facility Services -->
-                <div class="mb-5 pb-5 section-base">
+                <div id="facilities" class="mb-5 pb-5 section-base">
                     <h3 class="section-title">Facility Services</h3>
+                    <div v-if="hospital.facilities && hospital.facilities.length" class="facility-grid">
+                        <div v-for="facility in hospital.facilities" :key="facility.name"
+                            class="facility-item d-flex align-items-center gap-2">
+                            <!-- Dynamic Icon -->
+                            <Icon :name="getIcon(facility.slug)" size="30" />
+                            <span>{{ facility.name }}</span>
+                        </div>
+                    </div>
                     <div class="facility-grid">
                         <div class="facility-item">
                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
@@ -303,7 +316,7 @@
                 </div>
 
                 <!-- Procedures -->
-                <div class="mb-5 pb-5 section-base">
+                <div id="procedures" class="mb-5 pb-5 section-base">
                     <h3 class="section-title">Procedures</h3>
                     <Accordion parent v-for="treatment in hospital.treatments" :key="treatment.id">
                         <AccordionSection :title="treatment.name" :active="true">
@@ -316,7 +329,7 @@
                 </div>
 
                 <!-- Medical Staff -->
-                <div class="mb-5 pb-5 section-base">
+                <div id="medical-staff" class="mb-5 pb-5 section-base">
                     <h3 class="section-title">Medical Staff</h3>
                     <div class="accordion" id="staffAccordion">
                         <div class="accordion-item">
@@ -388,7 +401,7 @@
                 </div>
 
                 <!-- Reviews -->
-                <div class="mb-5 pb-5 section-base">
+                <div id="reviews" class="mb-5 pb-5 section-base">
                     <h3 class="section-title">Review</h3>
                     <div class="review-summary">
                         <div class="review-score">
@@ -438,7 +451,7 @@
                                     <div class="progress-bar" :style="{ width: getStarPercentage(star) + '%' }"></div>
                                 </div>
 
-                                <span>{{ getStarPercentage(star) }}%</span>
+                                <span>{{ Number(getStarPercentage(star)).toFixed(0) }}%</span>
                             </div>
                         </div>
                     </div>
@@ -448,44 +461,47 @@
             <div class="col-lg-4">
                 <div class="card card-body sidebar-card">
                     <div class="map-placeholder mb-3">
-                        <img src="/assets/img/banner-img1.png" alt="banner-img1" />
+                        <img :src="hospital.image_urls[0]" :alt="title" />
                     </div>
                     <div class="hospital-header d-flex align-items-center justify-content-between">
                         <h5 class="hospital-name text-truncate">
-                            Toronto General Hospital
+                            {{ title }}
                         </h5>
                         <div class="rating d-flex align-items-center ms-2">
-                            <span class="rating-score">4.5</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#F9B800"
-                                class="bi bi-star-fill ms-1" viewBox="0 0 16 16">
-                                <path
-                                    d="M3.612 15.443c-.396.198-.86-.149-.746-.592l.83-4.73L.173 6.765c-.329-.32-.158-.888.283-.95l4.898-.696 2.062-4.3c.197-.41.73-.41.927 0l2.062 4.3 4.898.696c.441.062.612.63.282.95l-3.523 3.356.83 4.73c.114.443-.35.79-.746.592L8 13.187l-4.389 2.256z" />
-                            </svg>
+                            <div class="rating-score">{{ Number(hospital.average_rating).toFixed(1) }}</div>
+                            <Icon name="carbon:star-filled" class="stars text-warning" />
                         </div>
                     </div>
                     <div class="hospital-location-section">
-                        <span>
-                            <svg width="18" height="22" viewBox="0 0 18 22" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9 12C10.6569 12 12 10.6569 12 9C12 7.34315 10.6569 6 9 6C7.34315 6 6 7.34315 6 9C6 10.6569 7.34315 12 9 12Z"
-                                    stroke="#053862" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M9 1C6.87827 1 4.84344 1.84285 3.34315 3.34315C1.84285 4.84344 1 6.87827 1 9C1 10.892 1.402 12.13 2.5 13.5L9 21L15.5 13.5C16.598 12.13 17 10.892 17 9C17 6.87827 16.1571 4.84344 14.6569 3.34315C13.1566 1.84285 11.1217 1 9 1Z"
-                                    stroke="#053862" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </span>
-                        <p class="text-muted ms-0 ps-2">Toronto, Canada</p>
+                        <Icon name="material-symbols:location-on" />
+                        <p class="text-muted ms-0 ps-2">{{ shortAddress }}</p>
                     </div>
-                    <a href="#" class="btn btn-primary w-100">Hospital location</a>
+                    <!-- Info Buttons -->
+                    <div class="info-buttons d-flex gap-2 flex-wrap">
+                        <NuxtLink :to="`tel:${hospital.phone}`" class="btn btn-sm btn-light">
+                            <Icon name="mdi:telephone" />
+                            Call
+                        </NuxtLink>
+                        <NuxtLink
+                            :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`"
+                            class="btn btn-sm btn-light">
+                            <Icon name="mdi:google-maps" />
+                            Google Map
+                        </NuxtLink>
+                        <NuxtLink :to="`/${hospital.url}`" class="btn btn-sm btn-light">
+                            <Icon name="mdi:web" />
+                            Website
+                        </NuxtLink>
+                    </div>
+                    <NuxtLink to="#" class="btn btn-primary w-100">CTA {will be like to open form}</NuxtLink>
                 </div>
             </div>
 
             <!--=============== POPULAR RESTAURENTS SECTION ===============-->
-            <RestaurentSection />
+            <RestaurentSection id="hotels" />
 
             <!--=============== POPULAR HOTELS SECTION ===============-->
-            <HotelSection />
+            <HotelSection id="restaurants" />
         </div>
     </main>
 </template>
@@ -512,7 +528,7 @@ const hospital = computed(() =>
 // Helpers
 const title = computed(() => useCapitalize(hospital.value.title || ""))
 const shortAddress = computed(() =>
-    useTruncateText(hospital.value.address || "", 100)
+    useTruncateText(hospital.value.address || "", 40)
 )
 
 // Description logic
@@ -542,6 +558,23 @@ const getStarCount = (star: number) => {
 const getStarPercentage = (star: number) => {
     if (!hospital.value.reviews.length) return 0
     return (getStarCount(star) / hospital.value.reviews.length) * 100
+}
+
+const getIcon = (slug: string): string => {
+    const icons: Record<string, string> = {
+        airport_pickup: "mdi:wifi",
+        cafe: "mdi:car",
+        free_wifi: "mdi:hospital-building",
+        medical_travel_insurance: "mdi:silverware-fork-knife",
+        parking_available: "mdi:silverware-fork-knife",
+        restaurant: "mdi:silverware-fork-knife",
+        pharmacy: "mdi:silverware-fork-knife",
+        tv_in_the_room: "mdi:silverware-fork-knife",
+        consultation_services: "mdi:silverware-fork-knife"
+    }
+
+    // fallback icon
+    return icons[slug] || "mdi:web"
 }
 </script>
 
