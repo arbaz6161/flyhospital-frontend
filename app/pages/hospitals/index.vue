@@ -35,12 +35,15 @@
                 </div>
                 <div class="col-lg-2">
                     <button class="search-btn-icon">
-                        <NuxtIcon name="bi:search" /> Search
+                        <Icon name="bi:search" class="text-[#ffffff] w-5 h-5"/>Search
                     </button>
                 </div>
             </div>
             <div class="mt-3">
-                <a href="#" class="advanced-search-link"><i class="bi bi-sliders"></i> Advanced Search</a>
+                <NuxtLink to="/advanced-search" class="advanced-search-link d-inline-flex align-items-center">
+                   <Icon name="bi:sliders" class="text-[#053862] w-5 h-5" style="margin-right: 5px;"/>
+                    Advanced Search
+                </NuxtLink>
             </div>
         </div>
 

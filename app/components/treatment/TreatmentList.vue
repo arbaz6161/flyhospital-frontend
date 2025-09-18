@@ -20,7 +20,10 @@
                         <img src="https://images.pexels.com/photos/3957987/pexels-photo-3957987.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                             alt="Knee Replacement Surgery">
                         <div class="card-content">
-                            <p class="location">Toronto, Canada</p>
+                            <p class="location">
+                                <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                                Toronto, Canada
+                            </p>
                             <div class="card-title-bar">
                                 <h3>Knee Replacement</h3>
                                 <span class="rating">4.9<span class="star">★</span></span>
@@ -33,7 +36,10 @@
                         <img src="https://images.pexels.com/photos/3957987/pexels-photo-3957987.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                             alt="Dialysis">
                         <div class="card-content">
-                            <p class="location">Toronto, Canada</p>
+                            <p class="location">
+                                <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                                Toronto, Canada
+                            </p>
                             <div class="card-title-bar">
                                 <h3>Dialysis</h3>
                                 <span class="rating">4.9<span class="start">★</span></span>
@@ -46,7 +52,10 @@
                         <img src="https://images.pexels.com/photos/3957987/pexels-photo-3957987.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                             alt="Antibiotic Therapy">
                         <div class="card-content">
-                            <p class="location">Vancouver, Canada</p>
+                            <p class="location">
+                                <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                                Vancouver, Canada
+                            </p>
                             <div class="card-title-bar">
                                 <h3>Antibiotic Therapy</h3>
                                 <span class="rating">5.0<span class="star">★</span></span>
@@ -59,7 +68,10 @@
                         <img src="https://images.pexels.com/photos/3957987/pexels-photo-3957987.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                             alt="Organ Transplant">
                         <div class="card-content">
-                            <p class="location">Montreal, Canada</p>
+                            <p class="location">
+                                <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                                Montreal, Canada
+                            </p>
                             <div class="card-title-bar">
                                 <h3>Organ Transplant</h3>
                                 <span class="rating">4.8<span class="star">★</span></span>
@@ -71,7 +83,10 @@
                         <img src="https://images.pexels.com/photos/3957987/pexels-photo-3957987.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                             alt="Organ Transplant">
                         <div class="card-content">
-                            <p class="location">Montreal, Canada</p>
+                            <p class="location">
+                                <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                                Montreal, Canada
+                            </p>
                             <div class="card-title-bar">
                                 <h3>Organ Transplant</h3>
                                 <span class="rating">4.8<span class="star">★</span></span>
@@ -83,7 +98,10 @@
                         <img src="https://images.pexels.com/photos/3957987/pexels-photo-3957987.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                             alt="Dialysis">
                         <div class="card-content">
-                            <p class="location">Toronto, Canada</p>
+                            <p class="location">
+                                <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                                Toronto, Canada
+                            </p>
                             <div class="card-title-bar">
                                 <h3>Dialysis</h3>
                                 <span class="rating">4.9<span class="start">★</span></span>

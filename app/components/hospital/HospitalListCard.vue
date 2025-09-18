@@ -1,5 +1,5 @@
 <template>
-    <div class="card hospital-card mb-4">
+    <div class="card hospital-card mb-4 p-4">
         <div class="row g-0">
             <!-- Image -->
             <div class="col-md-3 p-3">
@@ -9,14 +9,14 @@
             <!-- Main Content -->
             <div class="col-md-6 card-body">
                 <h5 class="card-title">
-                    <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none">
+                    <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-decoration-none" style="color: #053862;">
                         {{ title }}
                     </NuxtLink>
                 </h5>
 
                 <!-- Location -->
                 <p class="card-text location mb-2">
-                    <Icon name="material-symbols:location-on" />
+                    <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                     {{ shortAddress }}
                 </p>
 
@@ -31,17 +31,17 @@
                 <!-- Info Buttons -->
                 <div class="info-buttons d-flex gap-2 flex-wrap">
                     <NuxtLink :to="`tel:${hospital.phone}`" class="btn btn-sm btn-light">
-                        <Icon name="mdi:telephone" />
+                       <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                         Call
                     </NuxtLink>
                     <NuxtLink
                         :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`"
                         class="btn btn-sm btn-light">
-                        <Icon name="mdi:google-maps" />
+                          <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                         Google Map
                     </NuxtLink>
                     <NuxtLink :to="`/${hospital.url}`" class="btn btn-sm btn-light">
-                        <Icon name="mdi:web" />
+                        <Icon name="streamline-plump:web-remix" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                         Website
                     </NuxtLink>
                 </div>
