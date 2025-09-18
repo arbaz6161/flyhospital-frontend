@@ -3,8 +3,8 @@
     <main class="container my-5">
         <!-- Breadcrumb -->
         <Breadcrumb :items="[
-            { label: 'Treatment abroad', link: '/' },
-            { label: 'All specialities', active: true }
+            { label: 'Home', link: '/' },
+            { label: 'Hospitals', active: true }
         ]" />
 
         <!-- Filter Section -->
@@ -20,17 +20,24 @@
                                     stroke="#053862" stroke-width="4" stroke-linecap="round" />
                             </svg>
                         </span>
-                        <input type="text" class="form-control" placeholder="Enter name, procedure, or condition">
+                        <input type="text" class="form-control" v-model="store.search"
+                            placeholder="Enter Hospital Name">
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <select class="form-select">
-                        <option selected>Select a country</option>
+                    <select class="form-select" v-model="store.country_id">
+                        <option value="">Select a country</option>
+                        <option v-for="country in store.countries" :key="country.id" :value="country.id">
+                            {{ country.country_name }}
+                        </option>
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <select class="form-select">
-                        <option selected>Select a Price Range</option>
+                    <select class="form-select" v-model="store.city_id">
+                        <option value="">Select city</option>
+                        <option v-for="city in store.cities" :key="city.id" :value="city.id">
+                            {{ city.name }}
+                        </option>
                     </select>
                 </div>
                 <div class="col-lg-2">
@@ -49,19 +56,24 @@
 
         <!-- Hospital Listings -->
         <div class="listings-header mb-4">
-            <h2>Best <span>1654 Verified</span> Hospitals in the World</h2>
+            <h2>Best <span>{{ store.totalHospitals }} Verified</span> Hospitals in the World</h2>
             <p class="text-muted">FlyHospitals uses data science algorithms to deliver a trusted, transparent, and
                 objective comparison based on patient demand, review scores, treatment updates, pricing, response speed,
                 and clinic certifications.</p>
         </div>
 
         <div class="hospital-list">
-            <HospitalListCard v-for="hospital in store.hospitals" :key="hospital.id" :hospital="hospital" />
+            <template v-if="store.hospitals.length > 0">
+                <HospitalListCard v-for="hospital in store.hospitals" :key="hospital.id" :hospital="hospital" />
+            </template>
+            <div v-else class="text-center text-muted py-5">
+                No hospitals found.
+            </div>
         </div>
 
         <!-- Load More Section -->
         <div class="text-center mt-5">
-            <p class="text-muted">You've viewed 5 of 1654 hospitals</p>
+            <p class="text-muted">You've viewed 5 of {{ store.totalHospitals }} hospitals</p>
             <button class="btn btn-primary mt-3 details-btn" style="max-width: 321px; width:100%">Load More</button>
         </div>
 
@@ -75,5 +87,13 @@
 import { useHospitalStore } from '~/stores/hospital'
 
 const store = useHospitalStore()
+await store.loadCountries()
 await store.index()
+
+watch(() => store.country_id, (newCountryId) => {
+    console.log(newCountryId)
+    store.city_id = ''  // reset city selection
+    store.loadCities(newCountryId)
+})
+
 </script>

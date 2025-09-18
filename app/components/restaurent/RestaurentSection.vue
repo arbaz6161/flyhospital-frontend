@@ -2,108 +2,111 @@
     <section class="popular-hotels-section">
         <div class="container">
             <div class="section-header">
-                <h2>Explore Nearby Hotels</h2>
+                <h2>Explore Nearby Restaurants</h2>
                 <p>
-                    Explore nearby hotels that offer comfort and convenience during
-                    your stay. Enjoy a restful retreat just minutes away from our
-                    premier medical facilities.
+                    Discover the best dining spots just around the corner. Savor local
+                    flavors and unique cuisines that await you!
                 </p>
             </div>
 
             <div class="slider-container">
-                <button class="slider-arrow prev-arrow">
-                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Prev Button -->
+                <button class="slider-arrow prev-arrow" @click="prevSlide">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
                         <path d="M18.75 23.75L10 15L18.75 6.25" stroke="#003D6F" stroke-width="3" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
                 </button>
 
+                <!-- Dynamic Restaurant Cards -->
                 <div class="slider-grid">
-                    <!-- Hotel Card 1 -->
-                    <div class="hotel-card">
-                        <img src="https://images.pexels.com/photos/2611028/pexels-photo-2611028.jpeg?auto=compress&cs=tinysrgb&w=800"
-                            alt="The Ritz-Carlton Toronto" />
+                    <div v-for="(restaurant, index) in visibleRestaurants" :key="index" class="hotel-card">
+                        <img :src="restaurant.image" :alt="restaurant.name" />
                         <div class="card-content">
                             <h3>
-                                The Ritz-Carlton...
-                                <span class="rating">4.8<span class="star">★</span></span>
+                                {{ useTruncateText(restaurant?.name || "", 20) }}
+                                <span class="rating">
+                                    {{ restaurant.rating }}
+                                    <span class="star">★</span>
+                                </span>
                             </h3>
                             <p class="location">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 
+                       13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 
+                       9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 
+                       2.5-2.5 2.5 1.12 2.5 2.5-1.12 
+                       2.5-2.5 2.5z" />
                                 </svg>
-                                Toronto, Canada
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Hotel Card 2 -->
-                    <div class="hotel-card">
-                        <img src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=800"
-                            alt="Hotel Indigo Baltimore" />
-                        <div class="card-content">
-                            <h3>
-                                Hotel Indigo...
-                                <span class="rating">4.5<span class="star">★</span></span>
-                            </h3>
-                            <p class="location">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                </svg>
-                                Maryland, USA
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Hotel Card 3 -->
-                    <div class="hotel-card">
-                        <img src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800"
-                            alt="Hilton Cleveland Downtown" />
-                        <div class="card-content">
-                            <h3>
-                                Hilton Cleveland...
-                                <span class="rating">4.6<span class="star">★</span></span>
-                            </h3>
-                            <p class="location">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                </svg>
-                                Ohio, USA
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Hotel Card 4 -->
-                    <div class="hotel-card">
-                        <img src="https://images.pexels.com/photos/1617636/pexels-photo-1617636.jpeg?auto=compress&cs=tinysrgb&w=800"
-                            alt="Four Seasons Boston" />
-                        <div class="card-content">
-                            <h3>
-                                Four Seasons Bos...
-                                <span class="rating">4.9<span class="star">★</span></span>
-                            </h3>
-                            <p class="location">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                </svg>
-                                Massachusetts, USA
+                                {{ restaurant.location }}
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <button class="slider-arrow next-arrow">
-                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Next Button -->
+                <button class="slider-arrow next-arrow" @click="nextSlide">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
                         <path d="M11.25 23.75L20 15L11.25 6.25" stroke="#003D6F" stroke-width="3" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
                 </button>
             </div>
-            <a href="#" class="view-all-btn">View all Hotels</a>
+
+            <a href="#" class="view-all-btn">View all restaurants</a>
         </div>
     </section>
 </template>
+
+<script setup>
+import { ref, computed } from "vue"
+
+const restaurants = ref([
+    {
+        name: "Alo Restaurant",
+        rating: 4.7,
+        location: "Toronto, Canada",
+        image: "https://alofoodgroup.com/wp-content/uploads/2025/07/10yearsofalo.png",
+    },
+    {
+        name: "Tiflisi, Toronto",
+        rating: 4.6,
+        location: "Toronto, Canada",
+        image: "https://globaltorontoeats.com/wp-content/uploads/2022/05/PXL_20210530_200908941-1024x768.jpg",
+    },
+    {
+        name: "Conejo Negro",
+        rating: 4.8,
+        location: "Toronto, Canada",
+        image: "https://torontolife.mblycdn.com/tl/resized/2024/05/w1280/14_conejo_FINAL02.jpg",
+    },
+    {
+        name: "Estiatorio Milos Toronto",
+        rating: 4.9,
+        location: "Toronto, Canada",
+        image: "https://torontolife.mblycdn.com/uploads/tl/2024/09/toronto-restaurants-milos-greek-financial-district-exterior.jpg",
+    },
+])
+
+const currentIndex = ref(0)
+const itemsPerPage = 5
+
+const visibleRestaurants = computed(() => {
+    return restaurants.value.slice(
+        currentIndex.value,
+        currentIndex.value + itemsPerPage
+    )
+})
+
+function nextSlide() {
+    if (currentIndex.value + itemsPerPage < restaurants.value.length) {
+        currentIndex.value++
+    }
+}
+
+function prevSlide() {
+    if (currentIndex.value > 0) {
+        currentIndex.value--
+    }
+}
+</script>

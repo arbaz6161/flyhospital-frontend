@@ -4,19 +4,24 @@ import { defineStore } from 'pinia'
 export const useHospitalStore = defineStore('hospital', {
     state: () => ({
         hospitals: [] as any[],
-        pagination: {
-            current_page: 1,
-            per_page: 5,
-            total: 0,
-            last_page: 1,
-        },
+        totalHospitals: 0,
+        countries: [] as any[],
+        cities: [] as any[],
+        search: '' as string,
+        country_id: '' as string | number,
+        city_id: '' as string | number,
     }),
 
     actions: {
-        async index(page = 1, append = false) {
+        async index() {
+            const query = new URLSearchParams()
+
+            if (this.search) query.append('search', this.search)
+            if (this.country_id) query.append('country_id', String(this.country_id))
+            if (this.city_id) query.append('city_id', String(this.city_id))
 
             const { data, error } = await useFetch(
-                `http://flyhospital.test/api/hospitals?page=${page}&per_page=${this.pagination.per_page}`
+                `http://flyhospital.test/api/hospitals?${query.toString()}`
             )
 
             if (error.value) {
@@ -25,24 +30,37 @@ export const useHospitalStore = defineStore('hospital', {
             }
 
             if (data.value) {
-                // Append or Replace depending on load type
-                this.hospitals = append
-                    ? [...this.hospitals, ...data.value.data]
-                    : data.value.data
-
-                this.pagination = {
-                    current_page: data.value.current_page,
-                    per_page: data.value.per_page,
-                    total: data.value.total,
-                    last_page: data.value.last_page,
-                }
+                this.hospitals = data.value.data ?? data.value
+                this.totalHospitals = data.value.total_hospitals ?? 0
             }
         },
 
-        async loadMore() {
-            if (this.pagination.current_page < this.pagination.last_page) {
-                await this.index(this.pagination.current_page + 1, true)
+        // Load countries
+        async loadCountries() {
+            const { data, error } = await useFetch(
+                'http://flyhospital.test/api/countries'
+            )
+
+            if (error.value) {
+                console.error('❌ API Error:', error.value)
+                return
+            }
+
+            if (data.value) {
+                this.countries = data.value.data ?? data.value
             }
         },
+
+        // Load cities by countries
+        async loadCities(countryId: string | number) {
+            if (!countryId) {
+                this.cities = []
+                return
+            }
+
+            const { data, error } = await useFetch(`http://flyhospital.test/api/countries/${countryId}/cities`)
+            if (error.value) return console.error(error.value)
+            this.cities = data.value.data ?? data.value
+        }
     },
 })
