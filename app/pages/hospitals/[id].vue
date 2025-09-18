@@ -2,8 +2,8 @@
     <main class="container mt-4">
         <!-- Breadcrumb -->
         <Breadcrumb :items="[
-            { label: 'Treatment abroad', link: '/' },
-            { label: 'All specialities', link: '/hospitals' },
+            { label: 'Home', link: '/' },
+            { label: 'Hospitals', link: '/hospitals' },
             { label: title, active: true }
         ]" />
 
@@ -498,10 +498,10 @@
             </div>
 
             <!--=============== POPULAR RESTAURENTS SECTION ===============-->
-            <RestaurentSection id="hotels" />
+            <RestaurentSection id="restaurants" />
 
             <!--=============== POPULAR HOTELS SECTION ===============-->
-            <HotelSection id="restaurants" />
+            <HotelSection id="hotels" />
         </div>
     </main>
 </template>
