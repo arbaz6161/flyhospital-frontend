@@ -6,8 +6,8 @@
                     <NuxtLink :to="item.link">
                         {{ item.label }}
                     </NuxtLink>
-                    <span class="mx-1">
-                        <Icon name="material-symbols:chevron-right"></Icon>
+                    <span style="font-size: 21px !important; color: rgba(0, 61, 111, 0.6);">
+                        <Icon name="material-symbols:chevron-right"  class="text-[#6c8da8]" ></Icon>
                     </span>
                 </template>
                 <template v-else>

@@ -8,7 +8,7 @@
                 <span class="rating">{{ Number(hospital.average_rating).toFixed(1) }}<span class="star">★</span></span>
             </h3>
             <p class="location">
-                <Icon name="material-symbols:location-on"></Icon>
+                <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                 {{ shortAddress }}
             </p>
         </div>

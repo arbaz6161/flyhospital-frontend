@@ -14,7 +14,7 @@
                     <ul class="navbar-nav mx-auto align-items-center">
                         <li class="nav-item dropdown nav-item dropdown relative">
                             <Dropdown>
-                                <DropdownToggle class="dropdown-toggle d-flex align-items-center">
+                                <DropdownToggle class="dropdown-toggle d-flex align-items-center nav-link">
                                     Locations
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
@@ -30,7 +30,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <Dropdown>
-                                <DropdownToggle class="dropdown-toggle d-flex align-items-center">
+                                <DropdownToggle class="dropdown-toggle d-flex align-items-center nav-link">
                                     Treatments
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>

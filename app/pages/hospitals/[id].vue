@@ -1,4 +1,4 @@
-<template>
+ <template>
     <main class="container mt-4">
         <!-- Breadcrumb -->
         <Breadcrumb :items="[
@@ -50,7 +50,7 @@
                 <!-- Title & Basic Info -->
                 <div class="mb-4 section-base">
                     <div class="hospital-location-section">
-                        <Icon name="material-symbols:location-on" />
+                        <Icon name="material-symbols:location-on-outline" style="color:#053862;" />
                         <p class="text-muted ms-0 ps-2">{{ hospital.address }}</p>
                     </div>
                     <div class="hospital-title-section">
@@ -108,25 +108,25 @@
                     </div>
 
                     <!-- Row 2: Contact Info -->
-                    <div class="row w-100">
+                    <div class="row w-100"> 
                         <div class="col-12">
                             <ul class="hospital-contact-info list-unstyled mb-0 d-flex flex-wrap gap-4">
                                 <li>
                                     <NuxtLink :to="`tel:${hospital.phone}`">
-                                        <Icon name="mdi:telephone" />
+                                        <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                                         <span class="text-dark cursor-pointer">{{ hospital.phone }}</span>
                                     </NuxtLink>
                                 </li>
                                 <li>
                                     <NuxtLink
                                         :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`">
-                                        <Icon name="mdi:google-maps" />
+                                        <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                                         <span class="text-dark cursor-pointer">{{ hospital.address }}</span>
                                     </NuxtLink>
                                 </li>
                                 <li>
                                     <NuxtLink :to="`/${hospital.url}`" target="_blank">
-                                        <Icon name="mdi:web" />
+                                        <Icon name="streamline-plump:web-remix" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                                         <span class="text-dark cursor-pointer">flyhospitals.info</span>
                                     </NuxtLink>
                                 </li>
@@ -332,14 +332,14 @@
                 <div id="medical-staff" class="mb-5 pb-5 section-base">
                     <h3 class="section-title">Medical Staff</h3>
                     <div class="accordion" id="staffAccordion">
-                        <div class="accordion-item">
+                        <div class="accordion-item mb-0" >
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapsePeriodontist">
                                     Periodontist
                                 </button>
                             </h2>
-                            <div id="collapsePeriodontist" class="accordion-collapse collapse show"
+                            <!-- <div id="collapsePeriodontist" class="accordion-collapse collapse show"
                                 data-bs-parent="#staffAccordion">
                                 <div class="accordion-body">
                                     <div class="staff-member">
@@ -361,19 +361,19 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <br />
-                    <div class="accordion" id="staffAccordions">
+                    <div class="accordion" id="CardiologyAccordions">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapsePeriodontists">
-                                    Periodontist
+                                   Cardiology
                                 </button>
                             </h2>
-                            <div id="collapsePeriodontists" class="accordion-collapse collapse"
+                            <!-- <div id="collapsePeriodontists" class="accordion-collapse collapse"
                                 data-bs-parent="#staffAccordions">
                                 <div class="accordion-body">
                                     <div class="staff-member">
@@ -395,7 +395,73 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="accordion" id="DermatologyAccordions">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapsePeriodontists">
+                                    Dermatology
+                                </button>
+                            </h2>
+                            <!-- <div id="collapsePeriodontists" class="accordion-collapse collapse"
+                                data-bs-parent="#staffAccordions">
+                                <div class="accordion-body">
+                                    <div class="staff-member">
+                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter" />
+                                        <div class="staff-info">
+                                            <h6>Dr. Emily Carter</h6>
+                                            <p>Periodontist, Implantologist, Endodontist...</p>
+                                            <p>Experience: 10 years</p>
+                                        </div>
+                                    </div>
+                                    <div class="staff-member">
+                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson" />
+                                        <div class="staff-info">
+                                            <h6>Dr. James Anderson</h6>
+                                            <p>
+                                                Pediatric Dentist, Prosthodontist, Cosmetic Dentist...
+                                            </p>
+                                            <p>Experience: 8 years</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="accordion" id="PediatricsAccordions">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapsePeriodontists">
+                                    Pediatrics
+                                </button>
+                            </h2>
+                            <!-- <div id="collapsePeriodontists" class="accordion-collapse collapse"
+                                data-bs-parent="#staffAccordions">
+                                <div class="accordion-body">
+                                    <div class="staff-member">
+                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter" />
+                                        <div class="staff-info">
+                                            <h6>Dr. Emily Carter</h6>
+                                            <p>Periodontist, Implantologist, Endodontist...</p>
+                                            <p>Experience: 10 years</p>
+                                        </div>
+                                    </div>
+                                    <div class="staff-member">
+                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson" />
+                                        <div class="staff-info">
+                                            <h6>Dr. James Anderson</h6>
+                                            <p>
+                                                Pediatric Dentist, Prosthodontist, Cosmetic Dentist...
+                                            </p>
+                                            <p>Experience: 8 years</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -408,12 +474,12 @@
                             <svg class="circular-progress" viewBox="0 0 36 36">
                                 <!-- Background circle -->
                                 <path class="circle-bg" d="M18 2.0845
-           a 15.9155 15.9155 0 0 1 0 31.831
-           a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#053862" stroke-width="2" />
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#053862" stroke-width="2" />
                                 <!-- Progress circle -->
                                 <path class="circle" :stroke-dasharray="percentage + ', 100'" d="M18 2.0845
-           a 15.9155 15.9155 0 0 1 0 31.831
-           a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#053862" stroke-width="3" />
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#053862" stroke-width="3" />
                                 <!-- Center text -->
                                 <text x="18" y="20.35" class="percentage-text" text-anchor="middle">
                                     {{ Number(hospital.average_rating).toFixed(1) }}
@@ -473,23 +539,23 @@
                         </div>
                     </div>
                     <div class="hospital-location-section">
-                        <Icon name="material-symbols:location-on" />
+                        <Icon name="material-symbols:location-on-outline" style="color:#053862;" />
                         <p class="text-muted ms-0 ps-2">{{ shortAddress }}</p>
                     </div>
                     <!-- Info Buttons -->
-                    <div class="info-buttons d-flex gap-2 flex-wrap">
+                    <div class="info-buttons d-flex gap-2 flex-wrap" style="margin-top: 10px;">
                         <NuxtLink :to="`tel:${hospital.phone}`" class="btn btn-sm btn-light">
-                            <Icon name="mdi:telephone" />
+                            <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                             Call
                         </NuxtLink>
                         <NuxtLink
                             :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`"
                             class="btn btn-sm btn-light">
-                            <Icon name="mdi:google-maps" />
+                            <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                             Google Map
                         </NuxtLink>
                         <NuxtLink :to="`/${hospital.url}`" class="btn btn-sm btn-light">
-                            <Icon name="mdi:web" />
+                            <Icon name="streamline-plump:web-remix" style="color:#053862; margin-right:5px; font-size: 18px;"/>
                             Website
                         </NuxtLink>
                     </div>
@@ -596,7 +662,7 @@ const getIcon = (slug: string): string => {
 
 .percentage-text {
     font-size: 0.5em;
-    fill: #333;
+    fill: #333; 
     dominant-baseline: middle;
 }
 
@@ -604,7 +670,7 @@ const getIcon = (slug: string): string => {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 5px;
+    margin-bottom: 21px;
 }
 
 .progress {
