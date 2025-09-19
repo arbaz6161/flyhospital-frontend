@@ -16,7 +16,8 @@
 
                 <!-- Location -->
                 <p class="card-text location mb-2">
-                    <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                    <Icon name="material-symbols:location-on-outline"
+                        style="color:#053862; margin-right:5px; font-size: 18px;" />
                     {{ shortAddress }}
                 </p>
 
@@ -31,17 +32,19 @@
                 <!-- Info Buttons -->
                 <div class="info-buttons d-flex gap-2 flex-wrap">
                     <NuxtLink :to="`tel:${hospital.phone}`" class="btn btn-sm btn-light">
-                       <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                        <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Call
                     </NuxtLink>
                     <NuxtLink
                         :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`"
                         class="btn btn-sm btn-light">
-                          <Icon name="material-symbols:location-on-outline" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                        <Icon name="material-symbols:location-on-outline"
+                            style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Google Map
                     </NuxtLink>
                     <NuxtLink :to="`/${hospital.url}`" class="btn btn-sm btn-light">
-                        <Icon name="streamline-plump:web-remix" style="color:#053862; margin-right:5px; font-size: 18px;"/>
+                        <Icon name="streamline-plump:web-remix"
+                            style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Website
                     </NuxtLink>
                 </div>
@@ -80,8 +83,7 @@
                 </div>
 
                 <!-- Details Button pinned to bottom -->
-                <NuxtLink :to="`/hospitals/${hospital.id}`" @click.native="store.setSelectedHospital(hospital)"
-                    class="btn btn-primary w-100 mt-auto">
+                <NuxtLink :to="`/hospitals/${hospital.id}`" class="btn btn-primary w-100 mt-auto">
                     View Hospital Details
                 </NuxtLink>
             </div>

@@ -39,16 +39,19 @@
 }
 
 /* Breadcrumbs */
-.breadcrumb-item + .breadcrumb-item::before {
-  content: none !important;
+.breadcrumb-item+.breadcrumb-item::before {
+    content: none !important;
 }
+
 .breadcrumb {
     display: flex;
 }
+
 .breadcrumb li {
     display: flex;
     padding-left: 0;
 }
+
 .breadcrumb-item a {
     font-family: Inter Tight;
     font-weight: 400;
@@ -226,9 +229,11 @@
     letter-spacing: 0px;
     margin-bottom: 0.5rem;
 }
-.hospital-contact-info a{
+
+.hospital-contact-info a {
     text-decoration: none !important;
 }
+
 .hospital-contact-info i {
     color: #0d6efd;
     margin-right: 0.75rem;

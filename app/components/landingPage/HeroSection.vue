@@ -10,16 +10,21 @@
                     <h3>Start Your Medical Search</h3>
                     <div class="search-bar">
                         <input type="text" placeholder="Search hospitals, treatments or countries...">
-                        <a href="/listing">Search</a>
+                        <a href="#">Search</a>
                     </div>
                     <div class="filters">
-                        <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#priceRangeModal">$ Filter
-                            by
-                            Price</button>
-                        <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#treatment">⚕️ Filter by
-                            Treatment</button>
-                        <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#destination">🗺️
-                            Destination-Based Discovery</button>
+                        <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#priceRangeModal">
+                            <Icon name="mdi:dollar" />
+                            Filter by Price
+                        </button>
+                        <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#treatment">
+                            <Icon name="streamline-pixel:interface-essential-setting-slide" />
+                            Filter by Treatment
+                        </button>
+                        <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#destination">
+                            <Icon name="uiw:map" />
+                            Destination-Based Discovery
+                        </button>
                     </div>
                 </div>
             </div>

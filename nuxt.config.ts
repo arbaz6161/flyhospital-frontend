@@ -7,9 +7,13 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     'nuxt-link-checker',
     '@nuxt/icon',
-    'nuxt-swiper',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@nuxt/ui',
+    '@nuxtjs/color-mode'
   ],
+  ui: {
+    colorMode: false
+  },
   eslint: {
     config: {
       stylistic: {
@@ -29,6 +33,24 @@ export default defineNuxtConfig({
     '~/assets/css/footer.css',
     '~/assets/css/details.css',
     '~/assets/css/contact.css',
-    '~/assets/css/about.css'
-  ]
+    '~/assets/css/about.css',
+    '~/assets/css/main.css'
+  ],
+  site: {
+    url: 'frontend.flyhospitals.dev'
+  },
+  nitro: {
+    prerender: {
+      failOnError: false, // don’t crash if some routes fail
+      routes: [
+        '/' // add any known dynamic routes if needed
+      ]
+    }
+  },
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 1600
+    }
+  },
+  ssr: false,
 })

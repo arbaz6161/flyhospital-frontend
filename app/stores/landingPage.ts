@@ -7,7 +7,7 @@ export const useLandingPageStore = defineStore('landingPage', {
     }),
     actions: {
         async index() {
-            const { data, error } = await useFetch('http://flyhospital.test/api/')
+            const { data, error } = await useFetch('https://flyhospitals.dev/api/landing-page')
 
             console.log(data);
 

@@ -25,33 +25,27 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <select class="form-select" v-model="store.country_id">
-                        <option value="">Select a country</option>
-                        <option v-for="country in store.countries" :key="country.id" :value="country.id">
-                            {{ country.country_name }}
-                        </option>
-                    </select>
+                    <USelectMenu v-model="selectedCountry" :items="countryOptions" placeholder="Select a country"
+                        class="w-full rounded h-12 " />
                 </div>
+
                 <div class="col-lg-3">
-                    <select class="form-select" v-model="store.city_id">
-                        <option value="">Select city</option>
-                        <option v-for="city in store.cities" :key="city.id" :value="city.id">
-                            {{ city.name }}
-                        </option>
-                    </select>
+                    <USelectMenu v-model="selectedCity" :items="cityOptions" placeholder="Select city"
+                        class="w-full rounded h-12" />
                 </div>
+
                 <div class="col-lg-2">
-                    <button class="search-btn-icon">
-                        <Icon name="bi:search" class="text-[#ffffff] w-5 h-5"/>Search
+                    <button @click="store.index()" class="search-btn-icon">
+                        <Icon name="bi:search" class="text-[#ffffff] w-5 h-5" />Search
                     </button>
                 </div>
             </div>
-            <div class="mt-3">
+            <!-- <div class="mt-3">
                 <NuxtLink to="/advanced-search" class="advanced-search-link d-inline-flex align-items-center">
-                   <Icon name="bi:sliders" class="text-[#053862] w-5 h-5" style="margin-right: 5px;"/>
+                    <Icon name="bi:sliders" class="text-[#053862] w-5 h-5" style="margin-right: 5px;" />
                     Advanced Search
                 </NuxtLink>
-            </div>
+            </div> -->
         </div>
 
         <!-- Hospital Listings -->
@@ -90,10 +84,31 @@ const store = useHospitalStore()
 await store.loadCountries()
 await store.index()
 
-watch(() => store.country_id, (newCountryId) => {
-    console.log(newCountryId)
-    store.city_id = ''  // reset city selection
-    store.loadCities(newCountryId)
+const countryOptions = computed(() =>
+    store.countries.map(country => ({ label: country.country_name, value: country.id }))
+)
+
+const cityOptions = computed(() =>
+    store.cities.map(city => ({ label: city.name, value: city.id }))
+)
+
+const selectedCountry = ref<{ label: string; value: any } | null>(
+    countryOptions.value.find(c => c.value === store.country_id) || null
+)
+
+const selectedCity = ref<{ label: string; value: any } | null>(
+    cityOptions.value.find(c => c.value === store.city_id) || null
+)
+
+// Watch country changes
+watch(selectedCountry, (newVal) => {
+    store.country_id = newVal?.value || ''
+    store.city_id = ''
+    if (newVal?.value) store.loadCities(newVal.value)
 })
 
+// Watch city changes
+watch(selectedCity, (newVal) => {
+    store.city_id = newVal?.value || ''
+})
 </script>

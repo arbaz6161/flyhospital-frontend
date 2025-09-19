@@ -22,7 +22,7 @@
 
 /* Input group (search input with icon) */
 .input-group{
-    border: 1px solid rgba(212, 212, 212, 1) !important;
+    border: 1px solid rgb(209, 213, 219) !important;
     border-radius: 6px;
 }
 .input-group span{
