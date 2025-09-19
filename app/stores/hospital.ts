@@ -21,7 +21,7 @@ export const useHospitalStore = defineStore('hospital', {
             if (this.city_id) query.append('city_id', String(this.city_id))
 
             const { data, error } = await useFetch(
-                `http://flyhospital.test/api/hospitals?${query.toString()}`
+                `https://flyhospitals.dev/api/hospitals?${query.toString()}`
             )
 
             if (error.value) {
@@ -38,7 +38,7 @@ export const useHospitalStore = defineStore('hospital', {
         // Load countries
         async loadCountries() {
             const { data, error } = await useFetch(
-                'http://flyhospital.test/api/countries'
+                'https://flyhospitals.dev/api/countries'
             )
 
             if (error.value) {
@@ -58,7 +58,7 @@ export const useHospitalStore = defineStore('hospital', {
                 return
             }
 
-            const { data, error } = await useFetch(`http://flyhospital.test/api/countries/${countryId}/cities`)
+            const { data, error } = await useFetch(`https://flyhospitals.dev/api/countries/${countryId}/cities`)
             if (error.value) return console.error(error.value)
             this.cities = data.value.data ?? data.value
         }
