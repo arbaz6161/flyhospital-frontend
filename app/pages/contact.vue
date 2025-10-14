@@ -55,7 +55,7 @@
           <input type="hidden" name="tour[pricing][phone_dial_code]" data-flag-input-dial-code value="971">
           <input type="hidden" name="tour[pricing][phone_country_code]" data-flag-input-country-code value="ae">
           <input v-model="form.phone" class="form-control field flag-input" type="text"
-                 name="tour[pricing][phone_number]" data-flag-input value=""
+                 name="tour[pricing][phone_number]" data-flag-input 
                  placeholder="Phone" data-error="phone" inputmode="numeric" pattern="[0-9]*"
                  oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="15">
         </div>
