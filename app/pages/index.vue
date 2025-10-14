@@ -129,13 +129,14 @@
 </template>
 
 <script setup lang="ts">
+import {  useAsyncData  } from "#imports";
 import AboutSection from '~/components/landingPage/AboutSection.vue';
 import HeroSection from '~/components/landingPage/HeroSection.vue';
 import HowItWorks from '~/components/landingPage/HowItWorks.vue';
 import TreatmentServices from '~/components/landingPage/TreatmentServices.vue';
-import { useLandingPageStore } from '~/stores/landingPage'
+import { useLandingPageStore } from '@/stores/landingPage';
 
 const store = useLandingPageStore()
 
-await useAsyncData('landingPage', () => store.index())
+const { data } = await useAsyncData('landingPage', () => store.index())
 </script>

@@ -8,26 +8,21 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
-    "@nuxt/icon": "^2.0.0",
-    "@nuxt/ui": "^3.3.4",
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxt/image": "^1.11.0",
+    "@nuxt/ui": "^4.0.1",
     "@nuxtjs/color-mode": "^3.5.2",
     "@pinia/nuxt": "^0.11.2",
     "nuxt": "^4.1.2",
-    "nuxt-link-checker": "^4.3.1",
-    "nuxt-swiper": "^2.0.1",
-    "pinia": "^3.0.3",
+    "nuxt-link-checker": "^4.3.5",
     "usebootstrap": "^3.5.107",
-    "vue": "^3.5.21",
+    "vue": "^3.5.22",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.9.0",
-    "@nuxt/kit": "^4.1.1",
-    "eslint": "^9.35.0",
-    "typescript": "^5.9.2"
+    "@iconify-json/carbon": "^1.2.14"
   }
 }

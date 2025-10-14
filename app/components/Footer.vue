@@ -45,7 +45,7 @@
                     <div class="link-column">
                         <h4>Support</h4>
                         <ul>
-                            <li><NuxtLink to="#">Contact Us</NuxtLink></li>
+                            <li><NuxtLink to="/contact">Contact Us</NuxtLink></li>
                             <li><NuxtLink to="#">FAQs</NuxtLink></li>
                             <li><NuxtLink to="#">Help Center</NuxtLink></li>
                             <li><NuxtLink to="#">Partner With Us</NuxtLink></li>
@@ -83,3 +83,4 @@
         </div>
     </footer>
 </template>
+<script setup></script>
