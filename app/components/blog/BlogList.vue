@@ -1,60 +1,51 @@
 <template>
-    <section class=" blogs-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Blogs</h2>
-                <p>Explore our top-rated treatments in neurology, plastic surgery, dentistry, and oncology,
-                    delivered
-                    with precision for the best outcomes.</p>
-            </div>
+  <section class="blogs-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Blogs</h2>
+        <p>
+          Explore our top-rated treatments in neurology, plastic surgery,
+          dentistry, and oncology, delivered with precision for the best outcomes.
+        </p>
+      </div>
 
-            <div class="blogs-grid">
-                <!-- Blog Card 1 -->
-                <div class="blog-card">
-                    <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        alt="Medical stethoscope and equipment">
-                    <div class="blog-content">
-                        <h3>Utilize Our Medical Templates!</h3>
-                        <p>Lets embody your beautiful ideas together, simplify the way you visualize your next big
-                            things.</p>
-                        <a href="#">Read More</a>
-                    </div>
-                </div>
-                <!-- Blog Card 2 -->
-                <div class="blog-card">
-                    <img src="https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        alt="Scientist looking through a microscope">
-                    <div class="blog-content">
-                        <h3>Discover Our Medical Templates!</h3>
-                        <p>Lets embody your beautiful ideas together, simplify the way you visualize your next big
-                            things.</p>
-                        <a href="#">Read More</a>
-                    </div>
-                </div>
-                <!-- Blog Card 3 -->
-                <div class="blog-card">
-                    <img src="https://images.pexels.com/photos/4031818/pexels-photo-4031818.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        alt="Person taking a pill with a glass of water">
-                    <div class="blog-content">
-                        <h3>Check Out Our Medical Design Resources!</h3>
-                        <p>Unlock creativity with our curated assets, and transform your vision into stunning
-                            realities.
-                        </p>
-                        <a href="#">Read More</a>
-                    </div>
-                </div>
-                <!-- Blog Card 4 -->
-                <div class="blog-card">
-                    <img src="https://images.pexels.com/photos/3985163/pexels-photo-3985163.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        alt="Patient in a dental chair">
-                    <div class="blog-content">
-                        <h3>Become Part of Our Medical Community!</h3>
-                        <p>Connect with fellow innovators, share insights, and execute your design journey together.
-                        </p>
-                        <a href="#">Read More</a>
-                    </div>
-                </div>
-            </div>
+      <div v-if="loading">Loading blogs...</div>
+      <div v-else-if="error">{{ error }}</div>
+
+      <div v-else class="blogs-grid">
+        <div v-for="blog in blogs" :key="blog.id" class="blog-card">
+           <img :src="config.public.ImageUrl + blog.image_url" :alt="blog.title" />
+          <div class="blog-content">
+            <h3>{{ blog.title }}</h3>
+            <p class="truncate-lines">{{ blog.content }}</p>
+            <!-- <NuxtLink :to="`/blogs/${blog.slug}`">Read More</NuxtLink> -->
+            <NuxtLink >Read More</NuxtLink>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGeneralStore } from '~/stores/general'
+
+const store = useGeneralStore()
+ const config = useRuntimeConfig()
+// ✅ SSR-friendly call
+await useAsyncData('blogs', () => store.fetchBlogs())
+
+const blogs = computed(() => store.blogs.slice(0, 4))
+const loading = computed(() => store.loading)
+const error = computed(() => store.error)
+</script>
+<style>
+.truncate-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;   /* max lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

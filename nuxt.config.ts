@@ -80,6 +80,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: 'http://flyhospital.test/api',
+      ImageUrl: 'http://flyhospital.test/',
       webUrl: 'http://localhost:3000',
     },
   },
