@@ -8,7 +8,18 @@ export interface Blog {
   tags?: string
   created_at?: string
   updated_at?: string
-  slug?: string // if backend adds slug
+  slug?: string
+}
+
+export interface Treatments {
+  id: number
+  name: string
+  description: string
+  image_url: string
+  price?: string
+  created_at?: string
+  updated_at?: string
+  slug?: string // Added slug for potential dynamic routing
 }
 
 interface PaginatedResponse<T> {
@@ -27,6 +38,8 @@ interface ApiResponse<T> {
 
 interface GeneralState {
   blogs: Blog[]
+  treatments: Treatments[]
+  destinations: []
   loading: boolean
   error: string | null
   pagination: {
@@ -39,6 +52,8 @@ interface GeneralState {
 export const useGeneralStore = defineStore('general', {
   state: (): GeneralState => ({
     blogs: [],
+    treatments: [],
+    destinations: [],
     loading: false,
     error: null,
     pagination: {
@@ -57,10 +72,10 @@ export const useGeneralStore = defineStore('general', {
         const config = useRuntimeConfig()
         const api = `${config.public.baseUrl}/blogs?page=${page}`
 
-        // ✅ Match API structure
         const res = await $fetch<ApiResponse<Blog>>(api)
 
         this.blogs = res.data.data
+        this.loading =false;
         this.pagination = {
           current_page: res.data.current_page,
           last_page: res.data.last_page,
@@ -72,5 +87,40 @@ export const useGeneralStore = defineStore('general', {
         this.loading = false
       }
     },
+
+    async fetchTreatments(): Promise<void> {
+    try {
+      this.loading = true
+      this.error = null
+
+      const config = useRuntimeConfig()
+      const api = `${config.public.baseUrl}/treatments`
+
+      const res = await $fetch<{ status: boolean; data: Treatments[] }>(api)
+
+      this.treatments = res.data   // ✅ directly assign array
+    } catch (err: any) {
+      this.error = err?.message ?? 'Failed to fetch treatments'
+    } finally {
+      this.loading = false
+    }
+  },
+      async fetchMedicalDestination(): Promise<void> {
+      try {
+        this.loading = true
+        this.error = null
+
+        const config = useRuntimeConfig()
+        const api = `${config.public.baseUrl}/destinations`
+
+        const res = await $fetch(api)
+
+        this.destinations = res.data  // ✅ directly assign array
+      } catch (err: any) {
+        this.error = err?.message ?? 'Failed to fetch destinations'
+      } finally {
+        this.loading = false
+      }
+    }
   },
 })

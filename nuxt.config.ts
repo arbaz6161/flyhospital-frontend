@@ -14,37 +14,39 @@ export default defineNuxtConfig({
           href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
          
         },
-      //   // ✅ Google Fonts: Montserrat
-      //   {
-      //     rel: "stylesheet",
-      //     href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap",
-      //   },
+
         {
           rel: "stylesheet",
           href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css",
         },
       //   // ✅ Google Fonts: Moulpali (loaded with print -> all trick)
-      //   {
-      //     rel: "stylesheet",
-      //     href: "https://fonts.googleapis.com/css?family=Moulpali&display=swap",
-      //     media: "print",
-      //     onload: "this.media='all'",
-      //   },
+        {
+          rel: "preconnect",
+          href: "https://fonts.googleapis.com",
+        },
+        {
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+        },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap",
+        },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap",
+        },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap",
+        },
       //   // ✅ Font Awesome
-      //   {
-      //     rel: "stylesheet",
-      //     href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css",
-      //   },
-      // ],
-      //    script: [
-      //   // ✅ Bootstrap JS Bundle (with Popper)
-      //   {
-      //     src: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js",
-      //     integrity: "sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL",
-      //     crossorigin: "anonymous",
-      //     defer: true,
-      //   },
+        // {
+        //   rel: "stylesheet",
+        //   href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css",
+        // },
       ],
+    
     },
   },
 
@@ -72,7 +74,14 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/color-mode'
   ],
-
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 'tab',
+        semi: true,
+      }
+    }
+  },
   compatibilityDate: '2025-07-15',
 
   devtools: { enabled: true },

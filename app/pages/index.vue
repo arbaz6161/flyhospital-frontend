@@ -134,7 +134,7 @@ import AboutSection from '~/components/landingPage/AboutSection.vue';
 import HeroSection from '~/components/landingPage/HeroSection.vue';
 import HowItWorks from '~/components/landingPage/HowItWorks.vue';
 import TreatmentServices from '~/components/landingPage/TreatmentServices.vue';
-import { useLandingPageStore } from '@/stores/landingPage';
+import { useLandingPageStore } from '~/stores/landingPage';
 
 const store = useLandingPageStore()
 

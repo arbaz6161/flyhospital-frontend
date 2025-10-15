@@ -10,7 +10,7 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class=" navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto align-items-center">
                         <li class="nav-item dropdown nav-item dropdown relative">
                             <Dropdown>
@@ -19,12 +19,12 @@
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem to="/">
+                                    <DropdownItem to="#">
                                         New York
                                     </DropdownItem>
-                                    <DropdownItem to="/">Los Angeles</DropdownItem>
-                                    <DropdownItem to="/">Chicago</DropdownItem>
-                                    <DropdownItem to="/">Houston</DropdownItem>
+                                    <DropdownItem to="#">Los Angeles</DropdownItem>
+                                    <DropdownItem to="#">Chicago</DropdownItem>
+                                    <DropdownItem to="#">Houston</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                         </li>
@@ -35,10 +35,10 @@
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem to="/">Dental Care</DropdownItem>
-                                    <DropdownItem to="/">Cosmetic Surgery</DropdownItem>
-                                    <DropdownItem to="/">Physiotherapy</DropdownItem>
-                                    <DropdownItem to="/">Cardiology</DropdownItem>
+                                    <DropdownItem to="#">Dental Care</DropdownItem>
+                                    <DropdownItem to="#">Cosmetic Surgery</DropdownItem>
+                                    <DropdownItem to="#">Physiotherapy</DropdownItem>
+                                    <DropdownItem to="#">Cardiology</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                         </li>

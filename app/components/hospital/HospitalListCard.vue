@@ -3,7 +3,7 @@
         <div class="row g-0">
             <!-- Image -->
             <div class="col-md-3 p-3">
-                <img :src="hospital.image_urls[0]" :alt="title" class="img-fluid img-fit rounded" />
+                <img :src="config.public.ImageUrl + hospital.image_urls[0]" :alt="title" class="img-fluid img-fit rounded" />
             </div>
 
             <!-- Main Content -->
@@ -103,7 +103,7 @@ const props = defineProps({
 })
 
 const store = useLandingPageStore()
-
+ const config = useRuntimeConfig()
 const showMore = ref(false)
 
 // Helpers

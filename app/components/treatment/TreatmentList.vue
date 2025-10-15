@@ -2,8 +2,8 @@
     <section class="explore-treatment-section">
         <div class="container">
             <div class="section-header">
-                <h2>Explore Treatment Type</h2>
-                <p>Explore popular treatments and specialities across top hospitals. Find the right care tailored to
+                <h2>Explore Procedure Type</h2>
+                <p>Explore popular procedure and specialities across top hospitals. Find the right care tailored to
                     your medical needs.</p>
             </div>
 

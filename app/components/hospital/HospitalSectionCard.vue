@@ -1,6 +1,6 @@
 <template>
     <div class="hospital-card">
-        <img :src="hospital.image_urls[0]" :alt="title">
+        <img :src="config.public.ImageUrl + hospital.image_urls[0]" :alt="title">
         <div class="card-content">
             <h3>
                 <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none">{{ title }}
@@ -17,6 +17,7 @@
 
 <script setup>
 import { useCapitalize, useTruncateText } from '~/composables/useHelpers' // explicit import
+ const config = useRuntimeConfig()
 const props = defineProps({
     hospital: Object,
 })

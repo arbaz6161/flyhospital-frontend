@@ -43,7 +43,7 @@ const error = computed(() => store.error)
 <style>
 .truncate-lines {
   display: -webkit-box;
-  -webkit-line-clamp: 6;   /* max lines */
+  -webkit-line-clamp: 4;   /* max lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
