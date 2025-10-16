@@ -203,157 +203,72 @@
                 </div>
 
                 <!-- Procedures -->
-                <div id="procedures" class="mb-5 pb-5 section-base">
-                    <h3 class="section-title">Procedures</h3>
-                    <Accordion parent v-for="treatment in hospital.treatments" :key="treatment.id">
-                        <AccordionSection :title="treatment.name" :active="true">
-                            <div class="row mb-2">
-                                <div class="col-md-4 mb-2" v-for="subtreatment in treatment.children"
-                                    :key="subtreatment.id">
-                                    <span>{{ subtreatment.name }}</span>
+               <div id="procedures" class="mb-5 pb-5 section-base">
+                <h3 class="section-title">Departments</h3>
+
+                <Accordion parent v-for="treatment in hospital.treatments" :key="treatment.id">
+                    <AccordionSection :title="treatment.name" :active="true">
+                    
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs mb-3">
+                        <li class="nav-item tab">
+                        <a class="nav-link" 
+                            :class="{ active: activeTab[treatment.id] === 'procedures' }" 
+                            href="#" 
+                            @click.prevent="activeTab[treatment.id] = 'procedures'">
+                            Procedures
+                        </a>
+                        </li>
+                        <li class="nav-item tab">
+                        <a class="nav-link" 
+                            :class="{ active: activeTab[treatment.id] === 'staff' }" 
+                            href="#" 
+                            @click.prevent="activeTab[treatment.id] = 'staff'">
+                            Medical Staff
+                        </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab Content -->
+                    <div v-if="activeTab[treatment.id] === 'procedures'" class="row mb-2">
+                        <div class="col-md-4 mb-2" 
+                            v-for="subtreatment in treatment.children" 
+                            :key="subtreatment.id">
+                        <span>{{ subtreatment.name }}</span>
+                        </div>
+                    </div>
+
+                    <div v-if="activeTab[treatment.id] === 'staff'" class="row mb-2">
+                        <div class="accordion-body">
+                                    <div class="staff-member">
+                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter">
+                                        <div class="staff-info">
+                                            <h6>Dr. Emily Carter</h6>
+                                            <p>Periodontist, Implantologist, Endodontist...</p>
+                                            <p>Experience: 10 years</p>
+                                        </div>
+                                    </div>
+                                    <div class="staff-member">
+                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson">
+                                        <div class="staff-info">
+                                            <h6>Dr. James Anderson</h6>
+                                            <p>Pediatric Dentist, Prosthodontist, Cosmetic Dentist...</p>
+                                            <p>Experience: 8 years</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </AccordionSection>
-                    </Accordion>
+                        <!-- <div class="col-md-4 mb-2" 
+                            v-for="staff in treatment.staff" 
+                            :key="staff.id">
+                        <span>{{ staff.name }}</span>
+                        </div> -->
+                    </div>
+
+                    </AccordionSection>
+                </Accordion>
                 </div>
 
-                <!-- Medical Staff -->
-                <div id="medical-staff" class="mb-5 pb-5 section-base">
-                    <h3 class="section-title">Medical Staff</h3>
-                    <div class="accordion" id="staffAccordion">
-                        <div class="accordion-item mb-0">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapsePeriodontist">
-                                    Periodontist
-                                </button>
-                            </h2>
-                            <!-- <div id="collapsePeriodontist" class="accordion-collapse collapse show"
-                                data-bs-parent="#staffAccordion">
-                                <div class="accordion-body">
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter" />
-                                        <div class="staff-info">
-                                            <h6>Dr. Emily Carter</h6>
-                                            <p>Periodontist, Implantologist, Endodontist...</p>
-                                            <p class="exp">Experience: 10 years</p>
-                                        </div>
-                                    </div>
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson" />
-                                        <div class="staff-info">
-                                            <h6>Dr. James Anderson</h6>
-                                            <p>
-                                                Pediatric Dentist, Prosthodontist, Cosmetic Dentist...
-                                            </p>
-                                            <p class="exp">Experience: 10 years</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <br />
-                    <div class="accordion" id="CardiologyAccordions">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapsePeriodontists">
-                                    Cardiology
-                                </button>
-                            </h2>
-                            <!-- <div id="collapsePeriodontists" class="accordion-collapse collapse"
-                                data-bs-parent="#staffAccordions">
-                                <div class="accordion-body">
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter" />
-                                        <div class="staff-info">
-                                            <h6>Dr. Emily Carter</h6>
-                                            <p>Periodontist, Implantologist, Endodontist...</p>
-                                            <p>Experience: 10 years</p>
-                                        </div>
-                                    </div>
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson" />
-                                        <div class="staff-info">
-                                            <h6>Dr. James Anderson</h6>
-                                            <p>
-                                                Pediatric Dentist, Prosthodontist, Cosmetic Dentist...
-                                            </p>
-                                            <p>Experience: 8 years</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="accordion" id="DermatologyAccordions">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapsePeriodontists">
-                                    Dermatology
-                                </button>
-                            </h2>
-                            <!-- <div id="collapsePeriodontists" class="accordion-collapse collapse"
-                                data-bs-parent="#staffAccordions">
-                                <div class="accordion-body">
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter" />
-                                        <div class="staff-info">
-                                            <h6>Dr. Emily Carter</h6>
-                                            <p>Periodontist, Implantologist, Endodontist...</p>
-                                            <p>Experience: 10 years</p>
-                                        </div>
-                                    </div>
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson" />
-                                        <div class="staff-info">
-                                            <h6>Dr. James Anderson</h6>
-                                            <p>
-                                                Pediatric Dentist, Prosthodontist, Cosmetic Dentist...
-                                            </p>
-                                            <p>Experience: 8 years</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="accordion" id="PediatricsAccordions">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapsePeriodontists">
-                                    Pediatrics
-                                </button>
-                            </h2>
-                            <!-- <div id="collapsePeriodontists" class="accordion-collapse collapse"
-                                data-bs-parent="#staffAccordions">
-                                <div class="accordion-body">
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter" />
-                                        <div class="staff-info">
-                                            <h6>Dr. Emily Carter</h6>
-                                            <p>Periodontist, Implantologist, Endodontist...</p>
-                                            <p>Experience: 10 years</p>
-                                        </div>
-                                    </div>
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson" />
-                                        <div class="staff-info">
-                                            <h6>Dr. James Anderson</h6>
-                                            <p>
-                                                Pediatric Dentist, Prosthodontist, Cosmetic Dentist...
-                                            </p>
-                                            <p>Experience: 8 years</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Reviews -->
                 <div id="reviews" class="mb-5 pb-5 section-base">
@@ -467,11 +382,14 @@
 import { useHospitalStore } from '~/stores/hospital'
 import { useRoute } from 'vue-router'
 import HotelSection from '~/components/hotels/HotelSection.vue'
-
+import { reactive } from "vue";
 const store = useHospitalStore()
 const route = useRoute()
 const { hospitals } = storeToRefs(store)
+type TabType = "procedures" | "staff";
 
+// define object type with index signature
+const activeTab = reactive<Record<number, TabType>>({});
 const showMore = ref(false)
 
 if (!hospitals.value.length) {
@@ -588,5 +506,10 @@ const getIcon = (slug: string): string => {
     padding: 5px 10px;
     background: #f0f0f0;
     border-radius: 5px;
+}
+.tab .active{
+    background-color: none !important;
+    border-bottom: 1px solid;
+    border-color: none !important;
 }
 </style>

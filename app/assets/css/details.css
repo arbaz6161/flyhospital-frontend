@@ -329,7 +329,7 @@
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0px;
-    margin-bottom: 1.5rem !important;
+    /* margin-bottom: 1.5rem !important; */
 }
 
 .accordion-button {
