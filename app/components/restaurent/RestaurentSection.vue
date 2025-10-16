@@ -53,7 +53,7 @@
                 </button>
             </div>
 
-            <a href="#" class="view-all-btn">View all restaurants</a>
+            <!-- <a href="#" class="view-all-btn">View all restaurants</a> -->
         </div>
     </section>
 </template>

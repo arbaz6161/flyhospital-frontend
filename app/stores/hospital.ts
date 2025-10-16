@@ -19,10 +19,9 @@ export const useHospitalStore = defineStore('hospital', {
             if (this.search) query.append('search', this.search)
             if (this.country_id) query.append('country_id', String(this.country_id))
             if (this.city_id) query.append('city_id', String(this.city_id))
-
-            const { data, error } = await useFetch(
-                `https://flyhospitals.dev/api/hospitals?${query.toString()}`
-            )
+            const config = useRuntimeConfig()
+            const api = `${config.public.baseUrl}/hospitals?${query.toString()}`;
+            const { data, error } = await useFetch(api);
 
             if (error.value) {
                 console.error('❌ API Error:', error.value)

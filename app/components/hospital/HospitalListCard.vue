@@ -3,7 +3,7 @@
         <div class="row g-0">
             <!-- Image -->
             <div class="col-md-3 p-3">
-                <img :src="config.public.ImageUrl + hospital.image_urls[0]" :alt="title" class="img-fluid img-fit rounded" />
+                <img :src="hospital.image_urls[0]" :alt="title" class="img-fluid img-fit rounded" />
             </div>
 
             <!-- Main Content -->

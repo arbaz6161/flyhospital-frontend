@@ -370,10 +370,10 @@
             </div>
 
             <!--=============== POPULAR RESTAURENTS SECTION ===============-->
-            <RestaurentSection id="restaurants" />
+            <RestaurentSection id="restaurants" :items="hospital.restaurants" />
 
             <!--=============== POPULAR HOTELS SECTION ===============-->
-            <HotelSection id="hotels" />
+            <HotelSection id="hotels"  :items="hospital.hotels" />
         </div>
     </main>
 </template>

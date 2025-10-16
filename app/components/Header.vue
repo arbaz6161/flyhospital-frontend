@@ -19,12 +19,11 @@
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem to="#">
-                                        New York
+                                   <DropdownItem v-for="destination in destinations" :key="destination.id">
+                                     {{ destination.country_name }}
                                     </DropdownItem>
-                                    <DropdownItem to="#">Los Angeles</DropdownItem>
-                                    <DropdownItem to="#">Chicago</DropdownItem>
-                                    <DropdownItem to="#">Houston</DropdownItem>
+                                    <!-- <DropdownItem v-for="destination in destinations">{{ destination.name }}</DropdownItem> -->
+                                   
                                 </DropdownMenu>
                             </Dropdown>
                         </li>
@@ -35,10 +34,12 @@
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem to="#">Dental Care</DropdownItem>
-                                    <DropdownItem to="#">Cosmetic Surgery</DropdownItem>
-                                    <DropdownItem to="#">Physiotherapy</DropdownItem>
-                                    <DropdownItem to="#">Cardiology</DropdownItem>
+                                 <DropdownItem v-for="treatment in treatments" :key="treatment.id">
+                                    <NuxtLink 
+                                        :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
+                                        {{ treatment.name }}
+                                    </NuxtLink>
+                                    </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                         </li>
@@ -72,4 +73,28 @@
         </nav>
     </header>
 </template>
-<script setup></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGeneralStore } from '~/stores/general'
+
+const store = useGeneralStore()
+const config = useRuntimeConfig()
+
+// ✅ SSR-friendly calls
+await useAsyncData('treatments', () => store.fetchTreatments())
+await useAsyncData('destinations', () => store.fetchMedicalDestination())
+
+// ✅ State
+const treatments = computed(() => store.treatments)
+const destinations = computed(() => store.destinations)
+const loading = computed(() => store.loading)
+const error = computed(() => store.error)
+</script>
+<style>
+.dropdown-item a{
+    text-decoration: none !important;
+    color: #0d2d52;
+}
+</style>
+
+

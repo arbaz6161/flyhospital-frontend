@@ -1,7 +1,8 @@
 <template>
 
         <div class="col">
-             <NuxtLink :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
+          <NuxtLink :to="`/all-procedure/${encodeURIComponent(treatment.name)}`">
+
             <div>
                 <div class="card card-custom">
                     <img :src=" config.public.ImageUrl + treatment.image_url" class="card-img-top card-img-top-custom" alt="Knee Replacement">

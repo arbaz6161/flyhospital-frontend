@@ -53,7 +53,7 @@
                 </button>
             </div>
 
-            <a href="#" class="view-all-btn">View all Hotels</a>
+            <!-- <a href="#" class="view-all-btn">View all Hotels</a> -->
         </div>
     </section>
 </template>

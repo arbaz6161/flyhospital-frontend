@@ -1,6 +1,6 @@
 // nuxt.config.ts
 export default defineNuxtConfig({
-  ssr: true, // ✅ ensures SSR is enabled
+  ssr: false, // ✅ ensures SSR is enabled
   app: {
     head: {
       title: "Flyhospital",
