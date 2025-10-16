@@ -39,6 +39,7 @@ interface ApiResponse<T> {
 interface GeneralState {
   blogs: Blog[]
   treatments: Treatments[]
+  subprocedures: Treatments[]
   destinations: []
   loading: boolean
   error: string | null
@@ -53,6 +54,7 @@ export const useGeneralStore = defineStore('general', {
   state: (): GeneralState => ({
     blogs: [],
     treatments: [],
+    subprocedures: [],
     destinations: [],
     loading: false,
     error: null,
@@ -105,7 +107,7 @@ export const useGeneralStore = defineStore('general', {
       this.loading = false
     }
   },
-      async fetchMedicalDestination(): Promise<void> {
+  async fetchMedicalDestination(): Promise<void> {
       try {
         this.loading = true
         this.error = null
@@ -121,6 +123,23 @@ export const useGeneralStore = defineStore('general', {
       } finally {
         this.loading = false
       }
+    },
+  async fetchSubProcedures(treatmentId: string | number): Promise<void> {
+      try {
+        this.loading = true
+        this.error = null
+
+        const config = useRuntimeConfig()
+        // Example: /sub-treatments/123 or with query ?treatment_id=123
+        const api = `${config.public.baseUrl}/sub-treatments?parent_id=${treatmentId}`
+        const res = await $fetch(api)
+        this.subprocedures = res.data  // ✅ directly assign array
+      } catch (err: any) {
+        this.error = err?.message ?? 'Failed to fetch subprocedures'
+      } finally {
+        this.loading = false
+      }
     }
+
   },
 })
