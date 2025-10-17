@@ -36,7 +36,7 @@
                         Call
                     </NuxtLink>
                     <NuxtLink
-                        :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`"
+                        :to="hospital.google_map_location"
                         class="btn btn-sm btn-light">
                         <Icon name="material-symbols:location-on-outline"
                             style="color:#053862; margin-right:5px; font-size: 18px;" />
@@ -58,11 +58,11 @@
                         <div class="stars text-warning">
                             <template v-for="i in 5" :key="i">
                                 <!-- Full star -->
-                                <Icon v-if="i <= Math.floor(hospital.average_rating)" name="carbon:star-filled" />
+                                <Icon v-if="i <= Math.floor(hospital.rating)" name="carbon:star-filled" />
 
                                 <!-- Half star -->
                                 <Icon
-                                    v-else-if="i === Math.floor(hospital.average_rating) + 1 && (hospital.average_rating % 1) >= 0.5"
+                                    v-else-if="i === Math.floor(hospital.rating) + 1 && (hospital.rating % 1) >= 0.5"
                                     name="carbon:star-half" />
 
                                 <!-- Empty star -->
@@ -70,14 +70,15 @@
                             </template>
                         </div>
 
-                        <span class="fw-bold ms-2 me-1 rating">{{ Number(hospital.average_rating).toFixed(1) }}</span>
-                        <span class="text-muted review">{{ hospital.total_reviews }} reviews</span>
+                        <span class="fw-bold ms-2 me-1 rating">{{ Number(hospital.rating).toFixed(1) }}</span>
+                        <!-- <span class="text-muted review">{{ hospital.total_reviews }} reviews</span> -->
                     </div>
 
                     <h6 class="treatment-title">TREATMENTS</h6>
                     <ul class="treatment-list list-unstyled">
-                        <li v-for="treatment in hospital.treatments" :key="treatment">
-                            <Icon name="material-symbols:check-rounded" class="bg-success" /> {{ treatment.name }}
+                       <li v-for="treatment in hospital?.treatments" :key="treatment.parent.id">
+                        <Icon name="material-symbols:check-rounded" class="bg-success" />
+                        {{ treatment.parent.name }}
                         </li>
                     </ul>
                 </div>
