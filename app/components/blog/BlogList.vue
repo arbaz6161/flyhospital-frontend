@@ -14,7 +14,7 @@
 
       <div v-else class="blogs-grid">
         <div v-for="blog in blogs" :key="blog.id" class="blog-card">
-           <img :src="config.public.ImageUrl + blog.image_url" :alt="blog.title" />
+           <img :src="blog.image_url" :alt="blog.title" />
           <div class="blog-content">
             <h3>{{ blog.title }}</h3>
             <p class="truncate-lines">{{ blog.content }}</p>

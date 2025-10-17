@@ -17,7 +17,7 @@
                 <div class="slider-grid destination-grid">
                     <!-- Destination Card 1 -->
                     <div v-for="destination in destinations" class="destination-card">
-                        <img :src="config.public.ImageUrl + destination.image_url"
+                        <img :src="destination.image_url"
                             alt="New York City Skyline">
                         <div class="card-content">
                             <p class="card-subtitle">Looking for medical in</p>

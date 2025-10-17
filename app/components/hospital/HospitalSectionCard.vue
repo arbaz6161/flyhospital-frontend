@@ -1,6 +1,6 @@
 <template>
     <div class="hospital-card">
-        <img :src="config.public.ImageUrl + hospital.image_urls[0]" :alt="title">
+        <img :src="hospital.image_urls[0]" :alt="title">
         <div class="card-content">
             <h3>
                 <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none">{{ title }}

@@ -8,8 +8,9 @@
          <div v-if="loading">Loading blogs...</div>
       <div v-else-if="error">{{ error }}</div>
         <div v-else class="treatments-grid">
-            <a href="#" v-for="treatment in treatments" :key="treatment.id" class="treatment-tag">{{ treatment.name }}</a>
-           <a href="#" class="treatment-tag">Aesthetic Surgery</a>
+                <NuxtLink class="treatment-tag"  v-for="treatment in treatments" :key="treatment.id"  style="text-decoration: none; color: #053862;" :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
+                {{ treatment.name }}
+                </NuxtLink>   
         </div>
     </section>
 </template>

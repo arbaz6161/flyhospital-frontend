@@ -19,7 +19,8 @@
                 <div v-else class="slider-grid treatment-grid">
                     <!-- Treatment Card 1 -->
                     <div v-for="treatment in treatments" :key="treatment.id" class="treatment-card">
-                        <img :src="config.public.ImageUrl +treatment.image_url"
+                           <NuxtLink style="text-decoration: none; color: #053862;" :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
+                        <img :src="treatment.image_url"
                             alt="Knee Replacement Surgery">
                         <div class="card-content">
                             <p class="location">
@@ -30,8 +31,8 @@
                                 <h3>{{ treatment.name }}</h3>
                                 <span class="rating">4.9<span class="star">★</span></span>
                             </div>
-                            <p class="price">Starting from: ${{ treatment?.price??0 }}</p>
                         </div>
+                        </NuxtLink>
                     </div>
                    
                 </div>

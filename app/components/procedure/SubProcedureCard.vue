@@ -5,7 +5,7 @@
 
             <div>
                 <div class="card card-custom">
-                    <img :src=" config.public.ImageUrl + treatment.image_url" class="card-img-top card-img-top-custom" alt="Knee Replacement">
+                    <img :src="treatment.image_url" class="card-img-top card-img-top-custom" alt="Knee Replacement">
                 </div>
                 <div class="card-body card-body-custom">
                     <p class="card-text">{{ treatment.name }}</p>
