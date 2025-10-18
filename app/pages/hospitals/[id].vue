@@ -240,28 +240,32 @@
 
                     <div v-if="activeTab[treatment.id] === 'staff'" class="row mb-2">
                         <div class="accordion-body">
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/1v2hY88.png" alt="Dr. Emily Carter">
+                                    <div 
+                                        class="staff-member"  
+                                        v-for="staff in treatment?.staff || []"  
+                                        :key="staff?.id"
+                                        >
+                                        <img 
+                                            :src="staff?.media?.[0]?.original_url || '/images/default-doctor.png'" 
+                                            :alt="staff?.name || 'Doctor'"
+                                        >
                                         <div class="staff-info">
-                                            <h6>Dr. Emily Carter</h6>
-                                            <p>Periodontist, Implantologist, Endodontist...</p>
-                                            <p>Experience: 10 years</p>
+                                            <h6>Dr. {{ staff?.name || 'Unknown' }}</h6>
+                                            <p>
+                                            <span 
+                                                v-for="ts in staff?.treatment || []" 
+                                                :key="ts?.id"
+                                            >
+                                                {{ ts?.name || '' }}ss
+                                            </span>
+                                            </p>
+                                            <p>{{ staff?.description || '' }}</p>
                                         </div>
-                                    </div>
-                                    <div class="staff-member">
-                                        <img src="https://i.imgur.com/gX33k5w.png" alt="Dr. James Anderson">
-                                        <div class="staff-info">
-                                            <h6>Dr. James Anderson</h6>
-                                            <p>Pediatric Dentist, Prosthodontist, Cosmetic Dentist...</p>
-                                            <p>Experience: 8 years</p>
                                         </div>
-                                    </div>
+
+                                
                                 </div>
-                        <!-- <div class="col-md-4 mb-2" 
-                            v-for="staff in treatment.staff" 
-                            :key="staff.id">
-                        <span>{{ staff.name }}</span>
-                        </div> -->
+                        
                     </div>
 
                     </AccordionSection>
@@ -353,13 +357,13 @@
                             Call
                         </NuxtLink>
                         <NuxtLink
-                            :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`"
+                            :to="hospital.google_map_location"
                             class="btn btn-sm btn-light">
                             <Icon name="material-symbols:location-on-outline"
                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
                             Google Map
                         </NuxtLink>
-                        <NuxtLink :to="`/${hospital.url}`" class="btn btn-sm btn-light">
+                        <NuxtLink :to="`${hospital.website_url}`" class="btn btn-sm btn-light">
                             <Icon name="streamline-plump:web-remix"
                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
                             Website
@@ -370,10 +374,10 @@
             </div>
 
             <!--=============== POPULAR RESTAURENTS SECTION ===============-->
-            <RestaurentSection id="restaurants" :items="hospital.restaurants" />
+            <RestaurentSection  id="restaurants" v-if="hospital.restaurants.length > 0"  :restaurants="hospital.restaurants"  />
 
             <!--=============== POPULAR HOTELS SECTION ===============-->
-            <HotelSection id="hotels"  :items="hospital.hotels" />
+            <HotelSection id="hotels" v-if="hospital.hotels.length>0"   :hotels="hospital.hotels" />
         </div>
     </main>
 </template>
