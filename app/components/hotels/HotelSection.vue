@@ -40,6 +40,8 @@
                   <span class="star">★</span>
                 </span>
               </h3>
+                 <NuxtLink class="treatment-tag" :key="hotel.id"  style="text-decoration: none; color: #053862;" :to="hotel.google_map_location">
+             
               <p class="location">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path
@@ -50,8 +52,9 @@
                        2.5-2.5 2.5z"
                   />
                 </svg>
-                {{ hotel.google_map_location }}
+              Map Location
               </p>
+               </NuxtLink>   
             </div>
           </div>
         </div>
