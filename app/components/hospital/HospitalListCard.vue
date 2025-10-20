@@ -35,18 +35,18 @@
                         <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Call
                     </NuxtLink>
-                    <NuxtLink
-                        :to="hospital.google_map_location"
+                    <a
+                        :href="hospital.google_map_location" 
                         class="btn btn-sm btn-light">
                         <Icon name="material-symbols:location-on-outline"
                             style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Google Map
-                    </NuxtLink>
-                    <NuxtLink :to="`${hospital.website_url}`" class="btn btn-sm btn-light">
+                </a>
+                    <a :href="hospital.website_url" class="btn btn-sm btn-light">
                         <Icon name="streamline-plump:web-remix"
                             style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Website
-                    </NuxtLink>
+                    </a>
                 </div>
             </div>
 
@@ -74,7 +74,7 @@
                         <!-- <span class="text-muted review">{{ hospital.total_reviews }} reviews</span> -->
                     </div>
 
-                    <h6 class="treatment-title">TREATMENTS</h6>
+                    <h6 class="treatment-title">Procedure</h6>
                     <ul class="treatment-list list-unstyled">
                        <li v-for="treatment in hospital?.treatments" :key="treatment.id">
                         <Icon name="material-symbols:check-rounded" class="bg-success" />

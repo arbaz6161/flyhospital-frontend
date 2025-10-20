@@ -31,7 +31,7 @@
                             </svg>
                         </span>
                         <input type="text" class="form-control" 
-                            placeholder="Enter Hospital Name"
+                            placeholder="Enter Procedure Name"
                             v-model="searchQuery">
                     </div>
                 </div>
@@ -54,8 +54,8 @@
 
         <!-- Load More Section -->
         <div class="text-center mt-5">
-            <p class="text-muted">You've viewed 5 of {{ treatments.length }} hospitals</p>
-            <button class="btn btn-primary mt-3 details-btn" style="max-width: 321px; width:100%">Load More</button>
+            <p class="text-muted">Total {{ treatments.length }} procedure</p>
+            <!-- <button class="btn btn-primary mt-3 details-btn" style="max-width: 321px; width:100%">Load More</button> -->
         </div>
 
         <!--=============== BLOGS SECTION ===============-->

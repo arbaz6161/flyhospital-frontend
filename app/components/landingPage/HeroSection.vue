@@ -19,7 +19,7 @@
               v-model="store.search"
               placeholder="Search hospitals, treatments or countries..."
             />
-            <a href="#" @click.prevent="submitSearch">Search</a>
+            <a href="#" @click.prevent="submitSearch" style="text-decoration: none !important;">Search</a>
           </div>
 
           <!-- Active Filters Chips -->

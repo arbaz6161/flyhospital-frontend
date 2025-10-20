@@ -39,7 +39,7 @@
                   <span class="star">★</span>
                 </span>
               </h3>
-                <NuxtLink  :key="restaurant.id"  style="text-decoration: none; color: #053862;" :to="restaurant.google_map_location">
+                <a  :key="restaurant.id"  style="text-decoration: none; color: #053862;" :href="restaurant.google_map_location" >
               <p class="location treatment-tag" style="width: 63%;">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path
@@ -52,7 +52,7 @@
                 </svg>
                 Google Location 
               </p>
-               </NuxtLink>   
+            </a>   
             </div>
           </div>
         </div>

@@ -24,9 +24,9 @@
             <li class="nav-item">
                 <NuxtLink class="nav-link active" to="#overview">Overview</NuxtLink>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <NuxtLink class="nav-link" to="#facilities">Facility Services</NuxtLink>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <NuxtLink class="nav-link" to="#procedures">Procedures</NuxtLink>
             </li>
@@ -172,35 +172,10 @@
 
                             <span>{{ hospital.staff_count??0 }} doctors</span>
                         </li>
-                        <li class="info">
-                            <svg width="20" height="20" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
-                                style="color: #0b3d6e">
-                                <!-- Outer circle -->
-                                <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="16" />
-                                <!-- Eyes -->
-                                <circle cx="70" cy="80" r="12" fill="currentColor" />
-                                <circle cx="130" cy="80" r="12" fill="currentColor" />
-                                <!-- Smile -->
-                                <path d="M60 120 Q100 160 140 120" fill="none" stroke="currentColor" stroke-width="16"
-                                    stroke-linecap="round" />
-                            </svg>
-                            <span>43000 patients per year</span>
-                        </li>
+                   
                     </ul>
                 </div>
 
-                <!-- Facility Services -->
-                <div id="facilities" class="mb-5 pb-5 section-base">
-                    <h3 class="section-title">Facility Services</h3>
-                    <div v-if="hospital.facilities && hospital.facilities.length" class="facility-grid">
-                        <div v-for="facility in hospital.facilities" :key="facility.name"
-                            class="facility-item d-flex align-items-center gap-2">
-                            <!-- Dynamic Icon -->
-                            <Icon :name="getIcon(facility.slug)" size="30" />
-                            <span>{{ facility.name }}</span>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Procedures -->
                <div id="procedures" class="mb-5 pb-5 section-base">
@@ -274,62 +249,7 @@
 
                 
 
-                <!-- Reviews -->
-                <div id="reviews" class="mb-5 pb-5 section-base">
-                    <h3 class="section-title">Review</h3>
-                    <div class="review-summary">
-                        <div class="review-score">
-                            <svg class="circular-progress" viewBox="0 0 36 36">
-                                <!-- Background circle -->
-                                <path class="circle-bg" d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#053862" stroke-width="2" />
-                                <!-- Progress circle -->
-                                <path class="circle" :stroke-dasharray="percentage + ', 100'" d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#053862" stroke-width="3" />
-                                <!-- Center text -->
-                                <text x="18" y="20.35" class="percentage-text" text-anchor="middle">
-                                    {{ Number(hospital.average_rating).toFixed(1) }}
-                                </text>
-                            </svg>
-                            <div class="stars text-warning my-2">
-                                <template v-for="i in 5" :key="i">
-                                    <!-- Full star -->
-                                    <Icon v-if="i <= Math.floor(hospital.average_rating)" name="carbon:star-filled" />
-
-                                    <!-- Half star -->
-                                    <Icon
-                                        v-else-if="i === Math.floor(hospital.average_rating) + 1 && (hospital.average_rating % 1) >= 0.5"
-                                        name="carbon:star-half" />
-
-                                    <!-- Empty star -->
-                                    <Icon v-else name="carbon:star" />
-                                </template>
-                            </div>
-                            <div class="score-block">
-                                <div class="score-title">{{
-                                    hospital.average_rating >= 4.5 ? 'Excellent Score' :
-                                        hospital.average_rating >= 3.5 ? 'Good Score' :
-                                            hospital.average_rating >= 2.5 ? 'Average Score' :
-                                                'Poor Score'
-                                }}</div>
-                                <a href="#" class="score-link">{{ hospital.total_reviews }} patient verified review</a>
-                            </div>
-                        </div>
-                        <div class="review-breakdown">
-                            <div class="review-bar" v-for="star in [5, 4, 3, 2, 1]" :key="star">
-                                <span>{{ star }} star{{ star > 1 ? 's' : '' }}</span>
-
-                                <div class="progress">
-                                    <div class="progress-bar" :style="{ width: getStarPercentage(star) + '%' }"></div>
-                                </div>
-
-                                <span>{{ Number(getStarPercentage(star)).toFixed(0) }}%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              
             </div>
             <!-- Right Column: Sidebar -->
             <div class="col-lg-4">
@@ -363,7 +283,7 @@
                             Website
                         </NuxtLink>
                     </div>
-                    <NuxtLink :to="hospital.google_map_location" class="btn btn-primary w-100">Hospital Location</NuxtLink>
+                    <a :href="hospital.google_map_location" class="btn btn-primary w-100">Hospital Location</a>
                 </div>
             </div>
 

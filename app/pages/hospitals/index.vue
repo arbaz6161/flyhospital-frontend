@@ -97,6 +97,7 @@ const selectedCountry = ref<{ label: string; value: any } | null>(
 )
 
 const selectedCity = ref<{ label: string; value: any } | null>(
+    
     cityOptions.value.find(c => c.value === store.city_id) || null
 )
 
