@@ -3,7 +3,7 @@
         <img :src="hospital.image_urls[0]" :alt="title">
         <div class="card-content">
             <h3>
-                <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none  truncate-wordss">{{ truncateWords(hospital.title, 2) }}
+                <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none  truncate-wordss">{{ truncateWords(hospital.title, 3) }}
                 </NuxtLink>
                 <span class="rating">{{ Number(hospital.average_rating).toFixed(1) }}<span class="star">★</span></span>
             </h3>

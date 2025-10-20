@@ -29,6 +29,10 @@ const props = defineProps({
 
 </script>
 <style>
+.card-custom img{
+            width: 100%;
+    height: 173px;
+    }
  .card-custom {
         border-radius: 10px;
         overflow: hidden;

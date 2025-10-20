@@ -15,12 +15,14 @@
                         <li class="nav-item dropdown nav-item dropdown relative">
                             <Dropdown>
                                 <DropdownToggle class="dropdown-toggle d-flex align-items-center nav-link">
-                                    Locations
+                                    Destination
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                   <DropdownItem v-for="destination in destinations" :key="destination.id">
-                                     {{ destination.country_name }}
+                                  <DropdownItem v-for="destination in destinations" :key="destination.id">
+                                    <NuxtLink :to="`/hospitals?country_id=${destination.id}`">
+                                        {{ destination.country_name }}
+                                    </NuxtLink>  
                                     </DropdownItem>
                                     <!-- <DropdownItem v-for="destination in destinations">{{ destination.name }}</DropdownItem> -->
                                    

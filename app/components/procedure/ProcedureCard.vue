@@ -28,6 +28,7 @@ const props = defineProps({
 
 </script>
 <style>
+
  .card-custom {
         border-radius: 10px;
         overflow: hidden;
@@ -35,6 +36,10 @@ const props = defineProps({
         box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
         transition: transform 0.2s ease-in-out;
         height: 100%; /* Ensure cards in a row have equal height */
+    }
+    .card-custom img{
+            width: 100%;
+    height: 173px;
     }
     .card-custom:hover {
         transform: translateY(-5px); /* Slight lift on hover */

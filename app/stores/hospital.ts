@@ -39,6 +39,28 @@ export const useHospitalStore = defineStore('hospital', {
                 this.totalHospitals = data.value.total_hospitals ?? 0
             }
         },
+        async list(){
+             const query = new URLSearchParams()
+            if (this.search) query.append('search', this.search)
+            if (this.country_id) query.append('country_id', String(this.country_id))
+            if (this.city_id) query.append('city_id', String(this.city_id))
+            if (this.category_id) query.append('procedure_id', this.category_id)
+            if (this.treatment_id) query.append('treatment_id', this.treatment_id)
+            const config = useRuntimeConfig()
+            const api = `${config.public.baseUrl}/hospital-listing?${query.toString()}`;
+            const { data, error } = await useFetch(api);
+
+            if (error.value) {
+                console.error('❌ API Error:', error.value)
+                return
+            }
+
+            if (data.value) {
+                this.hospitals = data.value.data ?? data.value
+                this.totalHospitals = data.value.total_hospitals ?? 0
+            }
+
+        },
 
         // Load countries
         async loadCountries() {

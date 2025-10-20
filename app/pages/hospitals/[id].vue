@@ -33,9 +33,9 @@
             <li class="nav-item">
                 <NuxtLink class="nav-link" to="#medical-staff">Medical Staff</NuxtLink>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <NuxtLink class="nav-link" to="#reviews">Reviews</NuxtLink>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <NuxtLink class="nav-link" to="#hotels">Nearby Hotels</NuxtLink>
             </li>
@@ -87,12 +87,12 @@
                                 </div>
 
                                 <!-- Reviews -->
-                                <div class="col-5">
+                                <!-- <div class="col-5">
                                     <div class="rating-item">
                                         <div class="value">{{ hospital.total_reviews }}</div>
                                         <div class="label">reviews</div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -282,8 +282,15 @@
                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
                             Website
                         </NuxtLink>
+                          <a
+                            :href="hospital.google_map_location"
+                            class="btn btn-sm btn-light">
+                            <Icon name="material-symbols:location-on-outline"
+                                style="color:#053862; margin-right:5px; font-size: 18px;" />
+                            Google Map
+                    </a>
                     </div>
-                    <a :href="hospital.google_map_location" class="btn btn-primary w-100">Hospital Location</a>
+                    <!-- <a :href="hospital.google_map_location" class="btn btn-primary w-100">Hospital Location</a> -->
                 </div>
             </div>
 

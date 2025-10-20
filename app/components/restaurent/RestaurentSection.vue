@@ -39,20 +39,15 @@
                   <span class="star">★</span>
                 </span>
               </h3>
-                <a  :key="restaurant.id"  style="text-decoration: none; color: #053862;" :href="restaurant.google_map_location" >
-              <p class="location treatment-tag" style="width: 63%;">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 
-                       13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 
-                       9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 
-                       2.5-2.5 2.5 1.12 2.5 2.5-1.12 
-                       2.5-2.5 2.5z"
-                  />
-                </svg>
-                Google Location 
-              </p>
-            </a>   
+               <a
+                :key="restaurant.id" 
+                            :href="restaurant.google_map_location"
+                            class="btn btn-sm btn-light mt-2">
+                            <Icon name="material-symbols:location-on-outline"
+                                style="color:#053862; margin-right:5px; font-size: 18px;" />
+                            Google Map
+                    </a>
+                
             </div>
           </div>
         </div>

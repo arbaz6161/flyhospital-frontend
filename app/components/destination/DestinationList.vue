@@ -26,10 +26,13 @@
                         <div class="card-content">
                             <p class="card-subtitle">Looking for medical in</p>
                             <div class="card-title-bar">
-                                <h3>{{ destination.country_name }}</h3>
+                                <h3> <NuxtLink style="text-decoration: none;color: #053862;" :to="`/hospitals?country_id=${destination.id}`">
+                                        {{ destination.country_name }}
+                                    </NuxtLink>  
+                                  </h3>
                                 <span class="rating">4.5<span class="star">★</span></span>
                             </div>
-                            <div class="card-details" >
+                            <!-- <div class="card-details" >
                               <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M22 22H2" stroke="black" stroke-width="1.5" stroke-linecap="round" />
@@ -57,7 +60,7 @@
                                    
                                     42 Procedure
                                   </p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- Destination Card 2 -->
