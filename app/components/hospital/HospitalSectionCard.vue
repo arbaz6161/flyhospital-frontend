@@ -3,7 +3,7 @@
         <img :src="hospital.image_urls[0]" :alt="title">
         <div class="card-content">
             <h3>
-                <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none">{{ title }}
+                <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none  truncate-wordss">{{ truncateWords(hospital.title, 2) }}
                 </NuxtLink>
                 <span class="rating">{{ Number(hospital.average_rating).toFixed(1) }}<span class="star">★</span></span>
             </h3>
@@ -24,5 +24,18 @@ const props = defineProps({
 
 const title = computed(() => useCapitalize(props.hospital?.title || ''))
 const shortAddress = computed(() => useTruncateText(props.hospital?.address, 20))
-
+function truncateWords(str, num) {
+  const words = str.split(" ");
+  return words.length > num ? words.slice(0, num).join(" ") + "..." : str;
+}
 </script>
+<style>
+.truncate-wordss {
+  display: inline-block;
+  max-width: 20ch;   /* approx length of ~3 words */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+</style>

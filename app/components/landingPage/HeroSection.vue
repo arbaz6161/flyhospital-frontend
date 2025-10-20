@@ -7,7 +7,7 @@
         </h1>
         <p>
           FlyHospitals helps you explore and connect with internationally accredited hospitals,
-          based on your treatment needs, budget, and destination.
+          based on your procedure needs, budget, and destination.
         </p>
 
         <!-- Search -->

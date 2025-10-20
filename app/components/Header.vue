@@ -30,7 +30,7 @@
                         <li class="nav-item dropdown">
                             <Dropdown>
                                 <DropdownToggle class="dropdown-toggle d-flex align-items-center nav-link">
-                                    Treatments
+                                    Procedure
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>

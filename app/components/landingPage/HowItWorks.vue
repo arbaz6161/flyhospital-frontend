@@ -5,7 +5,7 @@
                 <div class="how-it-works-header">
                     <div class="header-text">
                         <h2>How FlyHospitals Works</h2>
-                        <p>Whether you're seeking affordable treatment, advanced medical care, or a specific
+                        <p>Whether you're seeking affordable procedure, advanced medical care, or a specific
                             specialty,
                             FlyHospitals helps you find, compare, and connect with trusted hospitals around the
                             world in
@@ -26,7 +26,7 @@
                             </svg>
                         </div>
                         <h3>Search</h3>
-                        <p>Use our smart filters to search by treatment, specialty, or destination. Easily explore
+                        <p>Use our smart filters to search by procedure, specialty, or destination. Easily explore
                             hospitals based on what matters most to you.</p>
                     </div>
                     <!-- Process Card 2: Compare -->

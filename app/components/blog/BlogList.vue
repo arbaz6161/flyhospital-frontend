@@ -4,7 +4,7 @@
       <div class="section-header">
         <h2>Blogs</h2>
         <p>
-          Explore our top-rated treatments in neurology, plastic surgery,
+          Explore our top-rated procedure in neurology, plastic surgery,
           dentistry, and oncology, delivered with precision for the best outcomes.
         </p>
       </div>

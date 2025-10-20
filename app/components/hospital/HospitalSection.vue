@@ -64,7 +64,7 @@ const props = defineProps({
   },
   description: {
     type: String,
-    default: "Discover our most sought-after treatments in neurology, plastic surgery, dentistry, and oncology expertly performed for optimal care and results."
+    default: "Discover our most sought-after procedure in neurology, plastic surgery, dentistry, and oncology expertly performed for optimal care and results."
   },
   viewAllLink: {
     type: String,

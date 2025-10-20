@@ -7,7 +7,7 @@
                         <img src="~assets/img/logo.png" alt="FlyHospitals Logo">
                         <span>FlyHospitals</span>
                     </div>
-                    <p>Your partner in trusted medical care. Find hospitals by treatment & location.</p>
+                    <p>Your partner in trusted medical care. Find hospitals by procedure & location.</p>
                     <p>
                         Call us: +1(734)-447-5890<br>
                         Email: contact@flyhospitals.com
@@ -19,7 +19,7 @@
                         <h4>Platform</h4>
                         <ul>
                             <li><NuxtLink to="#">Locations</NuxtLink></li>
-                            <li><NuxtLink to="#">Treatments</NuxtLink></li>
+                            <li><NuxtLink to="#">Procedure</NuxtLink></li>
                             <li><NuxtLink to="#">How It Works</NuxtLink></li>
                             <li><NuxtLink to="#">Submit Hospital Listing</NuxtLink></li>
                         </ul>
