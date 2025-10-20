@@ -40,7 +40,7 @@
                   treatment.name
                 )}`"
               >
-                <img :src="treatment.image_url" alt="Treatment" />
+                <img :src="treatment.image_url??'https://flyhospitals.dev/dumy.jpg'" alt="Treatment" />
                 <div class="card-content">
                   <p class="location">
                     <Icon

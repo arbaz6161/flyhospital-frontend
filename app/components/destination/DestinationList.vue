@@ -21,7 +21,7 @@
           >
                     <!-- Destination Card 1 -->
                     <div v-for="destination in destinations" class="destination-card">
-                        <img :src="destination.image_url"
+                        <img :src="destination.image_url??'https://flyhospitals.dev/dumy.jpg'"
                             alt="New York City Skyline">
                         <div class="card-content">
                             <p class="card-subtitle">Looking for medical in</p>

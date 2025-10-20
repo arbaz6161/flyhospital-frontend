@@ -30,7 +30,7 @@
             :key="index"
             class="hotel-card"
           >
-            <img :src="restaurant.image_url" :alt="restaurant.name" />
+            <img :src="restaurant.image_url??'https://flyhospitals.dev/dumy.jpg'" :alt="restaurant.name" />
             <div class="card-content">
               <h3>
                 {{ useTruncateText(restaurant?.name || "", 20) }}
@@ -39,8 +39,8 @@
                   <span class="star">★</span>
                 </span>
               </h3>
-                <NuxtLink class="treatment-tag" :key="restaurant.id"  style="text-decoration: none; color: #053862;" :to="restaurant.google_map_location">
-              <p class="location">
+                <NuxtLink  :key="restaurant.id"  style="text-decoration: none; color: #053862;" :to="restaurant.google_map_location">
+              <p class="location treatment-tag" style="width: 63%;">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path
                     d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 
@@ -50,7 +50,7 @@
                        2.5-2.5 2.5z"
                   />
                 </svg>
-                Map Location 
+                Google Location 
               </p>
                </NuxtLink>   
             </div>

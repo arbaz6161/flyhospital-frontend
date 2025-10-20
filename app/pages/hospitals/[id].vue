@@ -99,9 +99,9 @@
                         <!-- Right side: Categories -->
                         <div
                             class="col-12 col-md-8 ps-3 d-flex flex-wrap gap-3 align-items-center category-card-wrapper">
-                            <span class="category-card">Doctor <span>4.8</span></span>
+                            <span class="category-card">Doctor <span>{{ hospital.staff_count }}</span></span>
                             <span class="category-card">Facilities <span>4.8</span></span>
-                            <span class="category-card">Staff <span>4.9</span></span>
+                            <span class="category-card">Staff <span>{{ 4.9 }}</span></span>
                             <span class="category-card">Language assistance <span>4.8</span></span>
                             <span class="category-card">Support <span>4.9</span></span>
                         </div>
@@ -127,10 +127,10 @@
                                     </NuxtLink>
                                 </li>
                                 <li>
-                                    <NuxtLink :to="`/${hospital.url}`" target="_blank">
+                                    <NuxtLink :to="`/${hospital.website_url}`" target="_blank">
                                         <Icon name="streamline-plump:web-remix"
                                             style="color:#053862; margin-right:5px; font-size: 18px;" />
-                                        <span class="text-dark cursor-pointer">flyhospitals.info</span>
+                                        <span class="text-dark cursor-pointer">{{ hospital.website_url??'-' }}</span>
                                     </NuxtLink>
                                 </li>
                             </ul>
@@ -158,7 +158,7 @@
                                     stroke="#053862" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
 
-                            <span> {{ new Date().getFullYear() - new Date(hospital.start_date).getFullYear() }}'th Year
+                            <span> {{ new Date().getFullYear() - new Date(hospital.foundation_year).getFullYear() }}'th Year
                                 of
                                 Foundation</span>
                         </li>
@@ -170,7 +170,7 @@
                                     fill="#053862" />
                             </svg>
 
-                            <span>12 doctors</span>
+                            <span>{{ hospital.staff_count??0 }} doctors</span>
                         </li>
                         <li class="info">
                             <svg width="20" height="20" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
@@ -356,20 +356,14 @@
                             <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;" />
                             Call
                         </NuxtLink>
-                        <NuxtLink
-                            :to="hospital.google_map_location"
-                            class="btn btn-sm btn-light">
-                            <Icon name="material-symbols:location-on-outline"
-                                style="color:#053862; margin-right:5px; font-size: 18px;" />
-                            Google Map
-                        </NuxtLink>
+                       
                         <NuxtLink :to="`${hospital.website_url}`" class="btn btn-sm btn-light">
                             <Icon name="streamline-plump:web-remix"
                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
                             Website
                         </NuxtLink>
                     </div>
-                    <NuxtLink to="#" class="btn btn-primary w-100">CTA {will be like to open form}</NuxtLink>
+                    <NuxtLink :to="hospital.google_map_location" class="btn btn-primary w-100">Hospital Location</NuxtLink>
                 </div>
             </div>
 
