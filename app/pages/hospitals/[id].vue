@@ -6,7 +6,12 @@
             { label: 'Hospitals', link: '/hospitals' },
             { label: title, active: true }
         ]" />
-
+        <template v-if="store.loader">
+            <Loader>
+                Loding...
+            </Loader>
+        </template>
+    <template v-else>
         <!-- Image Gallery -->
         <div class="image-gallery my-4">
             <div v-if="hospital.image_urls && hospital.image_urls.length" class="main-image">
@@ -182,10 +187,10 @@
                 <h3 class="section-title">Departments</h3>
 
                 <Accordion parent v-for="treatment in hospital.treatments" :key="treatment.id">
-                    <AccordionSection :title="treatment.name" :active="true">
+                    <AccordionSection :title="treatment.name"  :key="treatment.id" :active="true">
                     
                     <!-- Tabs -->
-                    <ul class="nav nav-tabs mb-3">
+                    <ul class="nav nav-tabs mb-3" :key="treatment.id">
                         <li class="nav-item tab">
                         <a class="nav-link" 
                             :class="{ active: activeTab[treatment.id] === 'procedures' }" 
@@ -221,18 +226,18 @@
                                         :key="staff?.id"
                                         >
                                         <img 
-                                            :src="staff?.media?.[0]?.original_url || '/images/default-doctor.png'" 
+                                            :src="staff?.media?.[0]?.original_url || 'https://flyhospitals.dev/dumy.jpg'" 
                                             :alt="staff?.name || 'Doctor'"
                                         >
                                         <div class="staff-info">
                                             <h6>Dr. {{ staff?.name || 'Unknown' }}</h6>
                                             <p>
-                                            <span 
+                                            <p 
                                                 v-for="ts in staff?.treatment || []" 
                                                 :key="ts?.id"
                                             >
-                                                {{ ts?.name || '' }}ss
-                                            </span>
+                                                {{ ts?.name  }}{{ staff?.description }}
+                                            </p>
                                             </p>
                                             <p>{{ staff?.description || '' }}</p>
                                         </div>
@@ -300,32 +305,29 @@
             <!--=============== POPULAR HOTELS SECTION ===============-->
             <HotelSection id="hotels" v-if="hospital.hotels.length>0"   :hotels="hospital.hotels" />
         </div>
+    </template>
     </main>
 </template>
 
 <script setup lang="ts">
-import { useHospitalStore } from '~/stores/hospital'
+import { useHospitalListStore } from '~/stores/hospitallist'
 import { useRoute } from 'vue-router'
 import HotelSection from '~/components/hotels/HotelSection.vue'
-import { reactive } from "vue";
-const store = useHospitalStore()
-const route = useRoute()
-const { hospitals } = storeToRefs(store)
-type TabType = "procedures" | "staff";
+import { reactive ,ref,onMounted } from "vue";
 
-// define object type with index signature
+const route = useRoute()
+
+const store = useHospitalListStore()
+  await store.details(route.params.id)
+
+const { hospital } = storeToRefs(store)
+
+type TabType = "procedures" | "staff";
+const config = useRuntimeConfig()
+
 const activeTab = reactive<Record<number, TabType>>({});
 const showMore = ref(false)
 
-if (!hospitals.value.length) {
-    await store.index()
-}
-
-const hospital = computed(() =>
-    hospitals.value.find(h => h.id == route.params.id)
-)
-
-// Helpers
 const title = computed(() => useCapitalize(hospital.value.title || ""))
 const shortAddress = computed(() =>
     useTruncateText(hospital.value.address || "", 40)
@@ -376,6 +378,7 @@ const getIcon = (slug: string): string => {
     // fallback icon
     return icons[slug] || "mdi:web"
 }
+
 </script>
 
 <style scoped>

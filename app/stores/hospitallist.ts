@@ -16,7 +16,9 @@ export const useHospitalListStore = defineStore('hospitalList', {
     treatment_id: '',
     loader: false,
     countries: [] as any[],
-    cities: [] as any[]
+    cities: [] as any[],
+    id:'',
+    hospital:Object
   }),
 
   actions: {
@@ -121,5 +123,20 @@ export const useHospitalListStore = defineStore('hospitalList', {
       if (error.value) return console.error(error.value)
       this.cities = data.value.data ?? data.value
     },
+    async details(id:any)
+    {
+      this.loader =true;
+        if (!id) {
+        this.cities = []
+        return
+      }
+
+      const { data, error } = await useFetch(
+        `https://flyhospitals.dev/api/hospital/${id}`
+      )
+      if (error.value) return console.error(error.value)
+      this.hospital = data.value.data ?? data.value
+      this.loader = false;
+    }
   },
 })

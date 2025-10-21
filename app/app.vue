@@ -1,10 +1,9 @@
 <template>
-  <NuxtLayout>
-     <div v-if="loading" class="loader-screen">
-      <h1>Loading...</h1>
-    </div>
- 
-    <NuxtPage  v-else/>
+    <Loader v-if="loading">
+
+    </Loader>
+  <NuxtLayout  v-else>
+    <NuxtPage />
   </NuxtLayout>
 </template>
 
@@ -12,9 +11,8 @@
 const loading = ref(true)
 
 onMounted(() => {
-  // wait until store loads
   setTimeout(() => {
     loading.value = false
-  }, 1000) // simulate async
+  }, 2000) 
 })
 </script>
