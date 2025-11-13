@@ -14,11 +14,7 @@
         <div class="search-container">
           <h3>Start Your Medical Search</h3>
           <div class="search-bar">
-            <input
-              type="text"
-              v-model="store.search"
-              placeholder="Search hospitals, treatments or countries..."
-            />
+            <input type="text" v-model="store.search" placeholder="Search hospitals by name..." />
             <a href="#" @click.prevent="submitSearch" style="text-decoration: none !important;">Search</a>
           </div>
 
@@ -56,11 +52,7 @@
       </div>
 
       <div class="hero-image">
-        <img
-          src="~/assets/img/banner.jpg"
-          alt="Patients at a hospital reception"
-          class="rounded-left-bottom"
-        />
+        <img src="~/assets/img/banner.jpg" alt="Patients at a hospital reception" class="rounded-left-bottom" />
       </div>
     </div>
   </section>
@@ -276,12 +268,14 @@ const submitSearch = () => {
   align-items: center;
   z-index: 1050;
 }
+
 .active-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin: 10px 0;
 }
+
 .filter-chip {
   display: flex;
   align-items: center;
@@ -291,13 +285,15 @@ const submitSearch = () => {
   border-radius: 6px;
   font-size: 14px;
 }
+
 .chip-close {
   border: none;
   background: transparent;
   cursor: pointer;
   font-weight: bold;
 }
+
 .herocard {
-    width: 40% !important;
+  width: 40% !important;
 }
 </style>
