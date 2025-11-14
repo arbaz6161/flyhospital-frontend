@@ -2,7 +2,14 @@
     <section class="info-section">
         <div class="container info-content">
             <div class="info-icon">
-                <img src="~/assets/img/globe.png" alt="Globe with heart icon">
+                <img 
+                    src="~/assets/img/globe.png" 
+                    alt="Globe with heart icon"
+                    loading="lazy"
+                    :class="{ 'image-loading': !imageLoaded }"
+                    @load="imageLoaded = true"
+                    @error="imageLoaded = true"
+                >
             </div>
             <div class="info-text">
                 <h2><span>FlyHospitals</span> is an international platform for hospital search and treatment
@@ -19,4 +26,8 @@
         </div>
     </section>
 </template>
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+
+const imageLoaded = ref(false)
+</script>

@@ -1,6 +1,13 @@
 <template>
     <div class="hospital-card">
-        <img :src="hospital.image_urls[0]" :alt="title">
+        <img 
+            :src="hospital.image_urls[0]" 
+            :alt="title"
+            loading="lazy"
+            :class="{ 'image-loading': !imageLoaded }"
+            @load="imageLoaded = true"
+            @error="imageLoaded = true"
+        >
         <div class="card-content">
             <h3>
                 <NuxtLink :to="`/hospitals/${hospital.id}`" class="text-dark text-decoration-none  truncate-wordss">{{ truncateWords(hospital.title, 3) }}
@@ -16,11 +23,14 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useCapitalize, useTruncateText } from '~/composables/useHelpers' // explicit import
  const config = useRuntimeConfig()
 const props = defineProps({
     hospital: Object,
 })
+
+const imageLoaded = ref(false)
 
 const title = computed(() => useCapitalize(props.hospital?.title || ''))
 const shortAddress = computed(() => useTruncateText(props.hospital?.address, 20))

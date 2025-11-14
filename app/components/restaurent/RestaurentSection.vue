@@ -30,7 +30,14 @@
             :key="index"
             class="hotel-card"
           >
-            <img :src="restaurant.image_url??'https://flyhospitals.dev/dumy.jpg'" :alt="restaurant.name" />
+            <img 
+              :src="restaurant.image_url??'https://flyhospitals.dev/dumy.jpg'" 
+              :alt="restaurant.name" 
+              loading="lazy"
+              :class="{ 'image-loading': !imageLoaded[restaurant.id] }"
+              @load="imageLoaded[restaurant.id] = true"
+              @error="imageLoaded[restaurant.id] = true"
+            />
             <div class="card-content">
               <h3>
                 {{ useTruncateText(restaurant?.name || "", 20) }}
@@ -70,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, reactive } from "vue"
 
 // ✅ use defineProps
 const props = defineProps({
@@ -82,6 +89,9 @@ const props = defineProps({
 
 const currentIndex = ref(0)
 const itemsPerPage = 5
+
+// Track image loading state for blur effect
+const imageLoaded = reactive({})
 
 // ✅ use props.restaurants instead of restaurants.value
 const visibleRestaurants = computed(() => {

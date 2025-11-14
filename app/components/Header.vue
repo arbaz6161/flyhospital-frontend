@@ -3,7 +3,15 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <NuxtLink to="/" class="navbar-brand" active-class="active" exact-active-class="active">
-                    <img src="~assets/img/logo.png" class="logo" alt="FlyHospitals Logo">
+                    <img 
+                        src="~assets/img/logo.png" 
+                        class="logo" 
+                        alt="FlyHospitals Logo"
+                        loading="eager"
+                        :class="{ 'image-loading': !imageLoaded }"
+                        @load="imageLoaded = true"
+                        @error="imageLoaded = true"
+                    >
                     <span> FlyHospitals </span>
                 </NuxtLink>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -76,15 +84,21 @@
     </header>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useGeneralStore } from '~/stores/general'
 
 const store = useGeneralStore()
 const config = useRuntimeConfig()
+const imageLoaded = ref(false)
 
-// ✅ SSR-friendly calls
-await useAsyncData('treatments', () => store.fetchTreatments())
-await useAsyncData('destinations', () => store.fetchMedicalDestination())
+// ✅ Only fetch if data doesn't exist in store (prevents re-fetching on every page)
+if (store.treatments.length === 0) {
+	await useAsyncData('treatments', () => store.fetchTreatments())
+}
+
+if (store.destinations.length === 0) {
+	await useAsyncData('destinations', () => store.fetchMedicalDestination())
+}
 
 // ✅ State
 const treatments = computed(() => store.treatments)

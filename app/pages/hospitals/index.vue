@@ -128,6 +128,7 @@ const selectedCountry = computed({
     store.country_id = val?.value || ''
   }
 })
+
 const selectedCity = computed({
   get: () => cityOptions.value.find(c => c.value == store.city_id) || null,
   set: (val) => {

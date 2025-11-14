@@ -4,7 +4,15 @@
              <NuxtLink :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
             <div>
                 <div class="card card-custom">
-                    <img :src="treatment.image_url??'https://flyhospitals.dev/dumy.jpg'" class="card-img-top card-img-top-custom" alt="Knee Replacement">
+                    <img 
+                        :src="treatment.image_url??'https://flyhospitals.dev/dumy.jpg'" 
+                        class="card-img-top card-img-top-custom" 
+                        alt="Knee Replacement"
+                        loading="lazy"
+                        :class="{ 'image-loading': !imageLoaded }"
+                        @load="imageLoaded = true"
+                        @error="imageLoaded = true"
+                    >
                 </div>
                 <div class="card-body card-body-custom">
                     <p class="card-text">{{ treatment.name }}</p>
@@ -25,6 +33,8 @@ const props = defineProps({
         required: true,
     },
 })
+
+const imageLoaded = ref(false)
 
 </script>
 <style>

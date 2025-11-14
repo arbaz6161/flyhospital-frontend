@@ -52,7 +52,15 @@
       </div>
 
       <div class="hero-image">
-        <img src="~/assets/img/banner.jpg" alt="Patients at a hospital reception" class="rounded-left-bottom" />
+        <img 
+            src="~/assets/img/banner.jpg" 
+            alt="Patients at a hospital reception" 
+            class="rounded-left-bottom"
+            loading="lazy"
+            :class="{ 'image-loading': !imageLoaded }"
+            @load="imageLoaded = true"
+            @error="imageLoaded = true"
+        />
       </div>
     </div>
   </section>
@@ -134,7 +142,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useHospitalStore } from "~/stores/hospital";
 
@@ -143,6 +151,7 @@ const store = useHospitalStore();
 
 const showTreatmentModal = ref(false);
 const showDestinationModal = ref(false);
+const imageLoaded = ref(false);
 
 // Treatment state (use only ID instead of object)
 const selectedCategoryId = ref<string | number | "">("");
@@ -153,7 +162,20 @@ const selectedCountryId = ref<string | number | "">("");
 const selectedCityId = ref<string | number | "">("");
 
 // ===== Country & City Options =====
-await store.loadCountries();
+// ✅ Load in background (non-blocking) - only if data doesn't exist
+onMounted(() => {
+	if (store.countries.length === 0) {
+		store.loadCountries().catch(err => {
+			console.error('Failed to load countries:', err);
+		});
+	}
+	if (store.procedure.length === 0) {
+		store.loadprocedure().catch(err => {
+			console.error('Failed to load procedures:', err);
+		});
+	}
+});
+
 const countryOptions = computed(() =>
   store.countries.map((country) => ({ label: country.country_name, value: country.id }))
 );
@@ -163,7 +185,6 @@ const cityOptions = computed(() =>
 );
 
 // ===== Category & Treatment Options =====
-await store.loadprocedure();
 const categoryOptions = computed(() =>
   store.procedure.map((cat) => ({ label: cat.name, value: cat.id }))
 );

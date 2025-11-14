@@ -15,12 +15,27 @@
             <!-- Image Gallery -->
             <div class="image-gallery my-4">
                 <div v-if="hospital.image_urls && hospital.image_urls.length" class="main-image">
-                    <img :src="hospital.image_urls[0]" :alt="title" />
+                    <img 
+                        :src="hospital.image_urls[0]" 
+                        :alt="title" 
+                        loading="lazy"
+                        :class="{ 'image-loading': !imageLoaded.main }"
+                        @load="imageLoaded.main = true"
+                        @error="imageLoaded.main = true"
+                    />
                 </div>
                 <!-- Thumbnails (all others) -->
                 <div v-if="hospital.image_urls && hospital.image_urls.length > 1" class="thumbnail-grid">
-                    <img v-for="(img, index) in hospital.image_urls.slice(1)" :key="index" :src="img"
-                        :alt="`${title} thumbnail ${index + 1}`" />
+                    <img 
+                        v-for="(img, index) in hospital.image_urls.slice(1)" 
+                        :key="index" 
+                        :src="img"
+                        :alt="`${title} thumbnail ${index + 1}`" 
+                        loading="lazy"
+                        :class="{ 'image-loading': !imageLoaded.thumbnails[index] }"
+                        @load="imageLoaded.thumbnails[index] = true"
+                        @error="imageLoaded.thumbnails[index] = true"
+                    />
                 </div>
             </div>
 
@@ -223,8 +238,14 @@
                                     <div class="accordion-body">
                                         <div class="staff-member" v-for="staff in treatment?.staff || []"
                                             :key="staff?.id">
-                                            <img :src="staff?.media?.[0]?.original_url || 'https://flyhospitals.dev/dumy.jpg'"
-                                                :alt="staff?.name || 'Doctor'">
+                                            <img 
+                                                :src="staff?.media?.[0]?.original_url || 'https://flyhospitals.dev/dumy.jpg'"
+                                                :alt="staff?.name || 'Doctor'" 
+                                                loading="lazy"
+                                                :class="{ 'image-loading': !imageLoaded.staff[staff?.id] }"
+                                                @load="imageLoaded.staff[staff?.id] = true"
+                                                @error="imageLoaded.staff[staff?.id] = true"
+                                            >
                                             <div class="staff-info">
                                                 <h6>{{ staff?.name || 'Unknown' }}</h6>
                                                 <p>
@@ -246,7 +267,14 @@
                 <div class="col-lg-4">
                     <div class="card card-body sidebar-card">
                         <div class="map-placeholder mb-3">
-                            <img :src="hospital.image_urls[0]" :alt="title" />
+                            <img 
+                                :src="hospital.image_urls[0]" 
+                                :alt="title" 
+                                loading="lazy"
+                                :class="{ 'image-loading': !imageLoaded.sidebar }"
+                                @load="imageLoaded.sidebar = true"
+                                @error="imageLoaded.sidebar = true"
+                            />
                         </div>
                         <div class="hospital-header d-flex align-items-center justify-content-between">
                             <h5 class="hospital-name text-truncate">
@@ -312,6 +340,14 @@ const config = useRuntimeConfig()
 
 const activeTab = reactive<Record<number, TabType>>({});
 const showMore = ref(false)
+
+// Track image loading state for blur effect
+const imageLoaded = reactive({
+	main: false,
+	thumbnails: {} as Record<number, boolean>,
+	staff: {} as Record<number, boolean>,
+	sidebar: false,
+})
 
 const title = computed(() => useCapitalize(hospital.value.title || ""))
 const shortAddress = computed(() =>
@@ -425,5 +461,29 @@ const getIcon = (slug: string): string => {
     background-color: none !important;
     border-bottom: 1px solid;
     border-color: none !important;
+}
+
+/* Image loading blur effect */
+.image-loading {
+	filter: blur(10px);
+	transition: filter 0.5s ease;
+	background-color: #e0e0e0;
+	background-image: linear-gradient(90deg, #e0e0e0 0%, #f5f5f5 50%, #e0e0e0 100%);
+	background-size: 200% 100%;
+	animation: shimmer 1.5s infinite;
+}
+
+img:not(.image-loading) {
+	filter: blur(0);
+	transition: filter 0.5s ease;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
 }
 </style>

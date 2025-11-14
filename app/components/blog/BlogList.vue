@@ -14,7 +14,14 @@
 
       <div v-else class="blogs-grid">
         <div v-for="blog in blogs" :key="blog.id" class="blog-card">
-           <img :src="blog.image_url" :alt="blog.title" />
+           <img 
+             :src="blog.image_url" 
+             :alt="blog.title" 
+             loading="lazy"
+             :class="{ 'image-loading': !imageLoaded[blog.id] }"
+             @load="imageLoaded[blog.id] = true"
+             @error="imageLoaded[blog.id] = true"
+           />
           <div class="blog-content">
             <h3>{{ blog.title }}</h3>
             <p class="truncate-lines">{{ blog.content }}</p>
@@ -28,13 +35,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useGeneralStore } from '~/stores/general'
 
 const store = useGeneralStore()
- const config = useRuntimeConfig()
-// ✅ SSR-friendly call
-await useAsyncData('blogs', () => store.fetchBlogs())
+const config = useRuntimeConfig()
+
+// Track image loading state for blur effect
+const imageLoaded = reactive({})
+
+// ✅ Only fetch if data doesn't exist (non-blocking)
+onMounted(() => {
+	if (store.blogs.length === 0) {
+		store.fetchBlogs().catch(err => {
+			console.error('Failed to fetch blogs:', err);
+		});
+	}
+});
 
 const blogs = computed(() => store.blogs.slice(0, 4))
 const loading = computed(() => store.loading)
