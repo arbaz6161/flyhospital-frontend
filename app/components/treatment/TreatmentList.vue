@@ -40,7 +40,14 @@
                   treatment.name
                 )}`"
               >
-                <img :src="treatment.image_url??'https://flyhospitals.dev/dumy.jpg'" alt="Treatment" />
+                <img 
+                  :src="treatment.image_url??'https://flyhospitals.dev/dumy.jpg'" 
+                  alt="Treatment" 
+                  loading="lazy"
+                  :class="{ 'image-loading': !imageLoaded[treatment.id] }"
+                  @load="imageLoaded[treatment.id] = true"
+                  @error="imageLoaded[treatment.id] = true"
+                />
                 <div class="card-content">
                   <p class="location">
                     <Icon
@@ -83,14 +90,24 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted, reactive } from "vue";
 import { useGeneralStore } from "~/stores/general";
 
 const store = useGeneralStore();
 const viewAllLink = ref("/procedure");
 
-// ✅ SSR-friendly fetch
-await useAsyncData("treatments", () => store.fetchTreatments());
+// Track image loading state for blur effect
+const imageLoaded = reactive({})
+
+// ✅ Only fetch if data doesn't exist (non-blocking)
+// Data will refresh only on hard refresh (F5 or Ctrl+R)
+onMounted(() => {
+	if (store.treatments.length === 0) {
+		store.fetchTreatments().catch(err => {
+			console.error('Failed to fetch treatments:', err);
+		});
+	}
+});
 
 const treatments = computed(() => store.treatments);
 const loading = computed(() => store.loading);

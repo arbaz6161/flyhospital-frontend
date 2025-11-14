@@ -21,8 +21,14 @@
           >
                     <!-- Destination Card 1 -->
                     <div v-for="destination in destinations" class="destination-card">
-                        <img :src="destination.image_url??'https://flyhospitals.dev/dumy.jpg'"
-                            alt="New York City Skyline">
+                        <img 
+                            :src="destination.image_url??'https://flyhospitals.dev/dumy.jpg'"
+                            alt="New York City Skyline"
+                            loading="lazy"
+                            :class="{ 'image-loading': !imageLoaded[destination.id] }"
+                            @load="imageLoaded[destination.id] = true"
+                            @error="imageLoaded[destination.id] = true"
+                        >
                         <div class="card-content">
                             <p class="card-subtitle">Looking for medical in</p>
                             <div class="card-title-bar">
@@ -79,13 +85,24 @@
     </section>
 </template>
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref, reactive } from 'vue'
 import { useGeneralStore } from '~/stores/general'
 
 const store = useGeneralStore()
- const config = useRuntimeConfig()
-// ✅ SSR-friendly call
-await useAsyncData('destinations', () =>  store.fetchMedicalDestination())
+const config = useRuntimeConfig()
+
+// Track image loading state for blur effect
+const imageLoaded = reactive({})
+
+// ✅ Only fetch if data doesn't exist (non-blocking)
+// Data will refresh only on hard refresh (F5 or Ctrl+R)
+onMounted(() => {
+	if (store.destinations.length === 0) {
+		store.fetchMedicalDestination().catch(err => {
+			console.error('Failed to fetch destinations:', err);
+		});
+	}
+});
 
 const destinations = computed(() => store.destinations)
 const loading = computed(() => store.loading)

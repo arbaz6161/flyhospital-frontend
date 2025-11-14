@@ -15,13 +15,21 @@
     </section>
 </template>
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useGeneralStore } from '~/stores/general'
 
 const store = useGeneralStore()
- const config = useRuntimeConfig()
-// ✅ SSR-friendly call
-await useAsyncData('treatments', () =>  store.fetchTreatments())
+const config = useRuntimeConfig()
+
+// ✅ Only fetch if data doesn't exist (non-blocking)
+// Data will refresh only on hard refresh (F5 or Ctrl+R)
+onMounted(() => {
+	if (store.treatments.length === 0) {
+		store.fetchTreatments().catch(err => {
+			console.error('Failed to fetch treatments:', err);
+		});
+	}
+});
 
 const treatments = computed(() => store.treatments)
 const loading = computed(() => store.loading)

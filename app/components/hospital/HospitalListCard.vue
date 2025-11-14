@@ -3,7 +3,15 @@
         <div class="row g-0">
             <!-- Image -->
             <div class="col-md-3 p-3">
-                <img :src="hospital.image_urls[0]" :alt="title" class="img-fluid img-fit rounded" />
+                <img 
+                    :src="hospital.image_urls[0]" 
+                    :alt="title" 
+                    class="img-fluid img-fit rounded"
+                    loading="lazy"
+                    :class="{ 'image-loading': !imageLoaded }"
+                    @load="imageLoaded = true"
+                    @error="imageLoaded = true"
+                />
             </div>
 
             <!-- Main Content -->
@@ -106,6 +114,7 @@ const props = defineProps({
 const store = useLandingPageStore()
  const config = useRuntimeConfig()
 const showMore = ref(false)
+const imageLoaded = ref(false)
 
 // Helpers
 const title = computed(() => useCapitalize(props.hospital?.title || ""))

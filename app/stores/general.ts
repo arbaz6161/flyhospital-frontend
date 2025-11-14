@@ -48,6 +48,11 @@ interface GeneralState {
     last_page: number
     total: number
   }
+  lastFetched: {
+    blogs: number | null
+    treatments: number | null
+    destinations: number | null
+  }
 }
 
 export const useGeneralStore = defineStore('general', {
@@ -63,7 +68,21 @@ export const useGeneralStore = defineStore('general', {
       last_page: 1,
       total: 0,
     },
+    lastFetched: {
+      blogs: null,
+      treatments: null,
+      destinations: null,
+    },
   }),
+
+  getters: {
+    isStale: (state) => (key: 'blogs' | 'treatments' | 'destinations') => {
+      if (!state.lastFetched[key]) return true
+      // Consider data stale after 1 hour
+      const oneHour = 60 * 60 * 1000
+      return Date.now() - state.lastFetched[key]! > oneHour
+    },
+  },
 
   actions: {
     async fetchBlogs(page = 1): Promise<void> {
@@ -83,6 +102,7 @@ export const useGeneralStore = defineStore('general', {
           last_page: res.data.last_page,
           total: res.data.total,
         }
+        this.lastFetched.blogs = Date.now()
       } catch (err: any) {
         this.error = err?.message ?? 'Failed to fetch blogs'
       } finally {
@@ -90,7 +110,13 @@ export const useGeneralStore = defineStore('general', {
       }
     },
 
-    async fetchTreatments(): Promise<void> {
+    async fetchTreatments(forceRefresh = false): Promise<void> {
+    // If data exists and not forcing refresh, skip
+    // Data will only refresh on hard refresh (F5) which clears the store
+    if (!forceRefresh && this.treatments.length > 0) {
+      return
+    }
+
     try {
       this.loading = true
       this.error = null
@@ -101,13 +127,20 @@ export const useGeneralStore = defineStore('general', {
       const res = await $fetch<{ status: boolean; data: Treatments[] }>(api)
 
       this.treatments = res.data   // ✅ directly assign array
+      this.lastFetched.treatments = Date.now()
     } catch (err: any) {
       this.error = err?.message ?? 'Failed to fetch treatments'
     } finally {
       this.loading = false
     }
   },
-  async fetchMedicalDestination(): Promise<void> {
+  async fetchMedicalDestination(forceRefresh = false): Promise<void> {
+      // If data exists and not forcing refresh, skip
+      // Data will only refresh on hard refresh (F5) which clears the store
+      if (!forceRefresh && this.destinations.length > 0) {
+        return
+      }
+
       try {
         this.loading = true
         this.error = null
@@ -118,11 +151,28 @@ export const useGeneralStore = defineStore('general', {
         const res = await $fetch(api)
 
         this.destinations = res.data  // ✅ directly assign array
+        this.lastFetched.destinations = Date.now()
       } catch (err: any) {
         this.error = err?.message ?? 'Failed to fetch destinations'
       } finally {
         this.loading = false
       }
+    },
+
+    // Force refresh all data
+    async refreshAll(): Promise<void> {
+      this.treatments = []
+      this.destinations = []
+      this.blogs = []
+      this.lastFetched = {
+        blogs: null,
+        treatments: null,
+        destinations: null,
+      }
+      await Promise.all([
+        this.fetchTreatments(true),
+        this.fetchMedicalDestination(true),
+      ])
     },
   async fetchSubProcedures(treatmentId: string | number): Promise<void> {
       try {

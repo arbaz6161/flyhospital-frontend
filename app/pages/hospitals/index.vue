@@ -15,33 +15,20 @@
             <span class="input-group-text bg-white">
               <Icon name="bi:search" class="text-[#053862] w-5 h-5" />
             </span>
-            <input
-              type="text"
-              class="form-control"
-              v-model="store.search"
-              placeholder="Enter Hospital Name"
-            />
+            <input type="text" class="form-control" v-model="store.search" placeholder="Enter Hospital Name" />
           </div>
         </div>
 
         <!-- Country -->
         <div class="col-lg-3">
-          <USelectMenu
-            v-model="selectedCountry"
-            :items="countryOptions"
-            placeholder="Select a country"
-            class="w-full rounded h-12"
-          />
+          <USelectMenu v-model="selectedCountry" :items="countryOptions" placeholder="Select a country"
+            class="w-full rounded h-12" />
         </div>
 
         <!-- City -->
         <div class="col-lg-3">
-          <USelectMenu
-            v-model="selectedCity"
-            :items="cityOptions"
-            placeholder="Select city"
-            class="w-full rounded h-12"
-          />
+          <USelectMenu v-model="selectedCity" :items="cityOptions" placeholder="Select city"
+            class="w-full rounded h-12" />
         </div>
 
         <!-- Search button -->
@@ -67,11 +54,7 @@
       <span v-if="store.loader"> Loading ... </span>
       <div v-else>
         <template v-if="store.hospitals.length > 0">
-          <HospitalListCard
-            v-for="hospital in store.hospitals"
-            :key="hospital.id"
-            :hospital="hospital"
-          />
+          <HospitalListCard v-for="hospital in store.hospitals" :key="hospital.id" :hospital="hospital" />
         </template>
         <div v-else class="text-center text-muted py-5">
           No hospitals found.
@@ -87,19 +70,11 @@
       </p>
 
       <div class="d-flex justify-content-center gap-3">
-        <button
-          v-if="store.currentPage > 1"
-          @click="store.loadPrevious()"
-          class="btn btn-primary details-btn"
-        >
+        <button v-if="store.currentPage > 1" @click="store.loadPrevious()" class="btn btn-primary details-btn">
           Previous
         </button>
 
-        <button
-          v-if="store.currentPage < store.lastPage"
-          @click="store.loadMore()"
-          class="btn btn-primary details-btn"
-        >
+        <button v-if="store.currentPage < store.lastPage" @click="store.loadMore()" class="btn btn-primary details-btn">
           Next
         </button>
       </div>
@@ -120,6 +95,10 @@ const router = useRouter()
 
 // Load countries on mount
 await store.loadCountries()
+
+store.country_id = ''
+store.city_id = ''
+store.search = ''
 
 // ✅ On initial load, sync query params into store
 if (route.query.country_id) store.country_id = String(route.query.country_id)
@@ -149,6 +128,7 @@ const selectedCountry = computed({
     store.country_id = val?.value || ''
   }
 })
+
 const selectedCity = computed({
   get: () => cityOptions.value.find(c => c.value == store.city_id) || null,
   set: (val) => {
@@ -166,4 +146,16 @@ const applyFilters = async () => {
   await router.push({ path: '/hospitals', query })
   await store.list(1)
 }
+
+// Watch country changes
+watch(selectedCountry, (newVal) => {
+  store.country_id = newVal?.value || ''
+  store.city_id = ''
+  if (newVal?.value) store.loadCities(newVal.value)
+})
+
+// Watch city changes
+watch(selectedCity, (newVal) => {
+  store.city_id = newVal?.value || ''
+})
 </script>

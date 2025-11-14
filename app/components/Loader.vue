@@ -30,10 +30,10 @@ figure {
   border-radius: 100%;
   transition: all 1s ease;
 }
-.dot:nth-child(2) { top: 0; bottom: 0; left: 0; background: #FF4444; animation: dotsY 2.4s linear infinite; }
-.dot:nth-child(3) { left: 0; right: 0; top: 0; background: #FFBB33; animation: dotsX 2.4s linear infinite; }
-.dot:nth-child(4) { top: 0; bottom: 0; right: 0; background: #99CC00; animation: dotsY 2.4s linear infinite; }
-.dot:nth-child(5) { left: 0; right: 0; bottom: 0; background: #33B5E5; animation: dotsX 2.4s linear infinite; }
+.dot:nth-child(2) { top: 0; bottom: 0; left: 0; background: #053862; animation: dotsY 2.4s linear infinite; }
+.dot:nth-child(3) { left: 0; right: 0; top: 0; background: #0d2d52; animation: dotsX 2.4s linear infinite; }
+.dot:nth-child(4) { top: 0; bottom: 0; right: 0; background: #33B5E5; animation: dotsY 2.4s linear infinite; }
+.dot:nth-child(5) { left: 0; right: 0; bottom: 0; background: #053862; animation: dotsX 2.4s linear infinite; }
 
 @keyframes rotate {
   0% { transform: rotate( 0 ); }

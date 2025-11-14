@@ -12,8 +12,8 @@ export const useHospitalStore = defineStore('hospital', {
         city_id: '' as string | number | null,
         category_id: '' as string | number | null,
         treatment_id: '' as string | number | null,
-        procedure:[] as any[],
-        subprocedure:[] as any[],
+        procedure: [] as any[],
+        subprocedure: [] as any[],
     }),
 
     actions: {
@@ -39,8 +39,9 @@ export const useHospitalStore = defineStore('hospital', {
                 this.totalHospitals = data.value.total_hospitals ?? 0
             }
         },
-        async list(){
-             const query = new URLSearchParams()
+
+        async list() {
+            const query = new URLSearchParams()
             if (this.search) query.append('search', this.search)
             if (this.country_id) query.append('country_id', String(this.country_id))
             if (this.city_id) query.append('city_id', String(this.city_id))
@@ -90,9 +91,8 @@ export const useHospitalStore = defineStore('hospital', {
             this.cities = data.value.data ?? data.value
         },
 
-
-         async loadprocedure() {
-             const config = useRuntimeConfig()
+        async loadprocedure() {
+            const config = useRuntimeConfig()
             const api = `${config.public.baseUrl}/treatments`;
             const { data, error } = await useFetch(api)
 
@@ -105,6 +105,7 @@ export const useHospitalStore = defineStore('hospital', {
                 this.procedure = data.value.data ?? data.value
             }
         },
+
         async loadSubprocedure(procedureId: string | number) {
             if (!procedureId) {
                 this.subprocedure = []

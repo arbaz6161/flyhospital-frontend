@@ -4,7 +4,14 @@
             <div class="footer-top">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <img src="~assets/img/logo.png" alt="FlyHospitals Logo">
+                        <img 
+                            src="~assets/img/logo.png" 
+                            alt="FlyHospitals Logo"
+                            loading="eager"
+                            :class="{ 'image-loading': !imageLoaded }"
+                            @load="imageLoaded = true"
+                            @error="imageLoaded = true"
+                        >
                         <span>FlyHospitals</span>
                     </div>
                     <p>Your partner in trusted medical care. Find hospitals by procedure & location.</p>
@@ -83,4 +90,8 @@
         </div>
     </footer>
 </template>
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+
+const imageLoaded = ref(false)
+</script>
