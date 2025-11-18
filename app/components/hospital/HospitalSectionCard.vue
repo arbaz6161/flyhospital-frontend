@@ -39,6 +39,7 @@ function truncateWords(str, num) {
   return words.length > num ? words.slice(0, num).join(" ") + "..." : str;
 }
 </script>
+
 <style>
 .truncate-wordss {
   display: inline-block;

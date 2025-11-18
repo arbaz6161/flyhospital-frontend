@@ -6,13 +6,13 @@
                     <img 
                         src="~assets/img/logo.png" 
                         class="logo" 
-                        alt="FlyHospitals Logo"
+                        alt="ClickHospital Logo"
                         loading="eager"
                         :class="{ 'image-loading': !imageLoaded }"
                         @load="imageLoaded = true"
                         @error="imageLoaded = true"
                     >
-                    <span> FlyHospitals </span>
+                    <span> ClickHospital </span>
                 </NuxtLink>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

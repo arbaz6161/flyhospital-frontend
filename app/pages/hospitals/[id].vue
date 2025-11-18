@@ -6,11 +6,13 @@
             { label: 'Hospitals', link: '/hospitals' },
             { label: title, active: true }
         ]" />
+
         <template v-if="store.loader">
             <Loader>
                 Loding...
             </Loader>
         </template>
+        
         <template v-else>
             <!-- Image Gallery -->
             <div class="image-gallery my-4">

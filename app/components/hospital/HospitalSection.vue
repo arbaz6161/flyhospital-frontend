@@ -7,8 +7,12 @@
         <p>{{ description }}</p>
       </div>
 
+      <!-- Loading/Error States -->
+      <div v-if="loading" class="text-center py-5">Loading hospitals...</div>
+      <div v-else-if="error" class="text-center text-danger py-5">{{ error }}</div>
+      
       <!-- Slider -->
-      <div class="slider-container">
+      <div v-else-if="hospitals.length > 0" class="slider-container">
         <button 
           class="slider-arrow prev-arrow" 
           aria-label="Previous slide" 
@@ -45,6 +49,8 @@
           </svg>
         </button>
       </div>
+      
+      <div v-else class="text-center text-muted py-5">No hospitals available.</div>
 
       <!-- View all link -->
       <NuxtLink :to="viewAllLink" class="view-all-btn">View all Hospitals</NuxtLink>
@@ -53,11 +59,10 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue'
+import { useGeneralStore } from '~/stores/general'
+
 const props = defineProps({
-  hospitals: {
-    type: Array,
-    default: () => []
-  },
   title: {
     type: String,
     default: "Explore Popular Hospitals and Clinics"
@@ -72,13 +77,22 @@ const props = defineProps({
   }
 })
 
+const store = useGeneralStore()
+
+// ✅ Data is fetched centrally in index page
+// This component just displays the data from the store
+// No need to fetch here to avoid duplicate requests
+const hospitals = computed(() => store.hospitals)
+const loading = computed(() => store.loading)
+const error = computed(() => store.error)
+
 const currentIndex = ref(0)
 const slidesPerView = 4 // can be dynamic based on screen width
 const slideWidth = 100 / slidesPerView
 
 // Max index to prevent sliding too far
 const maxIndex = computed(() =>
-  Math.max(0, props.hospitals.length - slidesPerView)
+  Math.max(0, hospitals.value.length - slidesPerView)
 )
 
 // Track style computed for cleaner template

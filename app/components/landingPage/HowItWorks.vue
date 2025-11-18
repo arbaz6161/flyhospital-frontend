@@ -4,10 +4,10 @@
             <div class="how-it-works-container">
                 <div class="how-it-works-header">
                     <div class="header-text">
-                        <h2>How FlyHospitals Works</h2>
+                        <h2>How ClickHospital Works</h2>
                         <p>Whether you're seeking affordable procedure, advanced medical care, or a specific
                             specialty,
-                            FlyHospitals helps you find, compare, and connect with trusted hospitals around the
+                            ClickHospital helps you find, compare, and connect with trusted hospitals around the
                             world in
                             just a few clicks.</p>
                     </div>
@@ -85,4 +85,6 @@
         </div>
     </section>
 </template>
-<script setup></script>
+
+<script setup>
+</script>

@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   ssr: false, // ✅ ensures SSR is enabled
   app: {
     head: {
-      title: "Flyhospital",
+      title: "ClickHospital",
       meta: [
         { name: "description", content: "A simple Nuxt SSR example with useHead" }
       ],

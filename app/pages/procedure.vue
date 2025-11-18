@@ -11,7 +11,7 @@
         <div class="listings-header mb-4">
             <h2>Best <span>{{ treatments.length }} Verified</span> Procedure in the World</h2>
             <p class="text-muted">
-                The FlyHospitals is based on data science algorithms, providing a trusted, transparent, and objective comparison.
+                The ClickHospital is based on data science algorithms, providing a trusted, transparent, and objective comparison.
                 It takes into account patient demand, review scores (both positive and negative), the frequency of updates to procedure options and prices,
                 response speed, and clinic certifications.
             </p>

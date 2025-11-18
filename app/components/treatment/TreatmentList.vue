@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, reactive } from "vue";
+import { computed, ref, reactive } from "vue";
 import { useGeneralStore } from "~/stores/general";
 
 const store = useGeneralStore();
@@ -99,15 +99,9 @@ const viewAllLink = ref("/procedure");
 // Track image loading state for blur effect
 const imageLoaded = reactive({})
 
-// ✅ Only fetch if data doesn't exist (non-blocking)
-// Data will refresh only on hard refresh (F5 or Ctrl+R)
-onMounted(() => {
-	if (store.treatments.length === 0) {
-		store.fetchTreatments().catch(err => {
-			console.error('Failed to fetch treatments:', err);
-		});
-	}
-});
+// ✅ Data is fetched centrally in index page
+// This component just displays the data from the store
+// No need to fetch here to avoid duplicate requests
 
 const treatments = computed(() => store.treatments);
 const loading = computed(() => store.loading);

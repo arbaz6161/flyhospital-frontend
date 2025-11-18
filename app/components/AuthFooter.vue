@@ -2,7 +2,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center"
             style="border-top:1px solid rgba(0, 0, 0, 0.1); padding: 2rem 1rem;">
-            <p class="mb-0">Copyrights © 2025 FlyHospitals</p>
+            <p class="mb-0">Copyrights © 2025 ClickHospital</p>
             <div class="social-icons">
                 <a href="#">
                     <svg width="12" height="23" viewBox="0 0 12 23" fill="none" xmlns="http://www.w3.org/2000/svg">
