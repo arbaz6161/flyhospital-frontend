@@ -5,8 +5,8 @@
                 <!-- Left Column -->
                 <div class="col-lg-5">
                     <div class="left-column">
-                        <h1>Welcome to ClickHospital Partnership Registration!</h1>
-                        <p>Create an account to become our partner and list your clinic on ClickHospital in 4 simple
+                        <h1>Welcome to ClickHospitals Partnership Registration!</h1>
+                        <p>Create an account to become our partner and list your clinic on ClickHospitals in 4 simple
                             steps.</p>
                         <img src="~/assets/img/map.png" alt="World map with location pins">
                     </div>

@@ -7,18 +7,18 @@
             { label: title, active: true }
         ]" />
 
-        <template v-if="store.loader">
-            <Loader>
-                Loding...
-            </Loader>
+        <template v-if="pending || store.loader">
+            <div class="text-center py-5" style="position: relative; min-height: 400px;">
+                <Loader />
+            </div>
         </template>
         
         <template v-else>
             <!-- Image Gallery -->
             <div class="image-gallery my-4">
-                <div v-if="hospital.image_urls && hospital.image_urls.length" class="main-image">
+                <div v-if="(hospital as any)?.image_urls?.length" class="main-image">
                     <img 
-                        :src="hospital.image_urls[0]" 
+                        :src="(hospital as any).image_urls[0]" 
                         :alt="title" 
                         loading="lazy"
                         :class="{ 'image-loading': !imageLoaded.main }"
@@ -27,9 +27,9 @@
                     />
                 </div>
                 <!-- Thumbnails (all others) -->
-                <div v-if="hospital.image_urls && hospital.image_urls.length > 1" class="thumbnail-grid">
+                <div v-if="(hospital as any)?.image_urls?.length > 1" class="thumbnail-grid">
                     <img 
-                        v-for="(img, index) in hospital.image_urls.slice(1)" 
+                        v-for="(img, index) in (hospital as any).image_urls.slice(1)" 
                         :key="index" 
                         :src="img"
                         :alt="`${title} thumbnail ${index + 1}`" 
@@ -73,7 +73,7 @@
                     <div class="mb-4 section-base">
                         <div class="hospital-location-section">
                             <Icon name="material-symbols:location-on-outline" style="color:#053862;" />
-                            <p class="text-muted ms-0 ps-2">{{ hospital.address }}</p>
+                            <p class="text-muted ms-0 ps-2">{{ (hospital as any)?.address || '' }}</p>
                         </div>
                         <div class="hospital-title-section">
                             <h2>{{ title }}</h2>
@@ -82,48 +82,36 @@
 
                     <div class="card card-body rating-summary-card mb-4">
                         <!-- Row 1: Rating + Reviews + Categories -->
-                        <div class="row w-100 mb-3">
+                        <div class="row w-100 mb-3 g-2">
                             <!-- Left side: Rating + Reviews -->
-                            <div class="col-12 col-md-4 d-flex align-items-center">
-                                <div class="row w-100 text-center">
-                                    <!-- Rating -->
-                                    <div class="col-7">
-                                        <div class="rating-item">
-                                            <div class="value">{{ Number(hospital.average_rating).toFixed(1) }}</div>
-                                            <div class="stars text-warning">
-                                                <template v-for="i in 5" :key="i">
-                                                    <!-- Full star -->
-                                                    <Icon v-if="i <= Math.floor(hospital.average_rating)"
-                                                        name="carbon:star-filled" />
+                            <div class="col-12 col-md-2 align-items-center">
+                                <!-- Rating -->
+                                <div class="rating-item">
+                                    <div class="value">{{ Number((hospital as any)?.average_rating || 0).toFixed(1) }}</div>
+                                    <div class="stars text-warning">
+                                        <template v-for="i in 5" :key="i">
+                                            <!-- Full star -->
+                                            <Icon v-if="i <= Math.floor((hospital as any)?.average_rating || 0)"
+                                                name="carbon:star-filled" />
 
-                                                    <!-- Half star -->
-                                                    <Icon
-                                                        v-else-if="i === Math.floor(hospital.average_rating) + 1 && (hospital.average_rating % 1) >= 0.5"
-                                                        name="carbon:star-half" />
+                                            <!-- Half star -->
+                                            <Icon
+                                                v-else-if="i === Math.floor((hospital as any)?.average_rating || 0) + 1 && ((hospital as any)?.average_rating % 1) >= 0.5"
+                                                name="carbon:star-half" />
 
-                                                    <!-- Empty star -->
-                                                    <Icon v-else name="carbon:star" />
-                                                </template>
-                                            </div>
-                                        </div>
+                                            <!-- Empty star -->
+                                            <Icon v-else name="carbon:star" />
+                                        </template>
                                     </div>
-
-                                    <!-- Reviews -->
-                                    <!-- <div class="col-5">
-                                    <div class="rating-item">
-                                        <div class="value">{{ hospital.total_reviews }}</div>
-                                        <div class="label">reviews</div>
-                                    </div>
-                                </div> -->
                                 </div>
                             </div>
 
                             <!-- Right side: Categories -->
                             <div
-                                class="col-12 col-md-8 ps-3 d-flex flex-wrap gap-3 align-items-center category-card-wrapper">
-                                <span class="category-card">Doctor <span>{{ hospital.staff_count }}</span></span>
+                                class="col-12 col-md-9 d-flex flex-wrap align-items-center category-card-wrapper gap-2 ml-4">
+                                <span class="category-card">Doctor <span>{{ (hospital as any)?.staff_count || 0 }}</span></span>
                                 <span class="category-card">Facilities <span>4.8</span></span>
-                                <span class="category-card">Staff <span>{{ 4.9 }}</span></span>
+                                <span class="category-card">Staff <span>4.9</span></span>
                                 <span class="category-card">Language assistance <span>4.8</span></span>
                                 <span class="category-card">Support <span>4.9</span></span>
                             </div>
@@ -133,27 +121,26 @@
                         <div class="row w-100">
                             <div class="col-12">
                                 <ul class="hospital-contact-info list-unstyled mb-0 d-flex flex-wrap gap-4">
-                                    <li>
-                                        <NuxtLink :to="`tel:${hospital.phone}`">
+                                    <li v-if="(hospital as any)?.phone">
+                                        <NuxtLink :to="`tel:${(hospital as any).phone}`">
                                             <Icon name="bi:telephone"
                                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
-                                            <span class="text-dark cursor-pointer">{{ hospital.phone }}</span>
+                                            <span class="text-dark cursor-pointer">{{ (hospital as any).phone }}</span>
                                         </NuxtLink>
                                     </li>
-                                    <li>
+                                    <li v-if="(hospital as any)?.address">
                                         <NuxtLink
-                                            :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.location)}`">
+                                            :to="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((hospital as any).location || (hospital as any).address)}`">
                                             <Icon name="material-symbols:location-on-outline"
                                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
-                                            <span class="text-dark cursor-pointer">{{ hospital.address }}</span>
+                                            <span class="text-dark cursor-pointer">{{ (hospital as any).address }}</span>
                                         </NuxtLink>
                                     </li>
-                                    <li>
-                                        <NuxtLink :to="`/${hospital.website_url}`" target="_blank">
+                                    <li v-if="(hospital as any)?.website_url">
+                                        <NuxtLink :to="`${(hospital as any).website_url}`" target="_blank">
                                             <Icon name="streamline-plump:web-remix"
                                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
-                                            <span class="text-dark cursor-pointer">{{ hospital.website_url ?? '-'
-                                            }}</span>
+                                            <span class="text-dark cursor-pointer">Website</span>
                                         </NuxtLink>
                                     </li>
                                 </ul>
@@ -173,7 +160,7 @@
                         </p>
 
                         <ul class="list-unstyled">
-                            <li class="info">
+                            <li class="info d-flex">
                                 <svg width="20" height="20" viewBox="0 0 23 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -182,12 +169,12 @@
                                         stroke-linejoin="round" />
                                 </svg>
 
-                                <span> {{ new Date().getFullYear() - new Date(hospital.foundation_year).getFullYear()
-                                }}'th Year
-                                    of
-                                    Foundation</span>
+                                <span v-if="(hospital as any)?.foundation_year">
+                                    {{ new Date().getFullYear() - new Date((hospital as any).foundation_year).getFullYear() }}'th Year
+                                    of Foundation
+                                </span>
                             </li>
-                            <li class="info">
+                            <li class="info d-flex" v-if="(hospital as any)?.staff_count">
                                 <svg width="20" height="20" viewBox="0 0 23 26" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -195,7 +182,7 @@
                                         fill="#053862" />
                                 </svg>
 
-                                <span>{{ hospital.staff_count ?? 0 }} doctors</span>
+                                <span>{{ (hospital as any).staff_count || 0 }} doctors</span>
                             </li>
 
                             <div id="procedures"></div>
@@ -205,10 +192,10 @@
 
 
                     <!-- Procedures -->
-                    <div class="mb-5 pb-5 section-base">
+                    <div class="mb-5 pb-5 section-base" v-if="(hospital as any)?.treatments?.length">
                         <h3 class="section-title">Departments</h3>
 
-                        <Accordion parent v-for="treatment in hospital.treatments" :key="treatment.id">
+                        <Accordion parent v-for="treatment in (hospital as any).treatments" :key="treatment.id">
                             <AccordionSection :title="treatment.name" :key="treatment.id" :active="true">
 
                                 <!-- Tabs -->
@@ -268,9 +255,9 @@
                 <!-- Right Column: Sidebar -->
                 <div class="col-lg-4">
                     <div class="card card-body sidebar-card">
-                        <div class="map-placeholder mb-3">
+                        <div class="map-placeholder mb-3" v-if="(hospital as any)?.image_urls?.[0]">
                             <img 
-                                :src="hospital.image_urls[0]" 
+                                :src="(hospital as any).image_urls[0]" 
                                 :alt="title" 
                                 loading="lazy"
                                 :class="{ 'image-loading': !imageLoaded.sidebar }"
@@ -283,7 +270,7 @@
                                 {{ title }}
                             </h5>
                             <div class="rating d-flex align-items-center ms-2">
-                                <div class="rating-score">{{ Number(hospital.average_rating).toFixed(1) }}</div>
+                                <div class="rating-score">{{ Number((hospital as any)?.average_rating || 0).toFixed(1) }}</div>
                                 <Icon name="carbon:star-filled" class="stars text-warning" />
                             </div>
                         </div>
@@ -293,54 +280,63 @@
                         </div>
                         <!-- Info Buttons -->
                         <div class="info-buttons d-flex gap-2 flex-wrap" style="margin-top: 10px;">
-                            <NuxtLink :to="`tel:${hospital.phone}`" class="btn btn-sm btn-light">
+                            <NuxtLink v-if="(hospital as any)?.phone" :to="`tel:${(hospital as any).phone}`" class="btn btn-sm btn-light">
                                 <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;" />
                                 Call
                             </NuxtLink>
 
-                            <NuxtLink :to="`${hospital.website_url}`" class="btn btn-sm btn-light">
+                            <NuxtLink v-if="(hospital as any)?.website_url" :to="`${(hospital as any).website_url}`" target="_blank" class="btn btn-sm btn-light">
                                 <Icon name="streamline-plump:web-remix"
                                     style="color:#053862; margin-right:5px; font-size: 18px;" />
                                 Website
                             </NuxtLink>
-                            <a :href="hospital.google_map_location" class="btn btn-sm btn-light">
+                            <a v-if="(hospital as any)?.google_map_location" :href="(hospital as any).google_map_location" target="_blank" class="btn btn-sm btn-light">
                                 <Icon name="material-symbols:location-on-outline"
                                     style="color:#053862; margin-right:5px; font-size: 18px;" />
                                 Google Map
                             </a>
                         </div>
-                        <!-- <a :href="hospital.google_map_location" class="btn btn-primary w-100">Hospital Location</a> -->
                     </div>
                 </div>
 
                 <!--=============== POPULAR RESTAURENTS SECTION ===============-->
-                <RestaurentSection id="restaurants" v-if="hospital.restaurants.length > 0"
-                    :restaurants="hospital.restaurants" />
+                <LazyRestaurentSection id="restaurants" v-if="(hospital as any)?.restaurants?.length > 0"
+                    :restaurants="(hospital as any).restaurants" />
 
                 <!--=============== POPULAR HOTELS SECTION ===============-->
-                <HotelSection id="hotels" v-if="hospital.hotels.length > 0" :hotels="hospital.hotels" />
+                <LazyHotelSection id="hotels" v-if="(hospital as any)?.hotels?.length > 0" :hotels="(hospital as any).hotels" />
             </div>
         </template>
     </main>
 </template>
 
 <script setup lang="ts">
+import { computed, reactive, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useHospitalListStore } from '~/stores/hospitallist'
 import { useRoute } from 'vue-router'
-import HotelSection from '~/components/hotels/HotelSection.vue'
-import { reactive, ref, onMounted } from "vue";
+import Loader from '~/components/Loader.vue'
 
 const route = useRoute()
-
 const store = useHospitalListStore()
-await store.details(route.params.id)
+
+// ✅ SSR-friendly: Load hospital details
+const hospitalId = route.params.id as string
+const { pending } = await useAsyncData(`hospital-${hospitalId}`, async () => {
+  await store.details(hospitalId)
+}, {
+  lazy: true,
+  default: () => null,
+  server: true
+})
 
 const { hospital } = storeToRefs(store)
 
-type TabType = "procedures" | "staff";
-const config = useRuntimeConfig()
+// Type for active tabs
+type TabType = "procedures" | "staff"
 
-const activeTab = reactive<Record<number, TabType>>({});
+// Initialize active tabs - default to 'procedures' for each treatment
+const activeTab = reactive<Record<number, TabType>>({})
 const showMore = ref(false)
 
 // Track image loading state for blur effect
@@ -351,56 +347,47 @@ const imageLoaded = reactive({
 	sidebar: false,
 })
 
-const title = computed(() => useCapitalize(hospital.value.title || ""))
-const shortAddress = computed(() =>
-    useTruncateText(hospital.value.address || "", 40)
-)
+// ✅ Computed properties with safe access
+const title = computed(() => {
+  const hospitalData = hospital.value as any
+  return useCapitalize(hospitalData?.title || "")
+})
+
+const shortAddress = computed(() => {
+  const hospitalData = hospital.value as any
+  return useTruncateText(hospitalData?.address || "", 40)
+})
 
 // Description logic
-const needsTruncate = computed(
-    () => hospital.value.description?.length > 500
-)
+const needsTruncate = computed(() => {
+  const hospitalData = hospital.value as any
+  return (hospitalData?.description?.length || 0) > 500
+})
 
 const truncatedDescription = computed(() => {
-    if (showMore.value || !needsTruncate.value) {
-        return hospital.value.description || ""
-    }
-    return hospital.value.description.slice(0, 100)
+  const hospitalData = hospital.value as any
+  const description = hospitalData?.description || ""
+  
+  if (showMore.value || !needsTruncate.value) {
+    return description
+  }
+  return description.slice(0, 100)
 })
 
 const toggleDescription = () => {
-    showMore.value = !showMore.value
+  showMore.value = !showMore.value
 }
 
-const percentage = computed(() => (hospital.value.average_rating / 5) * 100)
-
-// Count of reviews for a given star
-const getStarCount = (star: number) => {
-    return hospital.value.reviews.filter(r => r.rating === star).length
-}
-
-// Percentage for the progress bar
-const getStarPercentage = (star: number) => {
-    if (!hospital.value.reviews.length) return 0
-    return (getStarCount(star) / hospital.value.reviews.length) * 100
-}
-
-const getIcon = (slug: string): string => {
-    const icons: Record<string, string> = {
-        airport_pickup: "fe:taxi",
-        cafe: "carbon:cafe",
-        free_wifi: "mdi:wifi",
-        medical_travel_insurance: "fa6-solid:hand-holding-medical",
-        parking_available: "tabler:parking",
-        restaurant: "mdi:silverware-fork-knife",
-        pharmacy: "bi:capsule-pill",
-        tv_in_the_room: "solar:tv-outline",
-        consultation_services: "garden:translation-exists-fill-16"
-    }
-
-    // fallback icon
-    return icons[slug] || "mdi:web"
-}
+// Initialize active tabs when treatments are loaded
+watch(() => (hospital.value as any)?.treatments, (treatments) => {
+  if (treatments && Array.isArray(treatments)) {
+    treatments.forEach((treatment: any) => {
+      if (treatment?.id && !activeTab[treatment.id]) {
+        activeTab[treatment.id] = 'procedures'
+      }
+    })
+  }
+}, { immediate: true })
 
 </script>
 

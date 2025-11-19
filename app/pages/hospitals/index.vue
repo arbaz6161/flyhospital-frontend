@@ -26,7 +26,7 @@
             @update:model-value="(val) => selectedCountry = val as any"
             :items="countryOptions" 
             placeholder="Select a country"
-            class="w-full rounded h-12" />
+            class="w-full rounded h-12 select-menu-white" />
         </div>
 
         <!-- City -->
@@ -36,7 +36,7 @@
             @update:model-value="(val) => selectedCity = val as any"
             :items="cityOptions" 
             placeholder="Select city"
-            class="w-full rounded h-12" />
+            class="w-full rounded h-12 select-menu-white" />
         </div>
 
         <!-- Search button -->
@@ -54,7 +54,7 @@
         Best <span>{{ store.totalHospitals }} Verified</span> Hospitals in the World
       </h2>
       <p class="text-muted">
-        ClickHospital uses data science algorithms to deliver a trusted, transparent, and objective comparison.
+        ClickHospitals uses data science algorithms to deliver a trusted, transparent, and objective comparison.
       </p>
     </div>
 
@@ -131,6 +131,7 @@ const router = useRouter()
 store.country_id = route.query.country_id ? String(route.query.country_id) : ''
 store.city_id = route.query.city_id ? String(route.query.city_id) : ''
 store.search = route.query.search ? String(route.query.search) : ''
+store.category_id = route.query.category_id ? String(route.query.category_id) : ''
 
 // ✅ Optimized: Check cache first, then load in parallel
 const needsCountries = store.countries.length === 0
@@ -147,7 +148,7 @@ const isFilterChanging = ref(false)
 
 // ✅ SSR-friendly: Load hospitals with lazy option (doesn't block initial render)
 // Use unique key based on filters for proper caching
-const dataKey = `hospitals-${store.country_id || 'all'}-${store.city_id || 'all'}-${store.search || 'all'}`
+const dataKey = `hospitals-${store.country_id || 'all'}-${store.city_id || 'all'}-${store.search || 'all'}-${store.category_id || 'all'}`
 const { pending } = await useAsyncData(dataKey, async () => {
   // Don't show loader for initial load (we use pending state instead)
   await store.list(1, false)
@@ -211,22 +212,24 @@ const applyFilters = async () => {
   if (store.country_id) query.country_id = store.country_id
   if (store.city_id) query.city_id = store.city_id
   if (store.search) query.search = store.search
+  if (store.category_id) query.category_id = store.category_id
 
   await router.push({ path: '/hospitals', query })
   await store.list(1)
   isFilterChanging.value = false
 }
 
-// ✅ Watch for filter changes (search, country, city) to show loader
-watch([() => store.search, () => store.country_id, () => store.city_id], ([newSearch, newCountry, newCity], [oldSearch, oldCountry, oldCity]) => {
+// ✅ Watch for filter changes (search, country, city, category) to show loader
+watch([() => store.search, () => store.country_id, () => store.city_id, () => store.category_id], ([newSearch, newCountry, newCity, newCategory], [oldSearch, oldCountry, oldCity, oldCategory]) => {
   // Only trigger if filters actually changed (not initial setup)
   if (isFirstLoad.value) return
   
   const searchChanged = newSearch !== oldSearch
   const countryChanged = newCountry !== oldCountry
   const cityChanged = newCity !== oldCity
+  const categoryChanged = newCategory !== oldCategory
   
-  if (searchChanged || countryChanged || cityChanged) {
+  if (searchChanged || countryChanged || cityChanged || categoryChanged) {
     isFilterChanging.value = true
     // Reload hospitals when filters change
     store.list(1).finally(() => {
@@ -253,3 +256,83 @@ watch(() => store.country_id, (newCountryId, oldCountryId) => {
   }
 })
 </script>
+
+<style scoped>
+/* Make USelectMenu background white with black text */
+:deep(.select-menu-white) {
+  background-color: white !important;
+  color: #000000 !important;
+}
+
+:deep(.select-menu-white button),
+:deep(.select-menu-white [role="button"]) {
+  background-color: white !important;
+  color: #000000 !important;
+}
+
+:deep(.select-menu-white input) {
+  background-color: white !important;
+  color: #000000 !important;
+}
+
+:deep(.select-menu-white span),
+:deep(.select-menu-white div) {
+  color: #000000 !important;
+}
+
+:deep(.select-menu-white .text-gray-500),
+:deep(.select-menu-white .text-gray-400) {
+  color: #000000 !important;
+}
+
+/* Dropdown menu (options list) - White background with black text */
+:deep(.select-menu-white [role="listbox"]),
+:deep(.select-menu-white [role="menu"]),
+:deep(.select-menu-white ul),
+:deep(.select-menu-white [data-headlessui-state]),
+:deep(.select-menu-white [data-popper-placement]),
+:deep(.select-menu-white [data-radix-popper-content-wrapper]) {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+:deep(.select-menu-white [role="option"]),
+:deep(.select-menu-white li),
+:deep(.select-menu-white [data-headlessui-state] > *),
+:deep(.select-menu-white [data-headlessui-state] button),
+:deep(.select-menu-white [role="option"] span),
+:deep(.select-menu-white [role="option"] div) {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+:deep(.select-menu-white [role="option"]:hover),
+:deep(.select-menu-white li:hover),
+:deep(.select-menu-white [data-headlessui-state] > *:hover),
+:deep(.select-menu-white [role="option"][aria-selected="true"]) {
+  background-color: #f5f5f5 !important;
+  color: #000000 !important;
+}
+
+/* Target any dropdown container that appears outside the component */
+:deep([data-headlessui-portal]),
+:deep([data-radix-portal]) {
+  background-color: #ffffff !important;
+}
+
+:deep([data-headlessui-portal] [role="option"]),
+:deep([data-headlessui-portal] li),
+:deep([data-headlessui-portal] button),
+:deep([data-radix-portal] [role="option"]),
+:deep([data-radix-portal] li) {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+:deep([data-headlessui-portal] [role="option"]:hover),
+:deep([data-headlessui-portal] li:hover),
+:deep([data-radix-portal] [role="option"]:hover) {
+  background-color: #f5f5f5 !important;
+  color: #000000 !important;
+}
+</style>

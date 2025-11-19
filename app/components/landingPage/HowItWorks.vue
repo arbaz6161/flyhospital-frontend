@@ -4,10 +4,10 @@
             <div class="how-it-works-container">
                 <div class="how-it-works-header">
                     <div class="header-text">
-                        <h2>How ClickHospital Works</h2>
+                        <h2>How ClickHospitals Works</h2>
                         <p>Whether you're seeking affordable procedure, advanced medical care, or a specific
                             specialty,
-                            ClickHospital helps you find, compare, and connect with trusted hospitals around the
+                            ClickHospitals helps you find, compare, and connect with trusted hospitals around the
                             world in
                             just a few clicks.</p>
                     </div>

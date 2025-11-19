@@ -12,12 +12,12 @@
                 >
             </div>
             <div class="info-text">
-                <h2><span>ClickHospital</span> is an international platform for hospital search and treatment
+                <h2><span>ClickHospitals</span> is an international platform for hospital search and treatment
                     arrangement
                 </h2>
             </div>
             <div class="info-description">
-                <p>We designed ClickHospital to simplify global medical discovery. Whether you're seeking advanced
+                <p>We designed ClickHospitals to simplify global medical discovery. Whether you're seeking advanced
                     procedure, lower costs, or expert care in another country, our platform connects you with
                     verified
                     hospitals worldwide.</p>

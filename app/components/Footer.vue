@@ -6,18 +6,18 @@
                     <div class="footer-logo">
                         <img 
                             src="~assets/img/logo.png" 
-                            alt="ClickHospital Logo"
+                            alt="ClickHospitals Logo"
                             loading="eager"
                             :class="{ 'image-loading': !imageLoaded }"
                             @load="imageLoaded = true"
                             @error="imageLoaded = true"
                         >
-                        <span>ClickHospital</span>
+                        <span>ClickHospitals</span>
                     </div>
                     <p>Your partner in trusted medical care. Find hospitals by procedure & location.</p>
                     <p>
                         Call us: +1(734)-447-5890<br>
-                        Email: contact@clickhospital.com
+                        Email: contact@ClickHospitals.com
                     </p>
                 </div>
 
@@ -63,7 +63,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p class="copyright">Copyrights © 2025 ClickHospital</p>
+                <p class="copyright">Copyrights © 2025 ClickHospitals</p>
                 <div class="social-icons">
                    <NuxtLink to="#" aria-label="Facebook">
                         <svg viewBox="0 0 24 24" fill="currentColor">

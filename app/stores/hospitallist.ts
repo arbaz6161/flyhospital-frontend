@@ -1,5 +1,17 @@
 import { defineStore } from 'pinia'
 
+interface Country {
+  id: number | string
+  country_name: string
+  slug?: string
+}
+
+interface City {
+  id: number | string
+  name: string
+  country_id?: number | string
+}
+
 export const useHospitalListStore = defineStore('hospitalList', {
   state: () => ({
     hospitals: [] as any[],
@@ -18,6 +30,7 @@ export const useHospitalListStore = defineStore('hospitalList', {
     loader: false,
     countries: [] as any[],
     cities: [] as any[],
+    citiesCache: {} as Record<string | number, any[]>, // Cache cities by country ID
     id:'',
     hospital:Object
   }),
@@ -125,47 +138,82 @@ export const useHospitalListStore = defineStore('hospitalList', {
 
     // Load countries
     async loadCountries() {
-      const { data, error } = await useFetch(
-        'https://flyhospitals.dev/api/countries'
-      )
+      const config = useRuntimeConfig()
+      const api = `${config.public.baseUrl}/countries`
 
-      if (error.value) {
-        console.error('❌ API Error:', error.value)
-        return
-      }
+      try {
+        const response = await $fetch<{
+          data?: Country[]
+          status?: boolean
+        } | Country[]>(api)
 
-      if (data.value) {
-        this.countries = data.value.data ?? data.value
+        if (Array.isArray(response)) {
+          this.countries = response
+        } else {
+          this.countries = (response as { data?: Country[] }).data ?? []
+        }
+      } catch (err) {
+        console.error('❌ Failed to load countries:', err)
       }
     },
 
-    // Load cities by countries
-    async loadCities(countryId: string | number) {
+    // Load cities by countries (with caching)
+    async loadCities(countryId: string | number, forceRefresh = false) {
       if (!countryId) {
         this.cities = []
         return
       }
 
-      const { data, error } = await useFetch(
-        `https://flyhospitals.dev/api/countries/${countryId}/cities`
-      )
-      if (error.value) return console.error(error.value)
-      this.cities = data.value.data ?? data.value
-    },
-    async details(id:any)
-    {
-      this.loader =true;
-        if (!id) {
-        this.cities = []
+      // Check cache first
+      if (!forceRefresh && this.citiesCache[countryId]) {
+        this.cities = this.citiesCache[countryId]
         return
       }
 
-      const { data, error } = await useFetch(
-        `https://flyhospitals.dev/api/hospital/${id}`
-      )
-      if (error.value) return console.error(error.value)
-      this.hospital = data.value.data ?? data.value
-      this.loader = false;
+      const config = useRuntimeConfig()
+      const api = `${config.public.baseUrl}/countries/${countryId}/cities`
+
+      try {
+        const response = await $fetch<{
+          data?: City[]
+          status?: boolean
+        } | City[]>(api)
+        
+        const cities = Array.isArray(response) ? response : (response.data ?? [])
+        this.cities = cities
+        this.citiesCache[countryId] = cities // Cache the result
+      } catch (err) {
+        console.error('❌ Failed to load cities:', err)
+        this.cities = []
+      }
+    },
+    async details(id: string | number) {
+      if (!id) {
+        this.hospital = {} as any
+        return
+      }
+
+      this.loader = true
+      const config = useRuntimeConfig()
+      const api = `${config.public.baseUrl}/hospital/${id}`
+
+      try {
+        const response = await $fetch<{
+          data?: any
+          status?: boolean
+        } | any>(api)
+        
+        if (response && typeof response === 'object' && 'data' in response) {
+          this.hospital = (response as { data?: any }).data ?? {}
+        } else {
+          this.hospital = (response as any) ?? {}
+        }
+      } catch (err) {
+        console.error('❌ Failed to load hospital details:', err)
+        this.hospital = {} as any
+      } finally {
+        this.loader = false
+      }
     }
   },
 })

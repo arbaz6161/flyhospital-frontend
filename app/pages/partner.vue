@@ -6,7 +6,7 @@
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
                         <div class="fly-hero-content">
-                            <h1>Grow Global Reach with ClickHospital</h1>
+                            <h1>Grow Global Reach with ClickHospitals</h1>
                             <p>Showcase your hospital to thousands of international patients actively seeking care.
                                 Create
                                 your public profile, highlight your expertise, and start receiving patient inquiries
@@ -161,7 +161,7 @@
                         <div class="fly-step-item">
                             <div class="fly-step-icon">1</div>
                             <h6>Create partner account</h6>
-                            <p>Register your clinic on clickhospital.com</p>
+                            <p>Register your clinic on ClickHospitals.com</p>
                         </div>
                     </div>
                     <div class="col-md-3">
