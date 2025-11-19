@@ -6,7 +6,7 @@
           Find the Right Hospital Anywhere <span>in the World.</span>
         </h1>
         <p>
-          FlyHospitals helps you explore and connect with internationally accredited hospitals,
+          ClickHospitals helps you explore and connect with internationally accredited hospitals,
           based on your procedure needs, budget, and destination.
         </p>
 
@@ -277,7 +277,6 @@ const submitSearch = () => {
   router.push({ path: "/hospitals", query });
 };
 </script>
-
 
 <style scoped>
 .modal-backdrop {

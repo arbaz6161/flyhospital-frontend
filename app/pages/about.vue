@@ -46,12 +46,12 @@
                     <img src="~/assets/img/Maskgroup.png" alt="Medical Team" class="about-image shadow">
                 </div>
                 <div class="col-lg-6 about-text">
-                    <h2>About FlyHospitals</h2>
-                    <p>Your gateway to trusted hospitals around the world. FlyHospitals is a free global patient hub
+                    <h2>About ClickHospitals</h2>
+                    <p>Your gateway to trusted hospitals around the world. ClickHospitals is a free global patient hub
                         that helps clients easily discover, compare, and access medical treatment across Oceania. We aim
                         to simplify healthcare journeys by connecting patients with verified hospitals, treatments, and
                         specialists no matter where they are. Whether you're searching for advanced philosophies,
-                        specialized care, or reliable medical systems abroad, FlyHospitals gives you access to top-tier
+                        specialized care, or reliable medical systems abroad, ClickHospitals gives you access to top-tier
                         facilities in various countries.</p>
                     <p>We offer complete transparency, from treatment details to hospital credentials, so you can make
                         informed decisions with confidence. Our mission is to make global healthcare more accessible,
@@ -66,7 +66,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="title">What Our Patient Say</h2>
-                <p class="subtitle">Read experiences from patients who found the right care through FlyHospitals.</p>
+                <p class="subtitle">Read experiences from patients who found the right care through ClickHospitals.</p>
             </div>
             <div class="position-relative">
                 <div class="slider-arrow prev">
@@ -97,7 +97,7 @@
                             <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                     class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                     class="bi bi-star-fill"></i></div>
-                            <p class="quote">In the middle of a very long and stressful ordeal, FlyHospitals was a life
+                            <p class="quote">In the middle of a very long and stressful ordeal, ClickHospitals was a life
                                 saver for me. A true diamond.</p>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
                             <div>
                                 <h5>Free Global Support</h5>
                                 <p class="heading">Zero-cost, full support.</p>
-                                <p>FlyHospitals staff are there for you at every step of your medical journey. We
+                                <p>ClickHospitals staff are there for you at every step of your medical journey. We
                                     provide assistance and advice to our international clients.</p>
                             </div>
                         </div>
@@ -289,7 +289,7 @@
                             <div>
                                 <h5>Verified Information</h5>
                                 <p class="heading">Medical content you can trust.</p>
-                                <p>All medical content on FlyHospitals is reviewed by licensed professionals and based
+                                <p>All medical content on ClickHospitals is reviewed by licensed professionals and based
                                     on globally recognized protocols.</p>
                             </div>
                         </div>

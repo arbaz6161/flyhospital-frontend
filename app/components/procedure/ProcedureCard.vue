@@ -1,5 +1,4 @@
 <template>
-
         <div class="col">
              <NuxtLink :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
             <div>
@@ -23,6 +22,7 @@
        
     
 </template>
+
 <script setup>
 import { ref, computed } from "vue"
 import { useCapitalize, useTruncateText } from "~/composables/useHelpers"
@@ -37,9 +37,9 @@ const props = defineProps({
 const imageLoaded = ref(false)
 
 </script>
-<style>
 
- .card-custom {
+<style>
+    .card-custom {
         border-radius: 10px;
         overflow: hidden;
         border: 1px solid #dee2e6; /* Light border */
@@ -47,28 +47,32 @@ const imageLoaded = ref(false)
         transition: transform 0.2s ease-in-out;
         height: 100%; /* Ensure cards in a row have equal height */
     }
+
     .card-custom img{
-            width: 100%;
-    height: 173px;
+        width: 100%;
+        height: 180px;
     }
+
     .card-custom:hover {
         transform: translateY(-5px); /* Slight lift on hover */
     }
+
     .card-img-top-custom {
         width: 100%;
         height: 100%; /* Fixed height for image consistency */
         object-fit: cover; /* Cover the area, cropping if necessary */
     }
+
     .card-body-custom {
         padding: 1rem;
-       
         font-weight: bold;
         color: #0d2d52;
     }
+    
     /* Responsive adjustments */
     @media (max-width: 767.98px) {
         .card-img-top-custom {
             height: 180px; /* Slightly taller on small screens */
         }
     }
-    </style>
+</style>

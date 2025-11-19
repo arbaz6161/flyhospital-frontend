@@ -111,8 +111,6 @@ const props = defineProps({
     },
 })
 
-const store = useLandingPageStore()
- const config = useRuntimeConfig()
 const showMore = ref(false)
 const imageLoaded = ref(false)
 

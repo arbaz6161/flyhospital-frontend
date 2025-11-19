@@ -11,7 +11,7 @@
                                 <div>
                                     <h6>Email</h6>
                                     <NuxtLink to="mailto:contact@flyhospitals.com">
-                                        contact@flyhospitals.com
+                                        contact@ClickHospitals.com
                                     </NuxtLink>
                                 </div>
                             </div>

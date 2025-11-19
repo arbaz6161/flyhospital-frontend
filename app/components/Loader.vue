@@ -56,5 +56,4 @@ figure {
   55%{ opacity: .6; border-radius: 100%; }
   66%{ opacity: 0; }
 }
-
 </style>

@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "deploy:build": "npm run generate && echo '✅ Build complete! Files are in .output/public/ - Upload these to your hosting.'"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.9.0",

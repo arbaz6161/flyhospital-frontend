@@ -4,16 +4,12 @@
  */
 export const useDataRefresh = () => {
 	const generalStore = useGeneralStore();
-	const landingPageStore = useLandingPageStore();
 
 	/**
 	 * Refresh all cached data
 	 */
 	const refreshAll = async () => {
-		await Promise.all([
-			generalStore.refreshAll(),
-			landingPageStore.refresh(),
-		]);
+		await generalStore.refreshAll();
 	};
 
 	/**
@@ -24,23 +20,23 @@ export const useDataRefresh = () => {
 	};
 
 	const refreshDestinations = async () => {
-		await generalStore.fetchMedicalDestination(true);
+		await generalStore.fetchDestination(true);
+	};
+
+	const refreshHospitals = async () => {
+		await generalStore.fetchHospitals(true);
 	};
 
 	const refreshBlogs = async () => {
 		await generalStore.fetchBlogs(1);
 	};
 
-	const refreshLandingPage = async () => {
-		await landingPageStore.refresh();
-	};
-
 	return {
 		refreshAll,
 		refreshTreatments,
 		refreshDestinations,
+		refreshHospitals,
 		refreshBlogs,
-		refreshLandingPage,
 	};
 };
 

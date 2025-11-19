@@ -84,8 +84,9 @@
         </div>
     </section>
 </template>
+
 <script setup>
-import { computed, onMounted, ref, reactive } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { useGeneralStore } from '~/stores/general'
 
 const store = useGeneralStore()
@@ -94,15 +95,9 @@ const config = useRuntimeConfig()
 // Track image loading state for blur effect
 const imageLoaded = reactive({})
 
-// ✅ Only fetch if data doesn't exist (non-blocking)
-// Data will refresh only on hard refresh (F5 or Ctrl+R)
-onMounted(() => {
-	if (store.destinations.length === 0) {
-		store.fetchMedicalDestination().catch(err => {
-			console.error('Failed to fetch destinations:', err);
-		});
-	}
-});
+// ✅ Data is fetched centrally in index page
+// This component just displays the data from the store
+// No need to fetch here to avoid duplicate requests
 
 const destinations = computed(() => store.destinations)
 const loading = computed(() => store.loading)
@@ -132,6 +127,7 @@ const prevSlide = () => {
   }
 };
 </script>
+
 <style scoped>
 .slider-container {
   position: relative;

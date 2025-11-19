@@ -1,5 +1,36 @@
 import { defineStore } from 'pinia'
 
+export interface Treatments {
+  id: number
+  name: string
+  description: string
+  image_url: string
+  price?: string
+  created_at?: string
+  updated_at?: string
+  slug?: string // Added slug for potential dynamic routing
+}
+
+export interface Destination {
+  id: number
+  name: string
+  description: string
+  image_url: string
+  created_at?: string
+  updated_at?: string
+  slug?: string
+}
+
+export interface Hospital {
+  id: number
+  name: string
+  image_url?: string
+  description?: string
+  title?: string
+  average_rating?: string
+  total_reviews?: number
+}
+
 export interface Blog {
   id: number
   title: string
@@ -11,7 +42,7 @@ export interface Blog {
   slug?: string
 }
 
-export interface Treatments {
+export interface SubProcedure {
   id: number
   name: string
   description: string
@@ -19,7 +50,7 @@ export interface Treatments {
   price?: string
   created_at?: string
   updated_at?: string
-  slug?: string // Added slug for potential dynamic routing
+  slug?: string
 }
 
 interface PaginatedResponse<T> {
@@ -40,7 +71,8 @@ interface GeneralState {
   blogs: Blog[]
   treatments: Treatments[]
   subprocedures: Treatments[]
-  destinations: []
+  destinations: Destination[]
+  hospitals: Hospital[]
   loading: boolean
   error: string | null
   pagination: {
@@ -52,15 +84,18 @@ interface GeneralState {
     blogs: number | null
     treatments: number | null
     destinations: number | null
+    hospitals: number | null
+    subprocedures: number | null
   }
 }
 
 export const useGeneralStore = defineStore('general', {
   state: (): GeneralState => ({
-    blogs: [],
     treatments: [],
-    subprocedures: [],
     destinations: [],
+    hospitals: [],
+    blogs: [],
+    subprocedures: [],
     loading: false,
     error: null,
     pagination: {
@@ -69,14 +104,16 @@ export const useGeneralStore = defineStore('general', {
       total: 0,
     },
     lastFetched: {
-      blogs: null,
       treatments: null,
       destinations: null,
+      hospitals: null,
+      blogs: null,
+      subprocedures: null,
     },
   }),
 
   getters: {
-    isStale: (state) => (key: 'blogs' | 'treatments' | 'destinations') => {
+    isStale: (state) => (key: 'treatments' | 'destinations' | 'hospitals' | 'blogs') => {
       if (!state.lastFetched[key]) return true
       // Consider data stale after 1 hour
       const oneHour = 60 * 60 * 1000
@@ -85,56 +122,32 @@ export const useGeneralStore = defineStore('general', {
   },
 
   actions: {
-    async fetchBlogs(page = 1): Promise<void> {
+    async fetchTreatments(forceRefresh = false): Promise<void> {
+      // If data exists and not forcing refresh, skip
+      // Data will only refresh on hard refresh (F5) which clears the store
+      if (!forceRefresh && this.treatments.length > 0) {
+        return
+      }
+
       try {
         this.loading = true
         this.error = null
 
         const config = useRuntimeConfig()
-        const api = `${config.public.baseUrl}/blogs?page=${page}`
+        const api = `${config.public.baseUrl}/treatments`
 
-        const res = await $fetch<ApiResponse<Blog>>(api)
+        const res = await $fetch<{ status: boolean; data: Treatments[] }>(api)
 
-        this.blogs = res.data.data
-        this.loading =false;
-        this.pagination = {
-          current_page: res.data.current_page,
-          last_page: res.data.last_page,
-          total: res.data.total,
-        }
-        this.lastFetched.blogs = Date.now()
+        this.treatments = res.data ?? []
+        this.lastFetched.treatments = Date.now()
       } catch (err: any) {
-        this.error = err?.message ?? 'Failed to fetch blogs'
+        this.error = err?.message ?? 'Failed to fetch treatments'
       } finally {
         this.loading = false
       }
     },
-
-    async fetchTreatments(forceRefresh = false): Promise<void> {
-    // If data exists and not forcing refresh, skip
-    // Data will only refresh on hard refresh (F5) which clears the store
-    if (!forceRefresh && this.treatments.length > 0) {
-      return
-    }
-
-    try {
-      this.loading = true
-      this.error = null
-
-      const config = useRuntimeConfig()
-      const api = `${config.public.baseUrl}/treatments`
-
-      const res = await $fetch<{ status: boolean; data: Treatments[] }>(api)
-
-      this.treatments = res.data   // ✅ directly assign array
-      this.lastFetched.treatments = Date.now()
-    } catch (err: any) {
-      this.error = err?.message ?? 'Failed to fetch treatments'
-    } finally {
-      this.loading = false
-    }
-  },
-  async fetchMedicalDestination(forceRefresh = false): Promise<void> {
+  
+    async fetchDestination(forceRefresh = false): Promise<void> {
       // If data exists and not forcing refresh, skip
       // Data will only refresh on hard refresh (F5) which clears the store
       if (!forceRefresh && this.destinations.length > 0) {
@@ -148,12 +161,78 @@ export const useGeneralStore = defineStore('general', {
         const config = useRuntimeConfig()
         const api = `${config.public.baseUrl}/destinations`
 
-        const res = await $fetch(api)
+        const res = await $fetch<{ status?: boolean; data: Destination[] }>(api)
 
-        this.destinations = res.data  // ✅ directly assign array
+        this.destinations = res.data ?? []
         this.lastFetched.destinations = Date.now()
       } catch (err: any) {
         this.error = err?.message ?? 'Failed to fetch destinations'
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchHospitals(forceRefresh = false): Promise<void> {
+      // If data exists and not forcing refresh, skip
+      if (!forceRefresh && this.hospitals.length > 0) {
+        return
+      }
+
+      try {
+        this.loading = true
+        this.error = null
+
+        const config = useRuntimeConfig()
+        const api = `${config.public.baseUrl}/hospitals`
+
+        const res = await $fetch<{ status: boolean; data: Hospital[] }>(api)
+
+        this.hospitals = res.data ?? []
+        this.lastFetched.hospitals = Date.now()
+      } catch (err: any) {
+        this.error = err?.message ?? 'Failed to fetch hospitals'
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchBlogs(page = 1): Promise<void> {
+      try {
+        this.loading = true
+        this.error = null
+
+        const config = useRuntimeConfig()
+        const api = `${config.public.baseUrl}/blogs?page=${page}`
+
+        const res = await $fetch<ApiResponse<Blog>>(api)
+
+        this.blogs = res.data.data
+        this.pagination = {
+          current_page: res.data.current_page,
+          last_page: res.data.last_page,
+          total: res.data.total,
+        }
+        this.lastFetched.blogs = Date.now()
+      } catch (err: any) {
+        this.error = err?.message ?? 'Failed to fetch blogs'
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchSubProcedures(treatmentId: string | number): Promise<void> {
+      try {
+        this.loading = true
+        this.error = null
+
+        const config = useRuntimeConfig()
+        const api = `${config.public.baseUrl}/sub-treatments?parent_id=${treatmentId}`
+        const res = await $fetch<{ status?: boolean; data: Treatments[] }>(api)
+        
+        this.subprocedures = res.data ?? []
+        this.lastFetched.subprocedures = Date.now()
+      } catch (err: any) {
+        this.error = err?.message ?? 'Failed to fetch subprocedures'
       } finally {
         this.loading = false
       }
@@ -163,33 +242,23 @@ export const useGeneralStore = defineStore('general', {
     async refreshAll(): Promise<void> {
       this.treatments = []
       this.destinations = []
+      this.hospitals = []
       this.blogs = []
+      this.subprocedures = []
       this.lastFetched = {
-        blogs: null,
         treatments: null,
         destinations: null,
+        hospitals: null,
+        blogs: null,
+        subprocedures: null,
       }
       await Promise.all([
         this.fetchTreatments(true),
-        this.fetchMedicalDestination(true),
+        this.fetchDestination(true),
+        this.fetchHospitals(true),
+        this.fetchBlogs(1),
+        this.fetchSubProcedures(1),
       ])
     },
-  async fetchSubProcedures(treatmentId: string | number): Promise<void> {
-      try {
-        this.loading = true
-        this.error = null
-
-        const config = useRuntimeConfig()
-        // Example: /sub-treatments/123 or with query ?treatment_id=123
-        const api = `${config.public.baseUrl}/sub-treatments?parent_id=${treatmentId}`
-        const res = await $fetch(api)
-        this.subprocedures = res.data  // ✅ directly assign array
-      } catch (err: any) {
-        this.error = err?.message ?? 'Failed to fetch subprocedures'
-      } finally {
-        this.loading = false
-      }
-    }
-
   },
 })
