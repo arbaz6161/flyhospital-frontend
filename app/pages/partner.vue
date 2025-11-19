@@ -6,7 +6,7 @@
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
                         <div class="fly-hero-content">
-                            <h1>Grow Global Reach with FlyHospitals</h1>
+                            <h1>Grow Global Reach with ClickHospitals</h1>
                             <p>Showcase your hospital to thousands of international patients actively seeking care.
                                 Create
                                 your public profile, highlight your expertise, and start receiving patient inquiries
@@ -161,7 +161,7 @@
                         <div class="fly-step-item">
                             <div class="fly-step-icon">1</div>
                             <h6>Create partner account</h6>
-                            <p>Register your clinic on FlyHospitals.com</p>
+                            <p>Register your clinic on ClickHospitals.com</p>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -196,15 +196,26 @@
                                     <p class="fly-period">Billed monthly</p>
                                 </div>
                                 <div class="fly-plan-features">
-                                    <ul>
-                                        <li><i class="bi bi-check-lg"></i> Item text</li>
-                                        <li><i class="bi bi-check-lg"></i> Item text 2</li>
-                                        <li><i class="bi bi-check-lg"></i> Item text 3</li>
+                                    <ul class="list-unstyled space-y-2">
+                                        <li class="flex items-center gap-2">
+                                            <Icon name="bi:check-lg" class="text-green-600 w-6 h-6" />
+                                            <span>Item text</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <Icon name="bi:check-lg" class="text-green-600 w-6 h-6" />
+                                            <span>Item text 2</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <Icon name="bi:check-lg" class="text-green-600 w-6 h-6" />
+                                            <span>Item text 3</span>
+                                        </li>
                                     </ul>
+
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-dark w-100 fly-btn-dark">Get Started</a>
-
+                             <NuxtLink to="#" class="btn btn-dark w-100 fly-btn-dark">
+                                Get Started
+                            </NuxtLink>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -216,14 +227,25 @@
                                     <p class="fly-period">Billed monthly</p>
                                 </div>
                                 <div class="fly-plan-features">
-                                    <ul>
-                                        <li><i class="bi bi-check-lg"></i> Item text</li>
-                                        <li><i class="bi bi-check-lg"></i> Item text 2</li>
-                                        <li><i class="bi bi-check-lg"></i> Item text 3</li>
+                                    <ul class="list-unstyled space-y-2">
+                                        <li class="flex items-center gap-2">
+                                            <Icon name="bi:check-lg" class="text-green-600 w-6 h-6" />
+                                            <span>Item text</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <Icon name="bi:check-lg" class="text-green-600 w-6 h-6" />
+                                            <span>Item text 2</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <Icon name="bi:check-lg" class="text-green-600 w-6 h-6" />
+                                            <span>Item text 3</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-dark w-100 fly-btn-dark">Get Started</a>
+                            <NuxtLink to="#" class="btn btn-dark w-100 fly-btn-dark">
+                                Get Started
+                            </NuxtLink>
 
                         </div>
                     </div>
