@@ -51,7 +51,7 @@
     <!-- Hospital Listings -->
     <div class="listings-header mb-4">
       <h2>
-        Best <span>{{ store.totalHospitals }} Verified</span> Hospitals in the World
+        <span>{{ store.totalHospitals }} Verified</span> Hospitals in {{ locationText }}
       </h2>
       <p class="text-muted">
         ClickHospitals uses data science algorithms to deliver a trusted, transparent, and objective comparison.
@@ -205,6 +205,17 @@ const selectedCity = computed<{ label: string; value: string } | null>({
   }
 })
 
+// ✅ Dynamic location text based on selected filters
+const locationText = computed(() => {
+  if (selectedCountry.value && selectedCountry.value.value) {
+    return selectedCountry.value.label
+  }
+  if (selectedCity.value && selectedCity.value.value) {
+    return selectedCity.value.label
+  }
+  return 'the World'
+})
+
 // ✅ Apply filters -> sync with URL and reload hospitals
 const applyFilters = async () => {
   isFilterChanging.value = true
@@ -237,6 +248,39 @@ watch([() => store.search, () => store.country_id, () => store.city_id, () => st
     })
   }
 })
+
+// ✅ Watch route query params and sync with store (for navigation from other pages)
+watch(() => route.query, (newQuery) => {
+  // Skip on initial load (handled by initialization above)
+  if (isFirstLoad.value) return
+  
+  const newCountryId = newQuery.country_id ? String(newQuery.country_id) : ''
+  const newCityId = newQuery.city_id ? String(newQuery.city_id) : ''
+  const newSearch = newQuery.search ? String(newQuery.search) : ''
+  const newCategoryId = newQuery.category_id ? String(newQuery.category_id) : ''
+  
+  // Check if any values actually changed
+  const countryChanged = newCountryId !== store.country_id
+  const cityChanged = newCityId !== store.city_id
+  const searchChanged = newSearch !== store.search
+  const categoryChanged = newCategoryId !== store.category_id
+  
+  // Only update and reload if something changed
+  if (countryChanged || cityChanged || searchChanged || categoryChanged) {
+    isFilterChanging.value = true
+    
+    // Update store values
+    if (countryChanged) store.country_id = newCountryId
+    if (cityChanged) store.city_id = newCityId
+    if (searchChanged) store.search = newSearch
+    if (categoryChanged) store.category_id = newCategoryId
+    
+    // Reload hospitals with new filters
+    store.list(1).finally(() => {
+      isFilterChanging.value = false
+    })
+  }
+}, { deep: true, immediate: false })
 
 // ✅ Watch country changes for loading cities
 watch(() => store.country_id, (newCountryId, oldCountryId) => {

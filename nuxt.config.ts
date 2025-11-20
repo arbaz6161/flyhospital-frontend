@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     head: {
       title: "ClickHospitals",
       meta: [
-        { name: "description", content: "A simple Nuxt SSR example with useHead" }
+        { name: "description", content: "A simple Nuxt SSR example with useHead" },
+        { name: "robots", content: "noindex, nofollow, noarchive, nosnippet" }
       ],
       link: [
       //   // ✅ Bootstrap CSS
