@@ -14,6 +14,7 @@ export interface Treatments {
 export interface Destination {
   id: number
   name: string
+  country_name?: string // API may return country_name instead of name
   description: string
   image_url: string
   created_at?: string

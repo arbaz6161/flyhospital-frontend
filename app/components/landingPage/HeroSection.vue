@@ -12,7 +12,7 @@
 
         <!-- Search -->
         <div class="search-container">
-          <h3>Start Your Medical Search</h3>
+          <h3>Search hospitals by name</h3>
           <div class="search-bar">
             <input type="text" v-model="store.search" placeholder="Search hospitals by name..." />
             <a href="#" @click.prevent="submitSearch" style="text-decoration: none !important;">Search</a>
@@ -42,10 +42,10 @@
           <!-- Filter buttons -->
           <div class="filters">
             <button class="filter-btn" @click="showTreatmentModal = true">
-              <Icon name="streamline-pixel:interface-essential-setting-slide" /> Filter by Procedure
+              <Icon name="streamline-pixel:interface-essential-setting-slide" /> Search by Procedure
             </button>
             <button class="filter-btn" @click="showDestinationModal = true">
-              <Icon name="uiw:map" /> Destination-Based Discovery
+              <Icon name="uiw:map" /> Search by Destination
             </button>
           </div>
         </div>
@@ -70,7 +70,7 @@
     <div class="modal-dialog modal-dialog-centered card herocard">
       <div class="modal-content card-body">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title">Filter Procedure Type</h5>
+          <h5 class="modal-title">Search by Procedure</h5>
           <button type="button" class="btn-close" @click="showTreatmentModal = false"></button>
         </div>
         <div class="modal-body pt-0">
@@ -85,11 +85,11 @@
                 </option>
               </select>
             </div>
-            <div>
+            <div v-if="selectedCategoryId && selectedCategoryId !== ''">
               <label>Procedure Type</label>
               <select class="form-control" v-model="selectedTreatmentId">
                 <option value="">Select procedure type</option>
-                <option v-for="tr in treatmentOptions" :key="tr.value" :value="tr.value">
+                <option v-for="tr in treatmentOptions" :key="tr.value" :value="String(tr.value)">
                   {{ tr.label }}
                 </option>
               </select>
@@ -108,7 +108,7 @@
     <div class="modal-dialog modal-dialog-centered card herocard">
       <div class="modal-content card-body">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title mb-1">Destination-Based Discovery</h5>
+          <h5 class="modal-title mb-1">Search by Destination</h5>
           <button type="button" class="btn-close" @click="showDestinationModal = false"></button>
         </div>
         <div class="modal-body pt-0">
@@ -117,16 +117,16 @@
               <label>Country</label>
               <select class="form-control" v-model="selectedCountryId">
                 <option value="">Select country</option>
-                <option v-for="c in countryOptions" :key="c.value" :value="c.value">
+                <option v-for="c in countryOptions" :key="c.value" :value="String(c.value)">
                   {{ c.label }}
                 </option>
               </select>
             </div>
-            <div>
+            <div v-if="selectedCountryId && selectedCountryId !== ''">
               <label>City</label>
               <select class="form-control" v-model="selectedCityId">
                 <option value="">Select city</option>
-                <option v-for="city in cityOptions" :key="city.value" :value="city.value">
+                <option v-for="city in cityOptions" :key="city.value" :value="String(city.value)">
                   {{ city.label }}
                 </option>
               </select>
@@ -223,9 +223,89 @@ watch(selectedTreatmentId, (newVal) => {
 // ===== Apply Filters =====
 const applyTreatmentFilter = () => {
   showTreatmentModal.value = false;
+  
+  // Get the selected values
+  const treatmentIdValue = selectedTreatmentId.value;
+  const categoryIdValue = selectedCategoryId.value;
+ 
+  console.log('treatmentIdValue:', treatmentIdValue, 'categoryIdValue:', categoryIdValue);
+  console.log('treatmentOptions:', treatmentOptions.value);
+  
+  // Check if a treatment is selected (not empty string, null, or undefined)
+  if (treatmentIdValue !== '' && treatmentIdValue != null) {
+    // Find the treatment name from options
+    // Compare by converting both to strings since HTML select returns strings
+    const treatment = treatmentOptions.value.find(t => {
+      // Convert both to strings for comparison
+      const match = String(t.value) === String(treatmentIdValue);
+      console.log(`Comparing: ${String(t.value)} === ${String(treatmentIdValue)} = ${match}`);
+      return match;
+    });
+    
+    console.log('Found treatment:', treatment);
+    
+    if (treatment) {
+      const treatmentName = treatment.label;
+      
+      // Create slug from treatment name (URL-encoded)
+      const slug = encodeURIComponent(treatmentName);
+      
+      console.log('Navigating to:', `/all-procedure/${slug}`, 'with name:', treatmentName);
+      
+      // Navigate to all-procedure page with slug
+      router.push({ 
+        path: `/all-procedure/${slug}`
+      });
+    } else {
+      console.log('Treatment not found in options');
+    }
+  } else if (categoryIdValue !== '' && categoryIdValue != null) {
+    // If only category is selected, use category_id to navigate to subprocedure page
+    console.log('Only category selected, using category_id:', categoryIdValue);
+    
+    // Find the category name from options
+    const category = categoryOptions.value.find(c => {
+      return String(c.value) === String(categoryIdValue);
+    });
+    
+    if (category) {
+      const categoryName = category.label;
+      const categoryId = String(category.value);
+      
+      console.log('Navigating to:', `/subprocedure/${categoryId}?name=${encodeURIComponent(categoryName)}`);
+      
+      // Navigate to subprocedure page with category ID and name
+      router.push({ 
+        path: `/subprocedure/${categoryId}`,
+        query: { name: categoryName }
+      });
+    } else {
+      console.log('Category not found in options');
+    }
+  } else {
+    console.log('No category or treatment selected');
+  }
 };
+
 const applyDestinationFilter = () => {
   showDestinationModal.value = false;
+  
+  // Build query object with selected filters
+  const query: Record<string, string> = {};
+  
+  if (selectedCountryId.value && selectedCountryId.value !== '') {
+    query.country_id = String(selectedCountryId.value);
+  }
+  
+  if (selectedCityId.value && selectedCityId.value !== '') {
+    query.city_id = String(selectedCityId.value);
+  }
+  
+  // Navigate to hospitals page with filters
+  router.push({ 
+    path: '/hospitals',
+    query
+  });
 };
 
 const clearTreatment = () => {
@@ -268,11 +348,8 @@ const hasActiveFilters = computed(() => {
 // ===== Submit Search =====
 const submitSearch = () => {
   const query: Record<string, any> = {};
+  // Only search by name when clicking the search button
   if (store.search) query.search = store.search;
-  if (store.country_id) query.country_id = store.country_id;
-  if (store.city_id) query.city_id = store.city_id;
-  if (store.category_id) query.category_id = store.category_id;
-  if (store.treatment_id) query.treatment_id = store.treatment_id;
 
   router.push({ path: "/hospitals", query });
 };
