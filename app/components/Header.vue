@@ -20,20 +20,18 @@
                 </button>
                 <div class=" navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto align-items-center">
-                        <li class="nav-item dropdown nav-item dropdown relative">
+                        <li class="nav-item dropdown">
                             <Dropdown>
                                 <DropdownToggle class="dropdown-toggle d-flex align-items-center nav-link">
                                     Destination
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                  <DropdownItem v-for="destination in destinations" :key="destination.id">
+                                  <DropdownItem v-for="destination in destinations" :key="destination.id" as="div">
                                     <NuxtLink :to="`/hospitals?country_id=${destination.id}`">
-                                        {{ destination.country_name }}
+                                        {{ destination.country_name || destination.name }}
                                     </NuxtLink>  
                                     </DropdownItem>
-                                    <!-- <DropdownItem v-for="destination in destinations">{{ destination.name }}</DropdownItem> -->
-                                   
                                 </DropdownMenu>
                             </Dropdown>
                         </li>
@@ -44,7 +42,7 @@
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                 <DropdownItem v-for="treatment in treatments" :key="treatment.id">
+                                 <DropdownItem v-for="treatment in treatments" :key="treatment.id" as="div">
                                     <NuxtLink 
                                         :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
                                         {{ treatment.name }}
@@ -84,7 +82,7 @@
     </header>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useGeneralStore } from '~/stores/general'
 
 const store = useGeneralStore()
@@ -97,7 +95,7 @@ if (store.treatments.length === 0) {
 }
 
 if (store.destinations.length === 0) {
-	await useAsyncData('destinations', () => store.fetchMedicalDestination())
+	await useAsyncData('destinations', () => store.fetchDestination())
 }
 
 // ✅ State
@@ -105,10 +103,28 @@ const treatments = computed(() => store.treatments)
 const destinations = computed(() => store.destinations)
 const loading = computed(() => store.loading)
 const error = computed(() => store.error)
+
+// Debug: Log destinations to see if they're loading
+if (process.client) {
+  watch(destinations, (newDestinations) => {
+    if (newDestinations.length > 0) {
+      console.log('Destinations loaded:', newDestinations)
+    }
+  }, { immediate: true })
+}
 </script>
 <style>
-.dropdown-item a{
+.dropdown-item a,
+.dropdown-link {
     text-decoration: none !important;
+    color: #0d2d52;
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+}
+
+.dropdown-link:hover {
+    background-color: #f8f9fa;
     color: #0d2d52;
 }
 </style>
