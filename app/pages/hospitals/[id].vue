@@ -304,7 +304,7 @@
                     :restaurants="(hospital as any).restaurants" />
 
                 <!--=============== POPULAR HOTELS SECTION ===============-->
-                <LazyHotelSection id="hotels" v-if="(hospital as any)?.hotels?.length > 0" :hotels="(hospital as any).hotels" />
+                <HotelSection id="hotels" v-if="(hospital as any)?.hotels?.length > 0" :hotels="(hospital as any).hotels" />
             </div>
         </template>
     </main>
@@ -316,6 +316,7 @@ import { storeToRefs } from 'pinia'
 import { useHospitalListStore } from '~/stores/hospitallist'
 import { useRoute } from 'vue-router'
 import Loader from '~/components/Loader.vue'
+import HotelSection from '~/components/hotels/HotelSection.vue'
 
 const route = useRoute()
 const store = useHospitalListStore()
