@@ -106,15 +106,24 @@ export const useHospitalListStore = defineStore('hospitalList', {
       }
     },
 
-    loadLess() {
+    async loadLess() {
       // Only allow load less if we have more than the initial load
       if (this.hospitals.length <= this.initialLoadCount || this.currentPage <= 1) {
         return
       }
 
+      // Show loader for 2 seconds
+      this.loader = true
+      
+      // Wait for 2 seconds
+      await new Promise(resolve => setTimeout(resolve, 2000))
+
       // Remove the last page of hospitals (perPage items)
       this.hospitals = this.hospitals.slice(0, -this.perPage)
       this.currentPage = Math.max(1, this.currentPage - 1)
+      
+      // Hide loader
+      this.loader = false
     },
 
     async loadPrevious() {
@@ -203,11 +212,68 @@ export const useHospitalListStore = defineStore('hospitalList', {
           status?: boolean
         } | any>(api)
         
+        let hospitalData: any = {}
+        
         if (response && typeof response === 'object' && 'data' in response) {
-          this.hospital = (response as { data?: any }).data ?? {}
+          hospitalData = (response as { data?: any }).data ?? {}
         } else {
-          this.hospital = (response as any) ?? {}
+          hospitalData = (response as any) ?? {}
         }
+        
+        // Debug logging to check treatments structure
+        if (process.client) {
+          console.log('Hospital data loaded:', hospitalData)
+          console.log('Treatments:', hospitalData?.treatments)
+          console.log('Treatments type:', typeof hospitalData?.treatments)
+          console.log('Is treatments array?', Array.isArray(hospitalData?.treatments))
+        }
+        
+        // Ensure treatments is always an array
+        if (hospitalData && !Array.isArray(hospitalData.treatments)) {
+          if (hospitalData.treatments && typeof hospitalData.treatments === 'object' && 'data' in hospitalData.treatments) {
+            hospitalData.treatments = Array.isArray(hospitalData.treatments.data) ? hospitalData.treatments.data : []
+          } else {
+            hospitalData.treatments = []
+          }
+        }
+        
+        // Ensure hotels is always an array
+        // First check if hotels exists directly
+        if (hospitalData && !Array.isArray(hospitalData.hotels)) {
+          if (hospitalData.hotels && typeof hospitalData.hotels === 'object' && 'data' in hospitalData.hotels) {
+            hospitalData.hotels = Array.isArray(hospitalData.hotels.data) ? hospitalData.hotels.data : []
+          } else if (!hospitalData.hotels) {
+            // If hotels doesn't exist, try to extract from nearbies array
+            if (hospitalData.nearbies && Array.isArray(hospitalData.nearbies)) {
+              hospitalData.hotels = hospitalData.nearbies.filter((item: any) => item?.type === 'hotel')
+            } else {
+              hospitalData.hotels = []
+            }
+          }
+        } else if (hospitalData && !hospitalData.hotels && hospitalData.nearbies && Array.isArray(hospitalData.nearbies)) {
+          // If hotels is undefined but nearbies exists, extract hotels from it
+          hospitalData.hotels = hospitalData.nearbies.filter((item: any) => item?.type === 'hotel')
+        }
+        
+        // Ensure restaurants is always an array
+        // First check if restaurants exists directly
+        if (hospitalData && !Array.isArray(hospitalData.restaurants)) {
+          if (hospitalData.restaurants && typeof hospitalData.restaurants === 'object' && 'data' in hospitalData.restaurants) {
+            hospitalData.restaurants = Array.isArray(hospitalData.restaurants.data) ? hospitalData.restaurants.data : []
+          } else if (!hospitalData.restaurants) {
+            // If restaurants doesn't exist, try to extract from nearbies array
+            if (hospitalData.nearbies && Array.isArray(hospitalData.nearbies)) {
+              hospitalData.restaurants = hospitalData.nearbies.filter((item: any) => item?.type === 'restaurant')
+            } else {
+              hospitalData.restaurants = []
+            }
+          }
+        } else if (hospitalData && !hospitalData.restaurants && hospitalData.nearbies && Array.isArray(hospitalData.nearbies)) {
+          // If restaurants is undefined but nearbies exists, extract restaurants from it
+          hospitalData.restaurants = hospitalData.nearbies.filter((item: any) => item?.type === 'restaurant')
+        }
+        
+        this.hospital = hospitalData
       } catch (err) {
         console.error('❌ Failed to load hospital details:', err)
         this.hospital = {} as any

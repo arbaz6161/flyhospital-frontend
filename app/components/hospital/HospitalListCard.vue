@@ -83,6 +83,7 @@
                     </div>
 
                     <h6 class="treatment-title">Procedure</h6>
+
                     <ul class="treatment-list list-unstyled">
                        <li v-for="treatment in hospital?.treatments" :key="treatment.id">
                         <Icon name="material-symbols:check-rounded" class="bg-success" />
