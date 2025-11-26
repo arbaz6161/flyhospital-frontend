@@ -137,6 +137,8 @@ export const useFilterHospitalStore = defineStore('filterHospital', () => {
         const response = await fetch(api);
         const data = await response.json();
 
+        console.log(data);
+
       if (data.success) {
         hospitals.value = data.data;
         totalHospitals.value = data.total_hospitals;

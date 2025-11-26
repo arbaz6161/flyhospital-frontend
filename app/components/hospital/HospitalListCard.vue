@@ -84,12 +84,20 @@
 
                     <h6 class="treatment-title">Procedure</h6>
 
-                    <ul class="treatment-list list-unstyled">
-                       <li v-for="treatment in hospital?.treatments" :key="treatment.id">
+                    <ul class="treatment-list list-unstyled mb-0">
+                       <li v-for="treatment in displayedTreatments" :key="treatment.id">
                         <Icon name="material-symbols:check-rounded" class="bg-success" />
                         {{ treatment.name }}
                         </li>
                     </ul>
+                    <button 
+                        v-if="hasMoreTreatments" 
+                        @click="toggleTreatments" 
+                        class="btn btn-link btn-sm p-0 text-primary text-decoration-none mt-0"
+                        style="font-size: 14px; margin-top: 0 !important;"
+                    >
+                        {{ showAllTreatments ? "Show less" : "Show more" }}
+                    </button>
                 </div>
 
                 <!-- Details Button pinned to bottom -->
@@ -113,6 +121,7 @@ const props = defineProps({
 })
 
 const showMore = ref(false)
+const showAllTreatments = ref(false)
 const imageLoaded = ref(false)
 
 // Helpers
@@ -135,5 +144,25 @@ const truncatedDescription = computed(() => {
 
 const toggleDescription = () => {
     showMore.value = !showMore.value
+}
+
+// Treatments logic
+const treatments = computed(() => {
+    return props.hospital?.treatments || []
+})
+
+const hasMoreTreatments = computed(() => {
+    return treatments.value.length > 5
+})
+
+const displayedTreatments = computed(() => {
+    if (showAllTreatments.value || !hasMoreTreatments.value) {
+        return treatments.value
+    }
+    return treatments.value.slice(0, 5)
+})
+
+const toggleTreatments = () => {
+    showAllTreatments.value = !showAllTreatments.value
 }
 </script>
