@@ -9,18 +9,18 @@ export default defineNuxtConfig({
         { name: "robots", content: "noindex, nofollow, noarchive, nosnippet" }
       ],
       link: [
-      //   // ✅ Bootstrap CSS
+        //   // ✅ Bootstrap CSS
         {
           rel: "stylesheet",
           href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
-         
+
         },
 
         {
           rel: "stylesheet",
           href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css",
         },
-      //   // ✅ Google Fonts: Moulpali (loaded with print -> all trick)
+        //   // ✅ Google Fonts: Moulpali (loaded with print -> all trick)
         {
           rel: "preconnect",
           href: "https://fonts.googleapis.com",
@@ -41,17 +41,17 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap",
         },
-      //   // ✅ Font Awesome
+        //   // ✅ Font Awesome
         // {
         //   rel: "stylesheet",
         //   href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css",
         // },
       ],
-    
+
     },
   },
 
-   css: [
+  css: [
     '~/assets/css/style.css',
     '~/assets/css/start.css',
     '~/assets/css/partner.css',
@@ -66,7 +66,7 @@ export default defineNuxtConfig({
     '~/assets/css/main.css'
   ],
 
-   modules: [
+  modules: [
     'usebootstrap',
     '@nuxt/eslint',
     'nuxt-link-checker',
@@ -89,9 +89,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseUrl: 'https://flyhospitals.dev/api',
-      ImageUrl: 'https://flyhospitals.dev/',
-      webUrl: 'https://frontend.flyhospitals.dev',
+      baseUrl: 'https://admin.clickhospitals.com/api',
+      ImageUrl: 'https://admin.clickhospitals.com/',
+      webUrl: 'https://clickhospitals.com/',
     },
   },
 })
