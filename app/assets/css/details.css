@@ -560,6 +560,47 @@
     height: 16px;
 }
 
+.popular-section {
+    padding: 80px 0;
+    background-color: #F7F7F7;
+}
+
+.popular-section-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    flex: 0 0 270px;
+}
+
+.popular-section-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.popular-section-card h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    margin: 0;
+}
+
+.popular-section-card .location {
+    font-size: 14px;
+    color: #6c757d;
+    margin: 8px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.popular-section-card .location svg {
+    width: 16px;
+    height: 16px;
+}
 
 /* Sidebar */
 .sidebar-card {
