@@ -44,14 +44,14 @@
         {{ Hotelstore.error }}
       </div>
       <div
-        v-else-if="Hotelstore.hospitals.length === 0"
+        v-else-if="filteredHospitals.length === 0"
         class="text-center text-muted py-5"
       >
-        No hospitals found.
+        No hospitals found for this treatment.
       </div>
       <div v-else>
         <HospitalListCard
-          v-for="hospital in Hotelstore.hospitals"
+          v-for="hospital in filteredHospitals"
           :key="hospital.id"
           :hospital="hospital"
         />
@@ -61,7 +61,7 @@
     <!-- Load More Section -->
     <div class="text-center mt-5">
       <button
-        v-if="Hotelstore.hospitals.length < Hotelstore.totalHospitals"
+        v-if="filteredHospitals.length < Hotelstore.totalHospitals"
         class="btn btn-primary mt-3 details-btn"
         style="max-width: 321px; width: 100%"
         @click="loadMore"
@@ -88,6 +88,48 @@ const slug = computed(() => String(route.params.slug || ""));
 const store = useHospitalStore();
 const Hotelstore = useFilterHospitalStore();
 
+// Decode slug to get treatment name
+const treatmentName = computed(() => {
+  try {
+    return decodeURIComponent(slug.value);
+  } catch {
+    return slug.value;
+  }
+});
+
+// Filter hospitals to only show those with the selected treatment
+const filteredHospitals = computed(() => {
+  if (!treatmentName.value || !Hotelstore.hospitals.length) {
+    return Hotelstore.hospitals;
+  }
+  
+  const searchName = treatmentName.value.toLowerCase().trim();
+  
+  return Hotelstore.hospitals.filter((hospital) => {
+    // Check if hospital has treatments array
+    if (!hospital.treatments || !Array.isArray(hospital.treatments)) {
+      return false;
+    }
+    
+    // Check if any treatment matches the slug (treatment name)
+    return hospital.treatments.some((treatment) => {
+      // Check treatment name (case-insensitive)
+      if (treatment.name && treatment.name.toLowerCase().trim() === searchName) {
+        return true;
+      }
+      
+      // Also check children treatments recursively
+      if (treatment.children && Array.isArray(treatment.children)) {
+        return treatment.children.some((child) => 
+          child.name && child.name.toLowerCase().trim() === searchName
+        );
+      }
+      
+      return false;
+    });
+  });
+});
+
 // Country options
 const countryOptions = computed(() =>
   store.countries.map((country) => ({
@@ -97,8 +139,8 @@ const countryOptions = computed(() =>
 );
 
 // Selected country
-const selectedCountry = ref<{ label: string; value: string | number } | null>(
-  null
+const selectedCountry = ref<{ label: string; value: string | number } | undefined>(
+  undefined
 );
 
 // Fetch countries and initialize selectedCountry

@@ -4,7 +4,7 @@
       <div class="hero-text">
         <h1>
           Find the Right Hospital Anywhere <span>in World.</span>
-        </h1>
+a        </h1>
         <p>
           ClickHospitals helps you explore and connect with internationally accredited hospitals,
           based on your procedure needs, budget, and destination.

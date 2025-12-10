@@ -92,7 +92,7 @@
           :disabled="store.loader"
           class="btn btn-primary details-btn"
           style="min-width: 150px;">
-          Load Less
+          {{ store.loader ? 'Loading...' : 'Load Less' }}
         </button>
 
         <!-- Load More button (show if more pages available) -->
