@@ -4,7 +4,7 @@
       <div class="hero-text">
         <h1>
           Find the Right Hospital Anywhere <span>in World.</span>
-a        </h1>
+        </h1>
         <p>
           ClickHospitals helps you explore and connect with internationally accredited hospitals,
           based on your procedure needs, budget, and destination.
@@ -52,15 +52,9 @@ a        </h1>
       </div>
 
       <div class="hero-image">
-        <img 
-            src="~/assets/img/banner.jpg" 
-            alt="Patients at a hospital reception" 
-            class="rounded-left-bottom"
-            loading="lazy"
-            :class="{ 'image-loading': !imageLoaded }"
-            @load="imageLoaded = true"
-            @error="imageLoaded = true"
-        />
+        <img src="~/assets/img/banner.jpg" alt="Patients at a hospital reception" class="rounded-left-bottom"
+          loading="lazy" :class="{ 'image-loading': !imageLoaded }" @load="imageLoaded = true"
+          @error="imageLoaded = true" />
       </div>
     </div>
   </section>
@@ -164,16 +158,16 @@ const selectedCityId = ref<string | number | "">("");
 // ===== Country & City Options =====
 // ✅ Load in background (non-blocking) - only if data doesn't exist
 onMounted(() => {
-	if (store.countries.length === 0) {
-		store.loadCountries().catch(err => {
-			console.error('Failed to load countries:', err);
-		});
-	}
-	if (store.procedure.length === 0) {
-		store.loadprocedure().catch(err => {
-			console.error('Failed to load procedures:', err);
-		});
-	}
+  if (store.countries.length === 0) {
+    store.loadCountries().catch(err => {
+      console.error('Failed to load countries:', err);
+    });
+  }
+  if (store.procedure.length === 0) {
+    store.loadprocedure().catch(err => {
+      console.error('Failed to load procedures:', err);
+    });
+  }
 });
 
 const countryOptions = computed(() =>
@@ -223,14 +217,14 @@ watch(selectedTreatmentId, (newVal) => {
 // ===== Apply Filters =====
 const applyTreatmentFilter = () => {
   showTreatmentModal.value = false;
-  
+
   // Get the selected values
   const treatmentIdValue = selectedTreatmentId.value;
   const categoryIdValue = selectedCategoryId.value;
- 
+
   console.log('treatmentIdValue:', treatmentIdValue, 'categoryIdValue:', categoryIdValue);
   console.log('treatmentOptions:', treatmentOptions.value);
-  
+
   // Check if a treatment is selected (not empty string, null, or undefined)
   if (treatmentIdValue !== '' && treatmentIdValue != null) {
     // Find the treatment name from options
@@ -241,19 +235,19 @@ const applyTreatmentFilter = () => {
       console.log(`Comparing: ${String(t.value)} === ${String(treatmentIdValue)} = ${match}`);
       return match;
     });
-    
+
     console.log('Found treatment:', treatment);
-    
+
     if (treatment) {
       const treatmentName = treatment.label;
-      
+
       // Create slug from treatment name (URL-encoded)
       const slug = encodeURIComponent(treatmentName);
-      
+
       console.log('Navigating to:', `/all-procedure/${slug}`, 'with name:', treatmentName);
-      
+
       // Navigate to all-procedure page with slug
-      router.push({ 
+      router.push({
         path: `/all-procedure/${slug}`
       });
     } else {
@@ -262,20 +256,20 @@ const applyTreatmentFilter = () => {
   } else if (categoryIdValue !== '' && categoryIdValue != null) {
     // If only category is selected, use category_id to navigate to subprocedure page
     console.log('Only category selected, using category_id:', categoryIdValue);
-    
+
     // Find the category name from options
     const category = categoryOptions.value.find(c => {
       return String(c.value) === String(categoryIdValue);
     });
-    
+
     if (category) {
       const categoryName = category.label;
       const categoryId = String(category.value);
-      
+
       console.log('Navigating to:', `/subprocedure/${categoryId}?name=${encodeURIComponent(categoryName)}`);
-      
+
       // Navigate to subprocedure page with category ID and name
-      router.push({ 
+      router.push({
         path: `/subprocedure/${categoryId}`,
         query: { name: categoryName }
       });
@@ -289,20 +283,20 @@ const applyTreatmentFilter = () => {
 
 const applyDestinationFilter = () => {
   showDestinationModal.value = false;
-  
+
   // Build query object with selected filters
   const query: Record<string, string> = {};
-  
+
   if (selectedCountryId.value && selectedCountryId.value !== '') {
     query.country_id = String(selectedCountryId.value);
   }
-  
+
   if (selectedCityId.value && selectedCityId.value !== '') {
     query.city_id = String(selectedCityId.value);
   }
-  
+
   // Navigate to hospitals page with filters
-  router.push({ 
+  router.push({
     path: '/hospitals',
     query
   });
