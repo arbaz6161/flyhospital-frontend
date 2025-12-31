@@ -89,8 +89,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseUrl: 'https://admin.clickhospitals.com/api',
-      ImageUrl: 'https://admin.clickhospitals.com/',
+      baseUrl: 'https://flyhospitals.dev/api',
+      ImageUrl: 'https://flyhospitals.dev/',
       webUrl: 'https://clickhospitals.com/',
     },
   },

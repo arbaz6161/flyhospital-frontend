@@ -3,15 +3,9 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <NuxtLink to="/" class="navbar-brand" active-class="active" exact-active-class="active">
-                    <img 
-                        src="~assets/img/logo.png" 
-                        class="logo" 
-                        alt="ClickHospitals Logo"
-                        loading="eager"
-                        :class="{ 'image-loading': !imageLoaded }"
-                        @load="imageLoaded = true"
-                        @error="imageLoaded = true"
-                    >
+                    <img src="~assets/img/logo.png" class="logo" alt="ClickHospitals Logo" loading="eager"
+                        :class="{ 'image-loading': !imageLoaded }" @load="imageLoaded = true"
+                        @error="imageLoaded = true">
                     <span> ClickHospitals </span>
                 </NuxtLink>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -27,10 +21,16 @@
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                  <DropdownItem v-for="destination in destinations" :key="destination.id" as="div">
-                                    <NuxtLink :to="`/hospitals?country_id=${destination.id}`">
-                                        {{ destination.country_name || destination.name }}
-                                    </NuxtLink>  
+                                    <DropdownItem v-for="destination in destinations.slice(0, 3)" :key="destination.id"
+                                        as="div">
+                                        <NuxtLink :to="`/hospitals?country_id=${destination.id}`">
+                                            {{ destination.country_name || destination.name }}
+                                        </NuxtLink>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <NuxtLink to="/destinations">
+                                            See All
+                                        </NuxtLink>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
@@ -42,11 +42,17 @@
                                     <Icon name="carbon:chevron-down"></Icon>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                 <DropdownItem v-for="treatment in treatments" :key="treatment.id" as="div">
-                                    <NuxtLink 
-                                        :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
-                                        {{ treatment.name }}
-                                    </NuxtLink>
+                                    <DropdownItem v-for="treatment in treatments.slice(0, 3)" :key="treatment.id"
+                                        as="div">
+                                        <NuxtLink
+                                            :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`">
+                                            {{ treatment.name }}
+                                        </NuxtLink>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <NuxtLink to="/procedure">
+                                            See All
+                                        </NuxtLink>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
@@ -91,11 +97,11 @@ const imageLoaded = ref(false)
 
 // ✅ Only fetch if data doesn't exist in store (prevents re-fetching on every page)
 if (store.treatments.length === 0) {
-	await useAsyncData('treatments', () => store.fetchTreatments())
+    await useAsyncData('treatments', () => store.fetchTreatments())
 }
 
 if (store.destinations.length === 0) {
-	await useAsyncData('destinations', () => store.fetchDestination())
+    await useAsyncData('destinations', () => store.fetchDestination())
 }
 
 // ✅ State
@@ -106,11 +112,11 @@ const error = computed(() => store.error)
 
 // Debug: Log destinations to see if they're loading
 if (process.client) {
-  watch(destinations, (newDestinations) => {
-    if (newDestinations.length > 0) {
-      console.log('Destinations loaded:', newDestinations)
-    }
-  }, { immediate: true })
+    watch(destinations, (newDestinations) => {
+        if (newDestinations.length > 0) {
+            console.log('Destinations loaded:', newDestinations)
+        }
+    }, { immediate: true })
 }
 </script>
 <style>
@@ -128,5 +134,3 @@ if (process.client) {
     color: #0d2d52;
 }
 </style>
-
-

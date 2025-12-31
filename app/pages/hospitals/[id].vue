@@ -76,22 +76,25 @@
                             <div class="col-12 col-md-2 align-items-center">
                                 <!-- Rating -->
                                 <div class="rating-item">
-                                    <div class="value">{{ Number((hospital as any)?.average_rating || 0).toFixed(1) }}
+                                    <div class="value">{{ Number((hospital as any)?.rating || 0).toFixed(1) }}
                                     </div>
                                     <div class="stars text-warning">
                                         <template v-for="i in 5" :key="i">
                                             <!-- Full star -->
-                                            <Icon v-if="i <= Math.floor((hospital as any)?.average_rating || 0)"
+                                            <Icon v-if="i <= Math.floor((hospital as any)?.rating || 0)"
                                                 name="carbon:star-filled" />
 
                                             <!-- Half star -->
                                             <Icon
-                                                v-else-if="i === Math.floor((hospital as any)?.average_rating || 0) + 1 && ((hospital as any)?.average_rating % 1) >= 0.5"
+                                                v-else-if="i === Math.floor((hospital as any)?.rating || 0) + 1 && ((hospital as any)?.rating % 1) >= 0.5"
                                                 name="carbon:star-half" />
 
                                             <!-- Empty star -->
                                             <Icon v-else name="carbon:star" />
                                         </template>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 13px;">Google Ratings</span>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +103,7 @@
                             <div
                                 class="col-12 col-md-9 d-flex flex-wrap align-items-center category-card-wrapper gap-2 ml-4">
                                 <span class="category-card">Doctor <span>{{ (hospital as any)?.staff_count || 0
-                                        }}</span></span>
+                                }}</span></span>
                                 <span class="category-card">Facilities <span>4.8</span></span>
                                 <span class="category-card">Staff <span>4.9</span></span>
                                 <span class="category-card">Language assistance <span>4.8</span></span>
@@ -125,7 +128,7 @@
                                             <Icon name="material-symbols:location-on-outline"
                                                 style="color:#053862; margin-right:5px; font-size: 18px;" />
                                             <span class="text-dark cursor-pointer">{{ (hospital as any).address
-                                                }}</span>
+                                            }}</span>
                                         </NuxtLink>
                                     </li>
                                     <li v-if="(hospital as any)?.website_url">
@@ -209,8 +212,8 @@
                                 </ul>
 
                                 <!-- Tab Content -->
-                                <div v-if="activeTab[treatment.id] === 'procedures'" class="row mb-2">
-                                    <div class="col-md-4 mb-2" v-for="subtreatment in treatment.children"
+                                <div v-if="activeTab[treatment.id] === 'procedures'" class="row mt-5 px-3">
+                                    <div class="col-md-4 mb-3" v-for="subtreatment in treatment.children"
                                         :key="subtreatment.id">
                                         <span>{{ subtreatment.name }}</span>
                                     </div>
@@ -256,7 +259,7 @@
                             </h5>
                             <div class="rating d-flex align-items-center ms-2">
                                 <div class="rating-score">{{ Number((hospital as any)?.average_rating || 0).toFixed(1)
-                                    }}</div>
+                                }}</div>
                                 <Icon name="carbon:star-filled" class="stars text-warning" />
                             </div>
                         </div>
