@@ -9,10 +9,12 @@
 
         <!-- Hospital Listings -->
         <div class="listings-header mb-4">
-            <h2>Best <span>{{ treatments.length }} Verified</span> Procedure in the World</h2>
+            <h2><span>{{ treatments.length }} Verified</span> Procedure in the World</h2>
             <p class="text-muted">
-                The ClickHospitals is based on data science algorithms, providing a trusted, transparent, and objective comparison.
-                It takes into account patient demand, review scores (both positive and negative), the frequency of updates to procedure options and prices,
+                The ClickHospitals is based on data science algorithms, providing a trusted, transparent, and objective
+                comparison.
+                It takes into account patient demand, review scores (both positive and negative), the frequency of
+                updates to procedure options and prices,
                 response speed, and clinic certifications.
             </p>
         </div>
@@ -30,8 +32,7 @@
                                     stroke="#053862" stroke-width="4" stroke-linecap="round" />
                             </svg>
                         </span>
-                        <input type="text" class="form-control" 
-                            placeholder="Enter Procedure Name"
+                        <input type="text" class="form-control" placeholder="Enter Procedure Name"
                             v-model="searchQuery">
                     </div>
                 </div>
@@ -42,9 +43,7 @@
         <div class="hospital-list">
             <template v-if="filteredTreatments.length > 0">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-                    <ProcedureCard v-for="treatment in filteredTreatments" 
-                        :key="treatment.id" 
-                        :treatment="treatment" />
+                    <ProcedureCard v-for="treatment in filteredTreatments" :key="treatment.id" :treatment="treatment" />
                 </div>
             </template>
             <div v-else class="text-center text-muted py-5">
@@ -80,9 +79,9 @@ const error = computed(() => store.error)
 
 // Filtered results
 const filteredTreatments = computed(() => {
-  if (!searchQuery.value) return treatments.value
-  return treatments.value.filter(t =>
-    t.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-  )
+    if (!searchQuery.value) return treatments.value
+    return treatments.value.filter(t =>
+        t.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
 })
 </script>
