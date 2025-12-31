@@ -3,15 +3,8 @@
         <div class="row g-0">
             <!-- Image -->
             <div class="col-md-3 p-3">
-                <img 
-                    :src="hospital.image_urls[0]" 
-                    :alt="title" 
-                    class="img-fluid img-fit rounded"
-                    loading="lazy"
-                    :class="{ 'image-loading': !imageLoaded }"
-                    @load="imageLoaded = true"
-                    @error="imageLoaded = true"
-                />
+                <img :src="hospital.image_urls[0]" :alt="title" class="img-fluid img-fit rounded" loading="lazy"
+                    :class="{ 'image-loading': !imageLoaded }" @load="imageLoaded = true" @error="imageLoaded = true" />
             </div>
 
             <!-- Main Content -->
@@ -43,13 +36,11 @@
                         <Icon name="bi:telephone" style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Call
                     </NuxtLink>
-                    <a
-                        :href="hospital.google_map_location" 
-                        class="btn btn-sm btn-light">
+                    <a :href="hospital.google_map_location" class="btn btn-sm btn-light">
                         <Icon name="material-symbols:location-on-outline"
                             style="color:#053862; margin-right:5px; font-size: 18px;" />
                         Google Map
-                </a>
+                    </a>
                     <a :href="hospital.website_url" class="btn btn-sm btn-light">
                         <Icon name="streamline-plump:web-remix"
                             style="color:#053862; margin-right:5px; font-size: 18px;" />
@@ -62,7 +53,7 @@
             <div class="col-md-3 col-sm-6 card-body border-start-md d-flex flex-column">
                 <!-- Rating -->
                 <div>
-                    <div class="rating d-flex align-items-center mb-3">
+                    <div v-if="false" class="rating d-flex align-items-center mb-3">
                         <div class="stars text-warning">
                             <template v-for="i in 5" :key="i">
                                 <!-- Full star -->
@@ -85,17 +76,14 @@
                     <h6 class="treatment-title">Procedure</h6>
 
                     <ul class="treatment-list list-unstyled mb-0">
-                       <li v-for="treatment in displayedTreatments" :key="treatment.id">
-                        <Icon name="material-symbols:check-rounded" class="bg-success" />
-                        {{ treatment.name }}
+                        <li v-for="treatment in displayedTreatments" :key="treatment.id">
+                            <Icon name="material-symbols:check-rounded" class="bg-success" />
+                            {{ treatment.name }}
                         </li>
                     </ul>
-                    <button 
-                        v-if="hasMoreTreatments" 
-                        @click="toggleTreatments" 
+                    <button v-if="hasMoreTreatments" @click="toggleTreatments"
                         class="btn btn-link btn-sm p-0 text-primary text-decoration-none mt-0"
-                        style="font-size: 14px; margin-top: 0 !important;"
-                    >
+                        style="font-size: 14px; margin-top: 0 !important;">
                         {{ showAllTreatments ? "Show less" : "Show more" }}
                     </button>
                 </div>

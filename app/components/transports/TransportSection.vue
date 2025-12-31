@@ -22,17 +22,22 @@
             <img v-if="item.type == 'Taxi Stand'" :src="taxiStandImage || fallbackImage" :alt="item.image" />
             <img v-if="item.type == 'Airport'" :src="airportImage || fallbackImage" :alt="item.image" />
             <img v-if="item.type == 'Railway Station'" :src="railwayImage || fallbackImage" :alt="item.image" />
-            <img v-if="item.type == 'Metro'" :src="metroImage || fallbackImage" :alt="item.image" />
 
             <div class="card-content">
               <h3>
-                {{ item.type }}
+                <span v-if="item.type == 'Taxi Stand'">Taxi / Shared Rides</span>
+                <span v-else>{{ item.name || item.type }}</span>
 
                 <span class="rating">
                   4.5
                   <span class="star">★</span>
                 </span>
               </h3>
+
+              <h4 class="mt-2" style="font-size: 13px;">
+                <span v-if="item.type == 'Taxi Stand'">multiple taxi / shared rides option availble</span>
+                <span v-else>{{ item.description }}</span>
+              </h4>
 
               <h3 class="mt-2" style="font-size: 13px;">
                 {{ item.distance }} km away
@@ -83,12 +88,7 @@ const props = defineProps({
 
   railwayImage: {
     type: String,
-    default: "https://flyhospitals.dev/assets/img/railway-station.png"
-  },
-
-  metroImage: {
-    type: String,
-    default: "https://flyhospitals.dev/assets/img/metro.webp"
+    default: "https://flyhospitals.dev/assets/img/railway-station.jpg"
   },
 
   fallbackImage: {
