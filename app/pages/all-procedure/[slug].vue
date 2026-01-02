@@ -1,13 +1,11 @@
 <template>
   <main class="container my-5">
     <!-- Breadcrumb -->
-    <Breadcrumb
-      :items="[
-        { label: 'Home', link: '/' },
-        { label: 'All Procedure', link: '/procedure' },
-        { label: slug, active: true },
-      ]"
-    />
+    <Breadcrumb :items="[
+      { label: 'Home', link: '/' },
+      { label: 'All Procedure', link: '/procedure' },
+      { label: slug, active: true },
+    ]" />
 
     <!-- Hospital Listings -->
     <div class="listings-header mb-4">
@@ -25,12 +23,8 @@
     <div class="mb-5">
       <div class="row g-3 align-items-center">
         <div class="col-lg-3">
-          <USelectMenu
-            v-model="selectedCountry"
-            :items="countryOptions"
-            placeholder="Select a country"
-            class="w-full rounded h-12"
-          />
+          <USelectMenu v-model="selectedCountry" :items="countryOptions" placeholder="Select a country"
+            class="w-full rounded h-12" />
         </div>
       </div>
     </div>
@@ -43,30 +37,18 @@
       <div v-else-if="Hotelstore.error" class="text-center text-danger py-5">
         {{ Hotelstore.error }}
       </div>
-      <div
-        v-else-if="filteredHospitals.length === 0"
-        class="text-center text-muted py-5"
-      >
+      <div v-else-if="filteredHospitals.length === 0" class="text-center text-muted py-5">
         No hospitals found for this treatment.
       </div>
       <div v-else>
-        <HospitalListCard
-          v-for="hospital in filteredHospitals"
-          :key="hospital.id"
-          :hospital="hospital"
-        />
+        <HospitalListCard v-for="hospital in filteredHospitals" :key="hospital.id" :hospital="hospital" />
       </div>
     </div>
 
     <!-- Load More Section -->
     <div class="text-center mt-5">
-      <button
-        v-if="filteredHospitals.length < Hotelstore.totalHospitals"
-        class="btn btn-primary mt-3 details-btn"
-        style="max-width: 321px; width: 100%"
-        @click="loadMore"
-        :disabled="Hotelstore.isLoading"
-      >
+      <button v-if="filteredHospitals.length < Hotelstore.totalHospitals" class="btn btn-primary mt-3 details-btn"
+        style="max-width: 321px; width: 100%" @click="loadMore" :disabled="Hotelstore.isLoading">
         {{ Hotelstore.isLoading ? "Loading..." : "Load More" }}
       </button>
     </div>
@@ -77,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import { useHospitalStore } from "~/stores/hospital";
 import { useFilterHospitalStore } from "~/stores/filterhospital";
@@ -99,47 +81,55 @@ const treatmentName = computed(() => {
 
 // Filter hospitals to only show those with the selected treatment
 const filteredHospitals = computed(() => {
-  if (!treatmentName.value || !Hotelstore.hospitals.length) {
-    return Hotelstore.hospitals;
-  }
-  
-  const searchName = treatmentName.value.toLowerCase().trim();
-  
-  return Hotelstore.hospitals.filter((hospital) => {
-    // Check if hospital has treatments array
-    if (!hospital.treatments || !Array.isArray(hospital.treatments)) {
-      return false;
-    }
-    
-    // Check if any treatment matches the slug (treatment name)
-    return hospital.treatments.some((treatment) => {
-      // Check treatment name (case-insensitive)
-      if (treatment.name && treatment.name.toLowerCase().trim() === searchName) {
-        return true;
+  let hospitals = Hotelstore.hospitals;
+
+  if (treatmentName.value && hospitals.length) {
+    const searchName = treatmentName.value.toLowerCase().trim();
+    hospitals = hospitals.filter((hospital) => {
+      // Check if hospital has treatments array
+      if (!hospital.treatments || !Array.isArray(hospital.treatments)) {
+        return false;
       }
-      
-      // Also check children treatments recursively
-      if (treatment.children && Array.isArray(treatment.children)) {
-        return treatment.children.some((child) => 
-          child.name && child.name.toLowerCase().trim() === searchName
-        );
-      }
-      
-      return false;
+
+      // Check if any treatment matches the slug (treatment name)
+      return hospital.treatments.some((treatment) => {
+        // Check treatment name (case-insensitive)
+        if (treatment.name && treatment.name.toLowerCase().trim() === searchName) {
+          return true;
+        }
+
+        // Also check children treatments recursively
+        if (treatment.children && Array.isArray(treatment.children)) {
+          return treatment.children.some((child) =>
+            child.name && child.name.toLowerCase().trim() === searchName
+          );
+        }
+
+        return false;
+      });
     });
-  });
+  }
+
+  // Local country filter
+  if (selectedCountry.value?.value) {
+    const countryId = String(selectedCountry.value.value);
+    hospitals = hospitals.filter((hospital) => String(hospital.country_id) === countryId);
+  }
+
+  return hospitals;
 });
 
 // Country options
 const countryOptions = computed(() =>
   store.countries.map((country) => ({
     label: country.country_name,
-    value: country.id, // or country.slug if the API expects a slug
+    value: country.id,
+    slug: country.slug,
   }))
 );
 
 // Selected country
-const selectedCountry = ref<{ label: string; value: string | number } | undefined>(
+const selectedCountry = ref<{ label: string; value: string | number; slug?: string } | undefined>(
   undefined
 );
 
@@ -156,6 +146,7 @@ await useAsyncData("countries", async () => {
       selectedCountry.value = {
         label: country.country_name,
         value: country.id,
+        slug: country.slug,
       };
       store.country_id = country.id;
     }
@@ -165,7 +156,7 @@ await useAsyncData("countries", async () => {
 // Fetch hospitals
 const fetchHospitals = async () => {
   const countryslug =
-    selectedCountry.value?.value || route.query.countryslug || "";
+    selectedCountry.value?.slug || route.query.countryslug || "";
   await Hotelstore.fetchHospitals(countryslug as string, slug.value);
 };
 
@@ -174,12 +165,9 @@ await fetchHospitals();
 
 // Watch for country changes
 watch(selectedCountry, async (newVal) => {
-  store.country_id = newVal?.value || "";
-  store.city_id = "";
   if (newVal?.value) {
     await store.loadCities(newVal.value);
   }
-  await fetchHospitals();
 });
 
 // Watch for slug changes (if user navigates to a different procedure)
@@ -197,7 +185,7 @@ const loadMore = async () => {
   // Assuming API supports pagination with a page parameter
   const nextPage = Math.ceil(Hotelstore.hospitals.length / 10) + 1; // Adjust based on API pagination
   const countryslug =
-    selectedCountry.value?.value || route.query.countryslug || "";
+    selectedCountry.value?.slug || route.query.countryslug || "";
   await Hotelstore.fetchHospitals(countryslug as string, slug.value);
 };
 </script>

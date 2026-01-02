@@ -115,7 +115,7 @@ const imageLoaded = ref(false)
 // Helpers
 const title = computed(() => useCapitalize(props.hospital?.title || ""))
 const shortAddress = computed(() =>
-    useTruncateText(props.hospital?.address || "", 100)
+    useTruncateText(props.hospital?.address || "", 75)
 )
 
 // Description logic
