@@ -610,6 +610,15 @@
     box-shadow: 0px 4px 44px 0px #00000014;
     margin-top: 160px;
 }
+@media only screen and (max-width: 768px) {
+    .sidebar-card {
+        background-color: #ffffff;
+        position: sticky;
+        top: 0px;
+        box-shadow: 0px 4px 44px 0px #00000014;
+        margin-top: 0px;
+    }
+}
 
 .sidebar-card img {
     width: 382px;

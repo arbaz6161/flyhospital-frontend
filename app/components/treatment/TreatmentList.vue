@@ -12,36 +12,27 @@
       <div class="slider-container">
         <!-- Prev Button -->
         <button class="slider-arrow prev-arrow" @click="prevSlide" :disabled="currentIndex === 0">
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-            <path
-              d="M18.75 23.75L10 15L18.75 6.25"
-              stroke="#003D6F"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          &#10094;
         </button>
 
-        <!-- Treatments -->
+        <!-- Slider Wrapper -->
         <div class="slider-wrapper">
           <div
             class="slider-track"
-            :style="{ transform: `translateX(-${currentIndex * slideWidth}%)` }"
+            :style="{ transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)` }"
           >
             <div
-              v-for="treatment in treatments"
+              v-for="(treatment, index) in treatments"
               :key="treatment.id"
               class="treatment-card"
+              :style="{ marginRight: (index === treatments.length -1 ? '0' : '10px') }"
             >
               <NuxtLink
                 style="text-decoration: none; color: #053862;"
-                :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(
-                  treatment.name
-                )}`"
+                :to="`/subprocedure/${treatment.id}?name=${encodeURIComponent(treatment.name)}`"
               >
                 <img 
-                  :src="treatment.image_url??'https://flyhospitals.dev/dumy.jpg'" 
+                  :src="treatment.image_url ?? 'https://flyhospitals.dev/dumy.jpg'" 
                   alt="Treatment" 
                   loading="lazy"
                   :class="{ 'image-loading': !imageLoaded[treatment.id] }"
@@ -72,15 +63,7 @@
           @click="nextSlide"
           :disabled="currentIndex >= maxIndex"
         >
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-            <path
-              d="M11.25 23.75L20 15L11.25 6.25"
-              stroke="#003D6F"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          &#10095;
         </button>
       </div>
 
@@ -89,45 +72,44 @@
   </section>
 </template>
 
-<script setup>
-import { computed, ref, reactive } from "vue";
+<script setup lang="ts">
+import { computed, ref, reactive, onMounted } from "vue";
 import { useGeneralStore } from "~/stores/general";
 
 const store = useGeneralStore();
 const viewAllLink = ref("/procedure");
-
-// Track image loading state for blur effect
 const imageLoaded = reactive({})
 
-// ✅ Data is fetched centrally in index page
-// This component just displays the data from the store
-// No need to fetch here to avoid duplicate requests
-
 const treatments = computed(() => store.treatments);
-const loading = computed(() => store.loading);
-const error = computed(() => store.error);
-
 const currentIndex = ref(0);
 
-// how many slides to show at once
-const slidesPerView = 4; 
-const slideWidth = 100 / slidesPerView; 
+// Responsive slides per view
+const slidesPerView = ref(4); // default desktop
 
-// Max index to prevent sliding too far
-const maxIndex = computed(() =>
-  Math.max(0, treatments.value.length - slidesPerView)
-);
+const maxIndex = computed(() => Math.max(0, treatments.value.length - slidesPerView.value));
+
+// Update slides per view on window resize
+const updateSlidesPerView = () => {
+  const width = window.innerWidth;
+  if (width >= 992) slidesPerView.value = 4;
+  else if (width >= 768) slidesPerView.value = 2;
+  else slidesPerView.value = 1;
+
+  // prevent overflow
+  if (currentIndex.value > maxIndex.value) currentIndex.value = maxIndex.value;
+};
+
+onMounted(() => {
+  updateSlidesPerView();
+  window.addEventListener('resize', updateSlidesPerView);
+});
 
 const nextSlide = () => {
-  if (currentIndex.value < maxIndex.value) {
-    currentIndex.value++;
-  }
+  if (currentIndex.value < maxIndex.value) currentIndex.value++;
 };
 
 const prevSlide = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--;
-  }
+  if (currentIndex.value > 0) currentIndex.value--;
 };
 </script>
 
@@ -146,12 +128,24 @@ const prevSlide = () => {
 .slider-track {
   display: flex;
   transition: transform 0.4s ease-in-out;
-  gap:10px
 }
 
 .treatment-card {
-  flex: 0 0 calc(100% / 4); /* 3 cards per view */
-  
+  flex: 0 0 auto;
+  width: calc(100% / 4); /* desktop default */
+}
+
+@media (max-width: 991.98px) {
+  .treatment-card {
+    width: calc(100% / 2); /* tablet */
+  }
+}
+
+@media (max-width: 767.98px) {
+  .treatment-card {
+    width: 100%; /* mobile */
+    margin-right: 0 !important; /* single card, no margin */
+  }
 }
 
 .slider-arrow {
@@ -159,10 +153,21 @@ const prevSlide = () => {
   border: none;
   cursor: pointer;
   z-index: 10;
+  font-size: 24px;
+  padding: 5px 10px;
 }
 
 .slider-arrow:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.image-loading {
+  filter: blur(5px);
+  transition: filter 0.3s;
+}
+
+.image-loading.loaded {
+  filter: blur(0);
 }
 </style>
