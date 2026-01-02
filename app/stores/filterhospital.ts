@@ -132,12 +132,12 @@ export const useFilterHospitalStore = defineStore('filterHospital', () => {
     error.value = null;
 
     try {
-          const config = useRuntimeConfig()
-          const api = `${config.public.baseUrl}/filter-hospitals?countryslug=${countryslug}&slug=${slug}`
-        const response = await fetch(api);
-        const data = await response.json();
+      const config = useRuntimeConfig()
+      const api = `${config.public.baseUrl}/filter-hospitals?countryslug=${countryslug}&slug=${slug}`
+      const response = await fetch(api);
+      const data = await response.json();
 
-        console.log(data);
+      console.log('my data: ', data);
 
       if (data.success) {
         hospitals.value = data.data;
