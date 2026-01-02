@@ -50,7 +50,7 @@
             </div>
 
             <!-- Sidebar -->
-            <div class="col-md-3 col-sm-6 card-body border-start-md d-flex flex-column">
+            <div class="col-lg-2 col-md-6 col-sm-6 card-body border-start-md d-flex flex-column">
                 <!-- Rating -->
                 <div>
                     <div v-if="false" class="rating d-flex align-items-center mb-3">

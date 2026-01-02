@@ -8,19 +8,26 @@
       </div>
 
       <div class="slider-container">
-        <button class="slider-arrow prev-arrow prev-des">
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"
-            @click="prevSlide" :disabled="currentIndex === 0">
-            <path d="M18.75 23.75L10 15L18.75 6.25" stroke="#003D6F" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
+        <!-- Prev Button -->
+        <button class="slider-arrow prev-arrow" @click="prevSlide" :disabled="currentIndex === 0">
+          &#10094;
         </button>
-        <div class="slider-grid destination-grid slider-wrapper">
-          <div class="slider-track" :style="{ transform: `translateX(-${currentIndex * slideWidth}%)` }">
-            <div v-for="destination in destinations" class="destination-card">
-              <img :src="destination.image_url ?? 'https://flyhospitals.dev/dumy.jpg'" alt="New York City Skyline"
-                loading="lazy" :class="{ 'image-loading': !imageLoaded[destination.id] }"
-                @load="imageLoaded[destination.id] = true" @error="imageLoaded[destination.id] = true">
+
+        <!-- Slider Wrapper -->
+        <div class="slider-wrapper">
+          <div class="slider-track" :style="{ transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)` }">
+            <div
+              v-for="(destination, index) in destinations"
+              :key="destination.id"
+              class="destination-card"
+              :style="{ marginRight: (index === destinations.length -1 ? '0' : '10px') }"
+            >
+              <img :src="destination.image_url ?? 'https://flyhospitals.dev/dumy.jpg'" 
+                   alt="Destination" 
+                   loading="lazy"
+                   :class="{ 'image-loading': !imageLoaded[destination.id] }"
+                   @load="imageLoaded[destination.id] = true"
+                   @error="imageLoaded[destination.id] = true">
               <div class="card-content">
                 <p class="card-subtitle">Looking for medical in</p>
                 <div class="card-title-bar">
@@ -36,59 +43,54 @@
             </div>
           </div>
         </div>
-        <button class="slider-arrow next-arrow next-des" @click="nextSlide" :disabled="currentIndex >= maxIndex">
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11.25 23.75L20 15L11.25 6.25" stroke="#003D6F" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
+
+        <!-- Next Button -->
+        <button class="slider-arrow next-arrow" @click="nextSlide" :disabled="currentIndex >= maxIndex">
+          &#10095;
         </button>
       </div>
+
       <NuxtLink to="/destinations" class="view-all-btn">View all Destination</NuxtLink>
     </div>
   </section>
 </template>
 
-<script setup>
-import { computed, ref, reactive } from 'vue'
+<script setup lang="ts">
+import { computed, ref, reactive, onMounted } from 'vue'
 import { useGeneralStore } from '~/stores/general'
 
 const store = useGeneralStore()
-const config = useRuntimeConfig()
-
-// Track image loading state for blur effect
 const imageLoaded = reactive({})
-
-// ✅ Data is fetched centrally in index page
-// This component just displays the data from the store
-// No need to fetch here to avoid duplicate requests
-
 const destinations = computed(() => store.destinations)
-const loading = computed(() => store.loading)
-const error = computed(() => store.error)
 
+const currentIndex = ref(0)
+const slidesPerView = ref(4) // default desktop
 
-const currentIndex = ref(0);
+const maxIndex = computed(() => Math.max(0, destinations.value.length - slidesPerView.value))
 
-// how many slides to show at once
-const slidesPerView = 4;
-const slideWidth = 100 / slidesPerView;
+// Update slides per view on window resize
+const updateSlidesPerView = () => {
+  const width = window.innerWidth
+  if (width >= 992) slidesPerView.value = 4
+  else if (width >= 768) slidesPerView.value = 2
+  else slidesPerView.value = 1
 
-// Max index to prevent sliding too far
-const maxIndex = computed(() =>
-  Math.max(0, destinations.value.length - slidesPerView)
-);
+  // prevent overflow
+  if (currentIndex.value > maxIndex.value) currentIndex.value = maxIndex.value
+}
+
+onMounted(() => {
+  updateSlidesPerView()
+  window.addEventListener('resize', updateSlidesPerView)
+})
 
 const nextSlide = () => {
-  if (currentIndex.value < maxIndex.value) {
-    currentIndex.value++;
-  }
-};
+  if (currentIndex.value < maxIndex.value) currentIndex.value++
+}
 
 const prevSlide = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--;
-  }
-};
+  if (currentIndex.value > 0) currentIndex.value--
+}
 </script>
 
 <style scoped>
@@ -106,13 +108,24 @@ const prevSlide = () => {
 .slider-track {
   display: flex;
   transition: transform 0.4s ease-in-out;
-  gap: 10px
 }
 
-.treatment-card {
-  flex: 0 0 calc(100% / 4);
-  /* 3 cards per view */
+.destination-card {
+  flex: 0 0 auto;
+  width: calc(100% / 4); /* desktop default */
+}
 
+@media (max-width: 991.98px) {
+  .destination-card {
+    width: calc(100% / 2); /* tablet */
+  }
+}
+
+@media (max-width: 767.98px) {
+  .destination-card {
+    width: 100%; /* mobile */
+    margin-right: 0 !important; /* single card no margin */
+  }
 }
 
 .slider-arrow {
@@ -120,6 +133,8 @@ const prevSlide = () => {
   border: none;
   cursor: pointer;
   z-index: 10;
+  font-size: 24px;
+  padding: 5px 10px;
 }
 
 .slider-arrow:disabled {
@@ -127,7 +142,12 @@ const prevSlide = () => {
   cursor: not-allowed;
 }
 
-.card-details .m-b-0 {
-  margin-bottom: 0 !important;
+.image-loading {
+  filter: blur(5px);
+  transition: filter 0.3s;
+}
+
+.image-loading.loaded {
+  filter: blur(0);
 }
 </style>
