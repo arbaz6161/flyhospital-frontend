@@ -1,3 +1,11 @@
+<style>
+    @media (max-width: 768px) {
+    .hospital-card .location {
+        line-height: 18px;
+    }
+}
+
+</style>
 <template>
     <div class="card hospital-card mb-4 p-4">
         <div class="row g-0">
