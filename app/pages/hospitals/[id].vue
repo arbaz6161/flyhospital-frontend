@@ -53,6 +53,9 @@
                 <li class="nav-item">
                     <NuxtLink class="nav-link" to="#restaurants">Nearby Restaurants</NuxtLink>
                 </li>
+                <li class="nav-item">
+                    <NuxtLink class="nav-link" to="#how-to-get-there">How to get there</NuxtLink>
+                </li>
             </ul>
 
             <div id="overview" class="row">
@@ -301,7 +304,7 @@
                     :hotels="(hospital as any).hotels" />
 
                 <!--=============== POPULAR TRANSPORT SECTION ===============-->
-                <TransportSection title="Available Transport Options"
+                <TransportSection id="how-to-get-there" title="How to get there"
                     description="Get convenient transport near the hospital."
                     v-if="(hospital as any)?.transports?.length > 0" :items="hospital.transports" />
             </div>
