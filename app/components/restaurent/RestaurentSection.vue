@@ -23,7 +23,7 @@
           </svg>
         </button>
 
-        <!-- Dynamic Restaurant Cards -->
+        <!-- Dynamic Restaurant Cards section -->
         <div class="slider-grid">
           <div
             v-for="(restaurant, index) in visibleRestaurants"
@@ -31,7 +31,7 @@
             class="hotel-card"
           >
             <img 
-              :src="restaurant.image_url??'https://flyhospitals.dev/dumy.jpg'" 
+              :src="restaurant.image_url ?? 'https://flyhospitals.dev/dumy.jpg'" 
               :alt="restaurant.name" 
               loading="lazy"
               :class="{ 'image-loading': !imageLoaded[restaurant.id] }"
@@ -46,15 +46,14 @@
                   <span class="star">★</span>
                 </span>
               </h3>
-               <a
-                :key="restaurant.id" 
-                            :href="restaurant.google_map_location"
-                            class="btn btn-sm btn-light mt-2">
-                            <Icon name="material-symbols:location-on-outline"
-                                style="color:#053862; margin-right:5px; font-size: 18px;" />
-                            Google Map
-                    </a>
-                
+              <a
+                :href="restaurant.google_map_location"
+                class="btn btn-sm btn-light mt-2"
+              >
+                <Icon name="material-symbols:location-on-outline"
+                  style="color:#053862; margin-right:5px; font-size: 18px;" />
+                Google Map
+              </a>
             </div>
           </div>
         </div>
@@ -77,9 +76,9 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from "vue"
+import { ref, computed, reactive, onMounted, onBeforeUnmount } from "vue"
 
-// ✅ use defineProps
+// Props
 const props = defineProps({
   restaurants: {
     type: Array,
@@ -87,22 +86,55 @@ const props = defineProps({
   }
 })
 
+// Current index of slider
 const currentIndex = ref(0)
-const itemsPerPage = 5
 
-// Track image loading state for blur effect
+// Track image loading for blur effect
 const imageLoaded = reactive({})
 
-// ✅ use props.restaurants instead of restaurants.value
+// ---------------- Dynamic items per page ----------------
+const itemsPerPage = ref(5)
+
+function updateItemsPerPage() {
+  const width = window.innerWidth
+  if (width < 768) {
+    // Mobile
+    itemsPerPage.value = 1
+  } else if (width < 1024) {
+    // Tablet
+    itemsPerPage.value = 2
+  } else {
+    // Desktop
+    itemsPerPage.value = 5
+  }
+
+  // Ensure currentIndex is valid after resizing
+  if (currentIndex.value + itemsPerPage.value > props.restaurants.length) {
+    currentIndex.value = Math.max(0, props.restaurants.length - itemsPerPage.value)
+  }
+}
+
+// Call on mounted and listen for resize
+onMounted(() => {
+  updateItemsPerPage()
+  window.addEventListener("resize", updateItemsPerPage)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateItemsPerPage)
+})
+
+// ---------------- Compute visible restaurants ----------------
 const visibleRestaurants = computed(() => {
   return props.restaurants.slice(
     currentIndex.value,
-    currentIndex.value + itemsPerPage
+    currentIndex.value + itemsPerPage.value
   )
 })
 
+// ---------------- Slider navigation ----------------
 function nextSlide() {
-  if (currentIndex.value + itemsPerPage < props.restaurants.length) {
+  if (currentIndex.value + itemsPerPage.value < props.restaurants.length) {
     currentIndex.value++
   }
 }

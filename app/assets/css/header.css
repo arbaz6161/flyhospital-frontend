@@ -73,3 +73,9 @@ body {
 .dropdown-toggle::after {
     display: none !important;
 }
+
+@media (max-width: 768px) {  
+    .supportandbtn {
+        align-items: center;
+    }
+}
