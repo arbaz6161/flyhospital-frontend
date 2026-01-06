@@ -188,7 +188,7 @@
 
 
                     <!-- Procedures -->
-                    <div class="mb-5 pb-5 section-base" v-if="(hospital as any)?.treatments?.length">
+                    <div class="mb-5 pb-5 section-base custom-collapse" v-if="(hospital as any)?.treatments?.length">
                         <h3 class="section-title">Departments</h3>
 
                         <Accordion parent v-for="treatment in (hospital as any).treatments" :key="treatment.id">
@@ -212,14 +212,14 @@
                                 </ul>
 
                                 <!-- Tab Content -->
-                                <div v-if="activeTab[treatment.id] === 'procedures'" class="row mt-5 px-3">
+                                <div v-show="activeTab[treatment.id] === 'procedures'" class="row mt-5 px-3">
                                     <div class="col-md-4 mb-3" v-for="subtreatment in treatment.children"
                                         :key="subtreatment.id">
                                         <span>{{ subtreatment.name }}</span>
                                     </div>
                                 </div>
 
-                                <div v-if="activeTab[treatment.id] === 'staff'" class="row mb-2">
+                                <div v-show="activeTab[treatment.id] === 'staff'" class="row mb-2">
                                     <div class="accordion-body">
                                         <div class="staff-member" v-for="staff in treatment?.staff || []"
                                             :key="staff?.id">
@@ -477,4 +477,5 @@ img:not(.image-loading) {
         background-position: 200% 0;
     }
 }
+
 </style>

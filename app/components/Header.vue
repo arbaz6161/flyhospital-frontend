@@ -124,6 +124,15 @@
 <script setup lang="ts">
 import { computed, ref, watch, onMounted } from 'vue'
 import { useGeneralStore } from '~/stores/general'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+router.afterEach(() => {
+  isMenuOpen.value = false
+  const collapse = document.getElementById('navbarCollapse')
+  if (collapse) collapse.style.display = 'none'
+})
 
 const store = useGeneralStore()
 const imageLoaded = ref(false)
