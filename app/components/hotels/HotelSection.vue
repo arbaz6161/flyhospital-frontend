@@ -31,24 +31,22 @@
             :key="index"
             class="hotel-card"
           >
-            <img :src="hotel.image_url??'https://flyhospitals.dev/dumy.jpg'" :alt="hotel.name" />
+            <img :src="hotel.image_url ?? 'https://flyhospitals.dev/dumy.jpg'" :alt="hotel.name" />
             <div class="card-content">
               <h3>
-                {{ useTruncateText(hotel?.name || "", 20) }}
+                {{ useTruncateText(hotel?.name || '', 20) }}
                 <span class="rating">
-                  {{ hotel.rating }}
-                  <span class="star">★</span>
+                  {{ hotel.rating }}<span class="star">★</span>
                 </span>
               </h3>
-                     <a
-                :key="hotel.id" 
-                            :href="hotel.google_map_location"
-                            class="btn btn-sm btn-light mt-2">
-                            <Icon name="material-symbols:location-on-outline"
-                                style="color:#053862; margin-right:5px; font-size: 18px;" />
-                            Google Map
-                    </a>
-             
+              <a
+                :href="hotel.google_map_location"
+                class="btn btn-sm btn-light mt-2"
+              >
+                <Icon name="material-symbols:location-on-outline"
+                      style="color:#053862; margin-right:5px; font-size: 18px;" />
+                Google Map
+              </a>
             </div>
           </div>
         </div>
@@ -71,9 +69,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
-// ✅ define props
+// Props
 const props = defineProps({
   hotels: {
     type: Array,
@@ -81,16 +79,45 @@ const props = defineProps({
   }
 })
 
+// Slider state
 const currentIndex = ref(0)
-const itemsPerPage = 4
+const itemsPerPage = ref(4)
 
-// ✅ use props.hotels instead of hotels.value
-const visibleHotels = computed(() => {
-  return props.hotels.slice(currentIndex.value, currentIndex.value + itemsPerPage)
+// ---------------- Dynamic items per page ----------------
+function updateItemsPerPage() {
+  const width = window.innerWidth
+  if (width < 768) {
+    // Mobile
+    itemsPerPage.value = 1
+  } else if (width < 1024) {
+    // Tablet
+    itemsPerPage.value = 2
+  } else {
+    // Desktop
+    itemsPerPage.value = 4
+  }
+}
+
+onMounted(() => {
+  updateItemsPerPage()
+  window.addEventListener('resize', updateItemsPerPage)
 })
 
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateItemsPerPage)
+})
+
+// ---------------- Compute visible hotels ----------------
+const visibleHotels = computed(() => {
+  return props.hotels.slice(
+    currentIndex.value,
+    currentIndex.value + itemsPerPage.value
+  )
+})
+
+// ---------------- Slider navigation ----------------
 function nextSlide() {
-  if (currentIndex.value + itemsPerPage < props.hotels.length) {
+  if (currentIndex.value + itemsPerPage.value < props.hotels.length) {
     currentIndex.value++
   }
 }
