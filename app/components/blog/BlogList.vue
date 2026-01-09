@@ -1,5 +1,5 @@
 <template>
-  <section class="blogs-section">
+  <section v-if="false" class="blogs-section">
     <div class="container">
       <div class="section-header">
         <h2>Blogs</h2>
