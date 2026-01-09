@@ -32,6 +32,29 @@ export interface Hospital {
   total_reviews?: number
 }
 
+export interface Media {
+  id: number
+  model_type: string
+  model_id: number
+  uuid: string
+  collection_name: string
+  name: string
+  file_name: string
+  mime_type: string
+  disk: string
+  conversions_disk: string
+  size: number
+  manipulations: any[]
+  custom_properties: any[]
+  generated_conversions: any[]
+  responsive_images: any[]
+  order_column: number
+  created_at: string
+  updated_at: string
+  original_url: string
+  preview_url: string
+}
+
 export interface Blog {
   id: number
   title: string
@@ -41,6 +64,7 @@ export interface Blog {
   created_at?: string
   updated_at?: string
   slug?: string
+  media?: Media[]
 }
 
 export interface SubProcedure {
@@ -147,7 +171,7 @@ export const useGeneralStore = defineStore('general', {
         this.loading = false
       }
     },
-  
+
     async fetchDestination(forceRefresh = false): Promise<void> {
       // If data exists and not forcing refresh, skip
       // Data will only refresh on hard refresh (F5) which clears the store
@@ -207,6 +231,8 @@ export const useGeneralStore = defineStore('general', {
 
         const res = await $fetch<ApiResponse<Blog>>(api)
 
+        console.log('Blogs fetched:', res)
+
         this.blogs = res.data.data
         this.pagination = {
           current_page: res.data.current_page,
@@ -229,7 +255,7 @@ export const useGeneralStore = defineStore('general', {
         const config = useRuntimeConfig()
         const api = `${config.public.baseUrl}/sub-treatments?parent_id=${treatmentId}`
         const res = await $fetch<{ status?: boolean; data: Treatments[] }>(api)
-        
+
         this.subprocedures = res.data ?? []
         this.lastFetched.subprocedures = Date.now()
       } catch (err: any) {
@@ -260,6 +286,25 @@ export const useGeneralStore = defineStore('general', {
         this.fetchBlogs(1),
         this.fetchSubProcedures(1),
       ])
+    },
+
+    async fetchBlogById(id: string): Promise<Blog | null> {
+      try {
+        this.loading = true
+        this.error = null
+
+        const config = useRuntimeConfig()
+        const api = `${config.public.baseUrl}/blogs/${id}`
+
+        const res = await $fetch<{ status: boolean; data: Blog }>(api)
+
+        return res.data
+      } catch (err: any) {
+        this.error = err?.message ?? 'Failed to fetch blog details'
+        return null
+      } finally {
+        this.loading = false
+      }
     },
   },
 })
