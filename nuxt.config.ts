@@ -9,6 +9,7 @@ export default defineNuxtConfig({
         { name: "robots", content: "noindex, nofollow, noarchive, nosnippet" }
       ],
       link: [
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: 'favicons/favicon-32x32.png' },
         //   // ✅ Bootstrap CSS
         {
           rel: "stylesheet",
